@@ -140,7 +140,7 @@ export const updateUserProfile = createAsyncThunk(
     // console.log(appState.auth.user.photoURL);
     // console.log(appState.auth.user.displayName);
     if (auth.currentUser) {
-      if (payload.imageFile.name) {
+      if (payload.imageFile) {
         if (appState.auth.user.photoURL.length === 0) {
           const updateRef = ref(
             storage,

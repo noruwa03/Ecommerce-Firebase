@@ -99,7 +99,7 @@ export default function Home() {
                     <div className="px-4 mt-8">
                       <h1 className="font-quicksand text-base text-slate-800 font-semibold capitalize">
                         <Link
-                          href=""
+                          href={`product/${res.id}`}
                           className="underline decoration-wavy decoration-red-300"
                         >
                           {res.product_name}

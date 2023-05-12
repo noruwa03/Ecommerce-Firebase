@@ -8,6 +8,7 @@ import {
   getDocs,
   doc,
   getDoc,
+  updateDoc,
 } from "firebase/firestore";
 
 import {
@@ -20,18 +21,18 @@ import {
 
 interface IVENDOR {
   loading: boolean;
-  success:string;
+  success: string;
   error: string;
   product: any;
   singleProduct: any;
 }
 
-const initialState : IVENDOR= {
+const initialState: IVENDOR = {
   loading: false,
   success: "",
   error: "",
   product: [],
-  singleProduct: []
+  singleProduct: [],
 };
 
 export const storeProduct = createAsyncThunk(
@@ -137,6 +138,257 @@ export const getSingleProduct = createAsyncThunk(
   }
 );
 
+export const updateProduct = createAsyncThunk(
+  "updateProduct/updateFirebaseProduct",
+  async (payload: any) => {
+  
+
+    if (payload.newCoverImageFile) {
+      if (payload.oldCoverImageName.length === 0) {
+        if (payload.productImages) {
+          const imagePath: any = [];
+
+          const oldArr = payload.multipleURL;
+
+          await payload.productImages.map(async (img: any) => {
+            const updateRef = ref(
+              storage,
+              `documents/product_image/${img.name}`
+            );
+
+            const uploadTask = uploadBytesResumable(updateRef, img);
+            await uploadTask;
+            const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
+            imagePath.push({ imageName: img.name, imageURL: imageURL });
+          });
+
+          setTimeout(async () => {
+            const newImagePath = [...oldArr, ...imagePath];
+
+            const updateRef = ref(
+              storage,
+              `documents/product_cover_image/${payload.newCoverImageFile.name}`
+            );
+
+            const uploadTask = uploadBytesResumable(
+              updateRef,
+              payload.newCoverImageFile
+            );
+            await uploadTask;
+            const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+            const docRef = doc(firestore, "product", payload.id);
+
+            await updateDoc(docRef, {
+              product_name: payload.productInfo.product_name,
+              price: payload.productInfo.price,
+              quantity: payload.productInfo.quantity,
+              category: payload.productInfo.category,
+              description: payload.productInfo.description,
+
+              coverImageName: payload.newCoverImageFile.name,
+              photoURL: imageURL,
+
+              multipleURL: newImagePath,
+
+              updatedAt: Date.now(),
+            });
+          }, 3000);
+        } else {
+          const updateRef = ref(
+            storage,
+            `documents/product_cover_image/${payload.newCoverImageFile.name}`
+          );
+
+          const uploadTask = uploadBytesResumable(
+            updateRef,
+            payload.newCoverImageFile
+          );
+          await uploadTask;
+          const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+          const docRef = doc(firestore, "product", payload.id);
+
+          await updateDoc(docRef, {
+            product_name: payload.productInfo.product_name,
+            price: payload.productInfo.price,
+            quantity: payload.productInfo.quantity,
+            category: payload.productInfo.category,
+            description: payload.productInfo.description,
+            coverImageName: payload.newCoverImageFile.name,
+            photoURL: imageURL,
+
+            // multipleURL: imagePath,
+            updatedAt: Date.now(),
+          });
+        }
+      } else {
+        if (payload.productImages) {
+          const imagePath: any = [];
+
+          const oldArr = payload.multipleURL;
+
+          await payload.productImages.map(async (img: any) => {
+            const updateRef = ref(
+              storage,
+              `documents/product_image/${img.name}`
+            );
+
+            const uploadTask = uploadBytesResumable(updateRef, img);
+            await uploadTask;
+            const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
+            imagePath.push({ imageName: img.name, imageURL: imageURL });
+          });
+
+          const storageRef = ref(
+            storage,
+            `documents/product_cover_image/${payload.oldCoverImageName}`
+          );
+
+          deleteObject(storageRef).then(async () => {
+            const updateRef = ref(
+              storage,
+              `documents/product_cover_image/${payload.newCoverImageFile.name}`
+            );
+
+            const uploadTask = uploadBytesResumable(
+              updateRef,
+              payload.newCoverImageFile
+            );
+            await uploadTask;
+            const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+            const docRef = doc(firestore, "product", payload.id);
+
+            const newImagePath = [...oldArr, ...imagePath];
+
+            await updateDoc(docRef, {
+              product_name: payload.productInfo.product_name,
+              price: payload.productInfo.price,
+              quantity: payload.productInfo.quantity,
+              category: payload.productInfo.category,
+              description: payload.productInfo.description,
+              coverImageName: payload.newCoverImageFile.name,
+              photoURL: imageURL,
+
+              multipleURL: newImagePath,
+              updatedAt: Date.now(),
+            });
+          });
+        } else {
+          const storageRef = ref(
+            storage,
+            `documents/product_cover_image/${payload.oldCoverImageName}`
+          );
+
+          deleteObject(storageRef).then(async () => {
+            const updateRef = ref(
+              storage,
+              `documents/product_cover_image/${payload.newCoverImageFile.name}`
+            );
+
+            const uploadTask = uploadBytesResumable(
+              updateRef,
+              payload.newCoverImageFile
+            );
+            await uploadTask;
+            const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+            const docRef = doc(firestore, "product", payload.id);
+
+            await updateDoc(docRef, {
+              product_name: payload.productInfo.product_name,
+              price: payload.productInfo.price,
+              quantity: payload.productInfo.quantity,
+              category: payload.productInfo.category,
+              description: payload.productInfo.description,
+              coverImageName: payload.newCoverImageFile.name,
+              photoURL: imageURL,
+              updatedAt: Date.now(),
+            });
+          });
+        }
+
+        // const storageRef = ref(
+        //   storage,
+        //   `documents/product_cover_image/${payload.oldCoverImageName}`
+        // );
+
+        // deleteObject(storageRef).then(async () => {
+        //   const updateRef = ref(
+        //     storage,
+        //     `documents/product_cover_image/${payload.newCoverImageFile.name}`
+        //   );
+
+        //   const uploadTask = uploadBytesResumable(
+        //     updateRef,
+        //     payload.newCoverImageFile
+        //   );
+        //   await uploadTask;
+        //   const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
+
+        //   const docRef = doc(firestore, "product", payload.id);
+
+        //   await updateDoc(docRef, {
+        //     product_name: payload.productInfo.product_name,
+        //     price: payload.productInfo.price,
+        //     quantity: payload.productInfo.quantity,
+        //     category: payload.productInfo.category,
+        //     description: payload.productInfo.description,
+        //     coverImageName: payload.newCoverImageFile.name,
+        //     photoURL: imageURL,
+
+        //     // multipleURL: imagePath,
+        //     updatedAt: Date.now(),
+        //   });
+        // });
+      }
+    } else {
+      if (payload.productImages) {
+        const imagePath: any = [];
+
+        const oldArr = payload.multipleURL;
+
+        await payload.productImages.map(async (img: any) => {
+          const updateRef = ref(storage, `documents/product_image/${img.name}`);
+
+          const uploadTask = uploadBytesResumable(updateRef, img);
+          await uploadTask;
+          const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
+          imagePath.push({ imageName: img.name, imageURL: imageURL });
+        });
+
+        setTimeout(async () => {
+          const newImagePath = [...oldArr, ...imagePath];
+
+          const docRef = doc(firestore, "product", payload.id);
+
+          await updateDoc(docRef, {
+            product_name: payload.productInfo.product_name,
+            price: payload.productInfo.price,
+            quantity: payload.productInfo.quantity,
+            category: payload.productInfo.category,
+            description: payload.productInfo.description,
+            multipleURL: newImagePath,
+            updatedAt: Date.now(),
+          });
+        }, 3000);
+      } else {
+        const docRef = doc(firestore, "product", payload.id);
+
+        await updateDoc(docRef, {
+          product_name: payload.productInfo.product_name,
+          price: payload.productInfo.price,
+          quantity: payload.productInfo.quantity,
+          category: payload.productInfo.category,
+          description: payload.productInfo.description,
+          updatedAt: Date.now(),
+        });
+      }
+    }
+  }
+);
+
 const vendorSlice = createSlice({
   name: "vendor",
   initialState,
@@ -159,6 +411,18 @@ const vendorSlice = createSlice({
         state.loading = false;
         state.success = "Product created successfully";
       }),
+      //Update Product
+      builder.addCase(updateProduct.pending, (state) => {
+        state.loading = true;
+      }),
+      builder.addCase(updateProduct.rejected, (state) => {
+        state.loading = false;
+        state.error = "An error occured";
+      }),
+      builder.addCase(updateProduct.fulfilled, (state) => {
+        state.loading = false;
+        state.success = "Product updated successfully";
+      }),
       //Get All Product
       builder.addCase(getProduct.pending, (state) => {
         state.loading = true;
@@ -174,7 +438,6 @@ const vendorSlice = createSlice({
           state.product = action.payload;
         }
       ),
-
       //Get Single Product
       // builder.addCase(getSingleProduct.pending, (state) => {
       //   state.loading = true;

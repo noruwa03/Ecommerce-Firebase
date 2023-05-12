@@ -69,7 +69,7 @@ const ProductDetail = () => {
           <div className="lg:col-span-2 col-span-2 relative">
             <div
               onClick={goToPrevious}
-              className=" cursor-pointer absolute top-[35%] -translate-y-[50%] left-2 grid place-content-center p-4 bg-[#000000cc] rounded-full"
+              className="cursor-pointer absolute top-[35%] -translate-y-[50%] left-2 grid place-content-center sm:p-4 p-2 bg-[#000000cc] rounded-full z-20"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -88,7 +88,7 @@ const ProductDetail = () => {
 
             <div
               onClick={goToNext}
-              className=" cursor-pointer absolute top-[35%] -translate-y-[50%] right-2 grid place-content-center p-4 bg-[#000000cc] rounded-full"
+              className=" cursor-pointer absolute top-[35%] -translate-y-[50%] right-2 grid place-content-center sm:p-4 p-2 bg-[#000000cc] rounded-full z-20"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

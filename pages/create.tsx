@@ -71,8 +71,8 @@ const Create: NextPageWithLayout = () => {
       category: "",
       description: "",
     });
-    setCoverImage("")
-    setMultipleFile("")
+    setCoverImage("");
+    setMultipleFile("");
   };
 
   const close = () => dispatch(closeModal());
@@ -90,7 +90,7 @@ const Create: NextPageWithLayout = () => {
       {state.loading ? <Loading /> : null}
       {state.error ? <Error message={state.error} close={close} /> : null}
       {state.success ? <Success message={state.success} close={close} /> : null}
-      <section className="py-20 lg:px-16 sm:px-8 px-6">
+      <section className="pt-14 pb-20 lg:px-16 sm:px-8 px-6">
         <div className="lg:p-8 sm:p-2 rounded-md sm:shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-200">
           <h1 className="font-quicksand font-semibold lg:text-2xl text-xl">
             Product Info
