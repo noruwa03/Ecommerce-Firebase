@@ -3,6 +3,7 @@ import { NextPageWithLayout } from "./_app";
 import type { FormEvent, ReactElement } from "react";
 import { ChangeEvent } from "react";
 import SignInFlow from "@/assets/icons/signin.svg";
+import Link from "next/link"
 import { useState, useRef } from "react";
 import UnauthorizedUser from "@/components/modal/UnauthorizedUser";
 import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
@@ -91,6 +92,14 @@ const Create: NextPageWithLayout = () => {
       {state.error ? <Error message={state.error} close={close} /> : null}
       {state.success ? <Success message={state.success} close={close} /> : null}
       <section className="pt-14 pb-20 lg:px-16 sm:px-8 px-6">
+        <div className="grid place-content-end">
+          <Link
+            href="/dashboard"
+            className="font-semibold  text-base text-center px-8 py-2 border-2 border-red-500 text-slate-900 mb-8 rounded-md"
+          >
+            Dashboard
+          </Link>
+        </div>
         <div className="lg:p-8 sm:p-2 rounded-md sm:shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-200">
           <h1 className="font-quicksand font-semibold lg:text-2xl text-xl">
             Product Info

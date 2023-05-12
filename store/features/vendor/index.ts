@@ -1,4 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import { RootState } from "@/store";
 import { storage, firestore } from "@/lib/firebase";
 import {
   addDoc,
@@ -9,6 +10,8 @@ import {
   doc,
   getDoc,
   updateDoc,
+  where,
+  deleteDoc
 } from "firebase/firestore";
 
 import {
@@ -22,18 +25,54 @@ import {
 interface IVENDOR {
   loading: boolean;
   success: string;
+  delete_image_success?: string;
   error: string;
   product: any;
   singleProduct: any;
+  dashboardProduct: any;
 }
 
 const initialState: IVENDOR = {
   loading: false,
   success: "",
+  delete_image_success: "",
   error: "",
   product: [],
   singleProduct: [],
+  dashboardProduct: []
 };
+
+
+export const getDashboardProduct = createAsyncThunk(
+  "getDashboardProduct/fetchVendorProduct",
+  async (_, { getState }) => {
+    const appState = getState() as RootState;
+
+    const productRef = collection(firestore, "product");
+    const productQuery = query(
+      productRef,
+      where("uid", "==", appState.auth.user.uid)
+    );
+
+    
+
+    const getVendorProduct = getDocs(productQuery).then((docRes) => {
+      if (docRes.empty) {
+        return [];
+      } else {
+        const result: any = [];
+        docRes.forEach((docData) => {
+          result.push({ ...docData.data(), id: docData.id });
+        });
+
+        return result;
+      }
+    });
+
+    return getVendorProduct;
+  }
+);
+
 
 export const storeProduct = createAsyncThunk(
   "storeProduct/uploadProduct",
@@ -141,8 +180,6 @@ export const getSingleProduct = createAsyncThunk(
 export const updateProduct = createAsyncThunk(
   "updateProduct/updateFirebaseProduct",
   async (payload: any) => {
-  
-
     if (payload.newCoverImageFile) {
       if (payload.oldCoverImageName.length === 0) {
         if (payload.productImages) {
@@ -309,39 +346,7 @@ export const updateProduct = createAsyncThunk(
           });
         }
 
-        // const storageRef = ref(
-        //   storage,
-        //   `documents/product_cover_image/${payload.oldCoverImageName}`
-        // );
-
-        // deleteObject(storageRef).then(async () => {
-        //   const updateRef = ref(
-        //     storage,
-        //     `documents/product_cover_image/${payload.newCoverImageFile.name}`
-        //   );
-
-        //   const uploadTask = uploadBytesResumable(
-        //     updateRef,
-        //     payload.newCoverImageFile
-        //   );
-        //   await uploadTask;
-        //   const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
-
-        //   const docRef = doc(firestore, "product", payload.id);
-
-        //   await updateDoc(docRef, {
-        //     product_name: payload.productInfo.product_name,
-        //     price: payload.productInfo.price,
-        //     quantity: payload.productInfo.quantity,
-        //     category: payload.productInfo.category,
-        //     description: payload.productInfo.description,
-        //     coverImageName: payload.newCoverImageFile.name,
-        //     photoURL: imageURL,
-
-        //     // multipleURL: imagePath,
-        //     updatedAt: Date.now(),
-        //   });
-        // });
+        
       }
     } else {
       if (payload.productImages) {
@@ -389,6 +394,78 @@ export const updateProduct = createAsyncThunk(
   }
 );
 
+export const deleteProductImage = createAsyncThunk(
+  "deleteProductImage/deleteImageFromFirebase",
+  async (payload: any) => {
+ 
+    // payload.delRef.imageName
+    // payload.delRef.imageURL
+    // payload.multipleURL
+
+    const newImagePath = payload.multipleURL.filter(
+      (res: any) => res.imageName !== payload.delRef.imageName
+    );
+
+
+    const storageRef = ref(
+      storage,
+      `documents/product_image/${payload.delRef.imageName}`
+    );
+
+    deleteObject(storageRef).then(async () => {
+      // File deleted successfully
+
+      const docRef = doc(firestore, "product", payload.id);
+
+      await updateDoc(docRef, {
+        multipleURL: newImagePath,
+        updatedAt: Date.now(),
+      });
+    });
+  }
+);
+
+
+export const removeProductFromDB = createAsyncThunk("removeProductFromDB/removeProduct", async (payload: any) => {
+ 
+
+  if (payload.coverImageName) {
+     const storageRef = ref(
+       storage,
+       `documents/product_cover_image/${payload.coverImageName}`
+     );
+
+     deleteObject(storageRef)
+
+     await payload.multipleURL.map(async (img: any) => {
+       const storageRef = ref(
+         storage,
+         `documents/product_image/${img.imageName}`
+       );
+
+        deleteObject(storageRef)
+     });
+    
+     const docRef = doc(firestore, "product", payload.id);
+     await deleteDoc(docRef);
+
+  } else {
+
+    await payload.multipleURL.map(async (img: any) => {
+      const storageRef = ref(
+        storage,
+        `documents/product_image/${img.imageName}`
+      );
+
+      deleteObject(storageRef);
+    });
+
+    const docRef = doc(firestore, "product", payload.id);
+    await deleteDoc(docRef);
+  }
+})
+
+
 const vendorSlice = createSlice({
   name: "vendor",
   initialState,
@@ -423,6 +500,18 @@ const vendorSlice = createSlice({
         state.loading = false;
         state.success = "Product updated successfully";
       }),
+      // Delete Product Image
+      builder.addCase(deleteProductImage.pending, (state) => {
+        state.loading = true;
+      }),
+      builder.addCase(deleteProductImage.rejected, (state) => {
+        state.loading = false;
+        state.error = "An error occured";
+      }),
+      builder.addCase(deleteProductImage.fulfilled, (state) => {
+        state.loading = false;
+        state.delete_image_success = "Product image deleted successfully";
+      }),
       //Get All Product
       builder.addCase(getProduct.pending, (state) => {
         state.loading = true;
@@ -436,6 +525,30 @@ const vendorSlice = createSlice({
         (state, action: PayloadAction<any>) => {
           state.loading = false;
           state.product = action.payload;
+        }
+      ),
+      //Get Vendor Product
+      builder.addCase(getDashboardProduct.pending, (state) => {
+        state.loading = true;
+      }),
+      builder.addCase(getDashboardProduct.rejected, (state) => {
+        state.loading = false;
+        state.error = "An error occured";
+      }),
+      builder.addCase(
+        getDashboardProduct.fulfilled,
+        (state, action: PayloadAction<any>) => {
+          state.loading = false;
+          state.dashboardProduct = action.payload;
+        }
+      ),
+      // Remove Product
+  
+      builder.addCase(
+        removeProductFromDB.fulfilled,
+        (state) => {
+ 
+          state.delete_image_success = "Product deleted successfully";
         }
       ),
       //Get Single Product

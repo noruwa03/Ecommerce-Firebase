@@ -130,7 +130,7 @@ const ProductDetail = () => {
                         alt=""
                         width={50}
                         height={50}
-                        className="lg:w-[7rem] w-[5rem] aspect-[4/3] lg:mr-6 mr-3 lg:mb-6 mb-3 border-2 border-white hover:border-red-400 cursor-pointer"
+                        className="lg:w-[7rem] w-[5rem] aspect-[4/4] lg:mr-6 mr-3 lg:mb-6 mb-3 border-2 border-white hover:border-red-400 cursor-pointer"
                         onClick={() => goToImage(index)}
                       />
                     </Fragment>
@@ -145,7 +145,9 @@ const ProductDetail = () => {
             </h1>
             <hr className="my-4" />
             <p className="font-quicksand text-base text-slate-900">
-              {state.singleProduct[0].description}
+              
+              {state.singleProduct[0].description.substring(0, 150)}
+              {state.singleProduct[0].description.length >= 150 && "..."}
             </p>
             <p className="font-quicksand lg:text-2xl text-base font-semibold text-slate-900 mt-4">
               # {state.singleProduct[0].price}

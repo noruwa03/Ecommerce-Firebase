@@ -1,6 +1,6 @@
 import Shoe from "@/assets/images/shoe0.jpg";
 import { NextPageWithLayout } from "../../_app";
-
+import Link from "next/link";
 import Image from "next/image";
 import SignInFlow from "@/assets/icons/signin.svg";
 import { useRouter } from "next/router";
@@ -9,7 +9,8 @@ import ScreenLoader from "@/components/loader/ScreenLoader";
 import ScreenError from "@/components/modal/ScreenError";
 import Error from "@/components/modal/Error";
 import Success from "@/components/modal/Success";
-import { closeModal } from "@/store/features/vendor";
+import DeleteImageSuccess from "@/components/modal/DeleteImageSuccess";
+import { closeModal, deleteProductImage } from "@/store/features/vendor";
 import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
 import {
   useEffect,
@@ -117,7 +118,12 @@ const Edit: NextPageWithLayout = () => {
   };
 
   const delImage = (payload: any) => {
-    console.log(payload);
+    const delInfo = {
+      id: query.slug,
+      delRef: payload,
+      multipleURL: state.singleProduct[0].multipleURL,
+    };
+    dispatch(deleteProductImage(delInfo));
   };
 
   if (state.singleProduct.length === 0) {
@@ -137,7 +143,18 @@ const Edit: NextPageWithLayout = () => {
       {state.loading ? <Loading /> : null}
       {state.error ? <Error message={state.error} close={close} /> : null}
       {state.success ? <Success message={state.success} close={close} /> : null}
+      {state.delete_image_success ? (
+        <DeleteImageSuccess message={state.delete_image_success} />
+      ) : null}
       <section className="pt-14 pb-20 lg:px-16 sm:px-8 px-6">
+        <div className="grid place-content-end">
+          <Link
+            href="/dashboard"
+            className="font-semibold  text-base text-center px-8 py-2 border-2 border-red-500 text-slate-900 mb-8 rounded-md"
+          >
+            Dashboard
+          </Link>
+        </div>
         <div className="lg:p-8 sm:p-2 rounded-md sm:shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-200">
           <div className="grid place-content-center my-4">
             <div
