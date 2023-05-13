@@ -68,7 +68,6 @@ export const signIn = createAsyncThunk(
         storeBGPhotoURL: currentUser[0].storeBGPhotoURL,
       };
 
-      window.location.replace("/dashboard");
 
       return userObj;
     });

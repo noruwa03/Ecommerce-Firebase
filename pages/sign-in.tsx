@@ -10,6 +10,7 @@ import { UserInput } from "@/models/userInput.type";
 import { Loading } from "@/components/loader/loading";
 import Error from "@/components/modal/Error";
 import { signIn, closeModal } from "@/store/features/auth";
+import { useRouter } from "next/router";
 
 const SignIn: NextPageWithLayout = () => {
   const state = useAppSelector((state) => state.auth);
@@ -26,9 +27,11 @@ const SignIn: NextPageWithLayout = () => {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
+  const router = useRouter()
+
   const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(signIn(input));
+    dispatch(signIn(input)).unwrap().then(() => router.push("/dashboard"));
   };
 
   const close = () => dispatch(closeModal());

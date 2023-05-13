@@ -484,6 +484,7 @@ const vendorSlice = createSlice({
       // Delete Product Image
       builder.addCase(deleteProductImage.pending, (state) => {
         state.loading = true;
+        
       }),
       builder.addCase(deleteProductImage.rejected, (state) => {
         state.loading = false;
