@@ -1,7 +1,6 @@
 import { useEffect, Fragment } from "react";
 import { NextPageWithLayout } from "./_app";
 import type { ReactElement } from "react";
-import Tv from "@/assets/images/tv.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import UnauthorizedUser from "@/components/modal/UnauthorizedUser";

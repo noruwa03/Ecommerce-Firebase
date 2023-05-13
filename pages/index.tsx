@@ -96,10 +96,10 @@ export default function Home() {
                               priority={true}
                               unoptimized={true}
                               loader={() =>
-                                "https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png"
+                                res.photoURL
                               }
                               src={res.photoURL}
-                              alt="Shoe"
+                              alt={res.id}
                               width={50}
                               height={50}
                               className="w-full h-full object-cover transition-all duration-150 scale-110 hover:scale-100"
@@ -125,7 +125,6 @@ export default function Home() {
                             href={`product/${res.id}`}
                             className="underline decoration-wavy decoration-red-300"
                           >
-                     
                             {res.product_name.substring(0, 25)}
                             {res.product_name.length >= 25 && "..."}
                           </Link>

@@ -2,7 +2,6 @@ import {
   createSlice,
   PayloadAction,
   createAsyncThunk,
-  current,
 } from "@reduxjs/toolkit";
 import { Auth } from "@/models/authState.type";
 import { UserInput } from "@/models/userInput.type";
@@ -115,7 +114,6 @@ export const signUp = createAsyncThunk(
           storeBGPhotoURL: "",
         };
 
-        // window.location.replace("/dashboard");
 
         return userObj;
       });
@@ -137,8 +135,6 @@ export const updateUserProfile = createAsyncThunk(
   async (payload: any, api) => {
     const appState = api.getState() as RootState;
 
-    // console.log(appState.auth.user.photoURL);
-    // console.log(appState.auth.user.displayName);
     if (auth.currentUser) {
       if (payload.imageFile) {
         if (appState.auth.user.photoURL.length === 0) {
@@ -169,7 +165,7 @@ export const updateUserProfile = createAsyncThunk(
 
           return updateResult;
         } else {
-          // Using photoName to delete from collection but unfortunately we do not have photoName in user data
+    
 
           const storageRef = ref(
             storage,
@@ -238,8 +234,7 @@ export const updateStoreDetail = createAsyncThunk(
   async (payload: any, api) => {
     const appState = api.getState() as RootState;
 
-    // console.log(appState.auth.user.photoURL);
-    // console.log(appState.auth.user.displayName);
+    
     if (auth.currentUser) {
   
       if (payload.imageFile) {
@@ -273,7 +268,7 @@ export const updateStoreDetail = createAsyncThunk(
 
           return updateResult;
         } else {
-          // Using photoName to delete from collection but unfortunately we do not have photoName in user data
+         
 
           const storageRef = ref(
             storage,

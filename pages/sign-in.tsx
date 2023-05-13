@@ -8,7 +8,7 @@ import SignInFlow from "@/assets/icons/signin.svg";
 import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
 import { UserInput } from "@/models/userInput.type";
 import { Loading } from "@/components/loader/loading";
-import  Error  from "@/components/modal/Error";
+import Error from "@/components/modal/Error";
 import { signIn, closeModal } from "@/store/features/auth";
 
 const SignIn: NextPageWithLayout = () => {
@@ -47,9 +47,11 @@ const SignIn: NextPageWithLayout = () => {
                 </h1>
                 <div className="w-full px-4 py-3 shadow-sm shadow-gray-200 bg-white rounded-lg flex flex-row items-center text-slate-700 space-x-6 font-semibold text-sm cursor-pointer hover:bg-gray-50">
                   <Image
+                    priority={true}
+                    unoptimized={true}
+                    loader={() => Google}
                     src={Google}
                     alt="Google"
-                    priority={true}
                     className="w-4 h-4"
                   />
                   <p>Signin with Google</p>

@@ -23,7 +23,7 @@ const TheNavBar = () => {
           href="/"
           className="lg:col-span-2 flex items-center lg:relative lg:top-0 lg:left-0 fixed top-4 left-4 z-50"
         >
-          <Image src={Logo} alt="" className="lg:w-11 lg:h-11 w-7 h-7" />{" "}
+          <Image src={Logo} alt="Logo" className="lg:w-11 lg:h-11 w-7 h-7" />{" "}
           <span className="text-base text-slate-900 font-semibold font-quicksand ml-2">
             shopper<span className="text-red-300">Cart</span>
           </span>{" "}

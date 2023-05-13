@@ -11,7 +11,7 @@ import {
   getDoc,
   updateDoc,
   where,
-  deleteDoc
+  deleteDoc,
 } from "firebase/firestore";
 
 import {
@@ -19,7 +19,6 @@ import {
   uploadBytesResumable,
   getDownloadURL,
   deleteObject,
-  uploadBytes,
 } from "firebase/storage";
 
 interface IVENDOR {
@@ -39,9 +38,8 @@ const initialState: IVENDOR = {
   error: "",
   product: [],
   singleProduct: [],
-  dashboardProduct: []
+  dashboardProduct: [],
 };
-
 
 export const getDashboardProduct = createAsyncThunk(
   "getDashboardProduct/fetchVendorProduct",
@@ -53,8 +51,6 @@ export const getDashboardProduct = createAsyncThunk(
       productRef,
       where("uid", "==", appState.auth.user.uid)
     );
-
-    
 
     const getVendorProduct = getDocs(productQuery).then((docRes) => {
       if (docRes.empty) {
@@ -73,7 +69,6 @@ export const getDashboardProduct = createAsyncThunk(
   }
 );
 
-
 export const storeProduct = createAsyncThunk(
   "storeProduct/uploadProduct",
   async (payload: any) => {
@@ -89,9 +84,6 @@ export const storeProduct = createAsyncThunk(
     });
 
     if (payload.coverImage) {
-      //   console.log(payload.productInfo);
-      //   console.log(payload.currentUserId);
-
       const updateRef = ref(
         storage,
         `documents/product_cover_image/${payload.coverImage.name}`
@@ -345,8 +337,6 @@ export const updateProduct = createAsyncThunk(
             });
           });
         }
-
-        
       }
     } else {
       if (payload.productImages) {
@@ -397,15 +387,9 @@ export const updateProduct = createAsyncThunk(
 export const deleteProductImage = createAsyncThunk(
   "deleteProductImage/deleteImageFromFirebase",
   async (payload: any) => {
- 
-    // payload.delRef.imageName
-    // payload.delRef.imageURL
-    // payload.multipleURL
-
     const newImagePath = payload.multipleURL.filter(
       (res: any) => res.imageName !== payload.delRef.imageName
     );
-
 
     const storageRef = ref(
       storage,
@@ -425,46 +409,43 @@ export const deleteProductImage = createAsyncThunk(
   }
 );
 
-
-export const removeProductFromDB = createAsyncThunk("removeProductFromDB/removeProduct", async (payload: any) => {
- 
-
-  if (payload.coverImageName) {
-     const storageRef = ref(
-       storage,
-       `documents/product_cover_image/${payload.coverImageName}`
-     );
-
-     deleteObject(storageRef)
-
-     await payload.multipleURL.map(async (img: any) => {
-       const storageRef = ref(
-         storage,
-         `documents/product_image/${img.imageName}`
-       );
-
-        deleteObject(storageRef)
-     });
-    
-     const docRef = doc(firestore, "product", payload.id);
-     await deleteDoc(docRef);
-
-  } else {
-
-    await payload.multipleURL.map(async (img: any) => {
+export const removeProductFromDB = createAsyncThunk(
+  "removeProductFromDB/removeProduct",
+  async (payload: any) => {
+    if (payload.coverImageName) {
       const storageRef = ref(
         storage,
-        `documents/product_image/${img.imageName}`
+        `documents/product_cover_image/${payload.coverImageName}`
       );
 
       deleteObject(storageRef);
-    });
 
-    const docRef = doc(firestore, "product", payload.id);
-    await deleteDoc(docRef);
+      await payload.multipleURL.map(async (img: any) => {
+        const storageRef = ref(
+          storage,
+          `documents/product_image/${img.imageName}`
+        );
+
+        deleteObject(storageRef);
+      });
+
+      const docRef = doc(firestore, "product", payload.id);
+      await deleteDoc(docRef);
+    } else {
+      await payload.multipleURL.map(async (img: any) => {
+        const storageRef = ref(
+          storage,
+          `documents/product_image/${img.imageName}`
+        );
+
+        deleteObject(storageRef);
+      });
+
+      const docRef = doc(firestore, "product", payload.id);
+      await deleteDoc(docRef);
+    }
   }
-})
-
+);
 
 const vendorSlice = createSlice({
   name: "vendor",
@@ -543,27 +524,15 @@ const vendorSlice = createSlice({
         }
       ),
       // Remove Product
-  
-      builder.addCase(
-        removeProductFromDB.fulfilled,
-        (state) => {
- 
-          state.delete_image_success = "Product deleted successfully";
-        }
-      ),
+
+      builder.addCase(removeProductFromDB.fulfilled, (state) => {
+        state.delete_image_success = "Product deleted successfully";
+      }),
       //Get Single Product
-      // builder.addCase(getSingleProduct.pending, (state) => {
-      //   state.loading = true;
-      // }),
-      // builder.addCase(getSingleProduct.rejected, (state) => {
-      //   state.loading = false;
-      //   state.error = "An error occured";
-      // }),
+
       builder.addCase(
         getSingleProduct.fulfilled,
         (state, action: PayloadAction<any>) => {
-          // state.loading = false;
-          // state.error = ""
           state.singleProduct = action.payload;
         }
       );

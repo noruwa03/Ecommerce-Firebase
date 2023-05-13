@@ -45,16 +45,18 @@ const SignUp: NextPageWithLayout = () => {
     <>
       {state.loading ? <Loading /> : null}
       {state.error ? <Error message={state.error} close={close} /> : null}
-      {state.emailVerification ? <EmailVerification/> : null}
+      {state.emailVerification ? <EmailVerification /> : null}
       <section className="lg:px-0 sm:px-8 px-6">
         <div className="grid lg:grid-cols-8 grid-cols-4">
           <div className="lg:col-span-4 lg:block hidden">
             {state.loading}
             <div className="w-full h-screen">
               <Image
+                priority={true}
+                unoptimized={true}
+                loader={() => signupFlow}
                 src={signupFlow}
                 alt="Signup Flow"
-                priority={true}
                 className="w-full h-full"
               />
             </div>
