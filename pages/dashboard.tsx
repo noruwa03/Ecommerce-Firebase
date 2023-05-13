@@ -10,7 +10,11 @@ import { Loading } from "@/components/loader/loading";
 import DeleteImageSuccess from "@/components/modal/DeleteImageSuccess";
 import Error from "@/components/modal/Error";
 
-import { getDashboardProduct, removeProductFromDB, closeModal } from "@/store/features/vendor";
+import {
+  getDashboardProduct,
+  removeProductFromDB,
+  closeModal,
+} from "@/store/features/vendor";
 
 const Dashboard: NextPageWithLayout = () => {
   const state = useAppSelector((state) => state.auth);
@@ -23,12 +27,9 @@ const Dashboard: NextPageWithLayout = () => {
     dispatch(getDashboardProduct());
   }, [state, dispatch]);
 
-
   const removeProduct = (payload: any) => {
-    dispatch(removeProductFromDB((payload)));
-  }
-
-
+    dispatch(removeProductFromDB(payload));
+  };
 
   if (!state.user) {
     return (
@@ -136,22 +137,32 @@ const Dashboard: NextPageWithLayout = () => {
               />
             )}
           </div>
-          <div className="sm:px-10 px-6 mt-14">
+          <div className="sm:px-10 px-6 mt-16">
             <h1 className="font-quicksand text-base text-slate-800 font-semibold">
               {state.user.storeName ? state.user.storeName : state.user.email}
             </h1>
+            <div className="mt-4">
+              <Link
+                href="/store-profile"
+                className="font-quicksand text-base text-slate-700 font-semibold underline decoration-wavy flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="currentColor"
+                  className="bi bi-shop mr-3"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
+                </svg>
+                My shop
+              </Link>
+            </div>
             <div className="mt-2 lg:w-3/5 w-5/5">
               <h2 className="font-quicksand text-[0.87em] text-slate-600">
                 {state.user.storeInfo ? state.user.storeInfo : ""}
               </h2>
-            </div>
-            <div className="mt-2">
-              <Link
-                href="/store-profile"
-                className="font-quicksand text-base text-slate-700 font-medium underline decoration-wavy"
-              >
-                Store Profile
-              </Link>
             </div>
           </div>
         </div>
@@ -244,7 +255,7 @@ const Dashboard: NextPageWithLayout = () => {
                               {res.product_name.substring(0, 15)}
                               {res.product_name.length >= 15 && "..."}
                             </h3>
-                            <p>#{res.price}</p>
+                            <p>₦ {res.price}</p>
                           </div>
                         </div>
                       </div>

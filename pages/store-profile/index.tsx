@@ -87,14 +87,14 @@ const StoreProfile: NextPageWithLayout = () => {
         <div className="grid place-content-end">
           <Link
             href="/dashboard"
-            className="font-semibold  text-base text-center px-8 py-3 bg-green-400 text-white mb-8 rounded-md"
+            className="font-semibold font-quicksand  text-base text-center px-8 py-3 bg-red-400 text-white mb-8 rounded-md"
           >
             Dashboard
           </Link>
         </div>
         <form onSubmit={submitHandler}>
           <div className="lg:w-2/5 lg:mx-auto sm:w-3/5 sm:mx-auto w-5/5">
-            <h1 className="text-slate-700 font-bold lg:text-3xl text-2xl lg:text-start text-center lg:mb-8 mb-16">
+            <h1 className="font-quicksand text-slate-700 font-bold lg:text-3xl text-2xl lg:text-start text-center lg:mb-8 mb-16">
               Store Information
             </h1>
             <div className="grid place-content-center mb-12">
@@ -159,7 +159,10 @@ const StoreProfile: NextPageWithLayout = () => {
               onChange={imageChange}
             />
 
-            <label htmlFor="" className="text-slate-700 text-sm">
+            <label
+              htmlFor=""
+              className="font-quicksand font-bold text-slate-700 text-sm"
+            >
               Store Name
             </label>
             <input
@@ -171,7 +174,10 @@ const StoreProfile: NextPageWithLayout = () => {
               onChange={detailHandler}
             />
 
-            <label htmlFor="" className="text-slate-700 text-sm">
+            <label
+              htmlFor=""
+              className="font-quicksand font-bold text-slate-700 text-sm"
+            >
               More Info
             </label>
             <textarea
@@ -182,7 +188,7 @@ const StoreProfile: NextPageWithLayout = () => {
               onChange={detailHandler}
             />
 
-            <button className="w-full bg-red-400 py-2 outline-none text-white text-sm font-bold my-6 rounded-lg">
+            <button className="font-quicksand w-full bg-red-400 py-2 outline-none text-white text-sm font-bold my-6 rounded-lg">
               Update
             </button>
           </div>

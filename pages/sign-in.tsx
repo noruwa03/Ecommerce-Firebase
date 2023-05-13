@@ -54,7 +54,7 @@ const SignIn: NextPageWithLayout = () => {
                     alt="Google"
                     className="w-4 h-4"
                   />
-                  <p>Signin with Google</p>
+                  <p className="font-quicksand">Signin with Google</p>
                 </div>
                 <div className="uppercase lg:text-sm text-xs font-bold text-slate-500 font-serif text-center my-10">
                   Or Login with Email
@@ -62,7 +62,7 @@ const SignIn: NextPageWithLayout = () => {
 
                 <input
                   type="email"
-                  className="outline-none border-[1px] border-gray-100 focus:border-red-400 px-4 py-2 rounded-lg w-full mb-4 placeholder:text-slate-500 placeholder:font-serif placeholder:font-normal placeholder:text-sm lg:text-base text-sm text-slate-700"
+                  className="outline-none border-[1px] border-gray-100 focus:border-red-400 px-4 py-3 rounded-lg w-full mb-4 placeholder:text-slate-500 placeholder:font-serif placeholder:font-normal placeholder:text-sm lg:text-base text-sm text-slate-700"
                   placeholder="name@gmail.com"
                   name="email"
                   value={input.email}
@@ -70,13 +70,13 @@ const SignIn: NextPageWithLayout = () => {
                 />
                 <input
                   type="password"
-                  className="outline-none border-[1px] border-gray-100 focus:border-red-400 px-4 py-2 rounded-lg w-full mb-4 placeholder:text-slate-500 placeholder:font-serif placeholder:font-normal placeholder:text-sm lg:text-base text-sm text-slate-700"
+                  className="outline-none border-[1px] border-gray-100 focus:border-red-400 px-4 py-3 rounded-lg w-full mb-4 placeholder:text-slate-500 placeholder:font-serif placeholder:font-normal placeholder:text-sm lg:text-base text-sm text-slate-700"
                   placeholder="********"
                   name="password"
                   value={input.password}
                   onChange={onChangeHandler}
                 />
-                <button className="w-full bg-red-400 py-2 outline-none text-white text-sm font-serif font-bold my-6 rounded-lg">
+                <button className="w-full bg-red-400 py-3 outline-none text-white text-sm font-serif font-bold my-6 rounded-lg">
                   Sign in
                 </button>
               </div>

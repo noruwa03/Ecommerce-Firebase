@@ -11,7 +11,6 @@ import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
 import { Fragment, useEffect } from "react";
 import { getProduct } from "@/store/features/vendor";
 
-
 export default function Home() {
   if (auth.currentUser) {
     console.log(auth.currentUser);
@@ -22,14 +21,9 @@ export default function Home() {
   const state = useAppSelector((state) => state.vendor);
   const dispatch = useAppDispatch();
 
-
-
-
   useEffect(() => {
     dispatch(getProduct());
-  }, [dispatch])
-
-
+  }, [dispatch]);
 
   return (
     <>
@@ -95,9 +89,7 @@ export default function Home() {
                             <Image
                               priority={true}
                               unoptimized={true}
-                              loader={() =>
-                                res.photoURL
-                              }
+                              loader={() => res.photoURL}
                               src={res.photoURL}
                               alt={res.id}
                               width={50}
@@ -134,7 +126,7 @@ export default function Home() {
                             {res.category}
                           </h2>
                           <h3 className="font-quicksand text-[0.87em] text-slate-600 px-6 py-2 bg-gray-50 rounded-lg  font-semibold">
-                            #{res.price}
+                            ₦ {res.price}
                           </h3>
                         </div>
                       </div>
