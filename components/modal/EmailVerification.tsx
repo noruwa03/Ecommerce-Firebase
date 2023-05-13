@@ -12,7 +12,7 @@ const EmailVerification = () => {
           <div className="text-center my-6">
             <Link
               href="/dashboard"
-              className="font-quicksand px-8 py-3 text-base bg-red-400 rounded-md text-white font-medium"
+              className="font-quicksand px-8 py-3 text-base bg-red-400 rounded-md text-white font-semibold"
             >
               Continue
             </Link>

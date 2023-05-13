@@ -12,7 +12,7 @@ const UnauthorizedUser = () => {
           <div className="text-center my-6">
             <Link
               href="/sign-in"
-              className="font-quicksand px-8 py-2 text-sm bg-red-400 rounded-md text-white font-medium"
+              className="font-quicksand px-8 py-2 text-sm bg-red-400 rounded-md text-white font-semibold"
             >
               Sign In
             </Link>

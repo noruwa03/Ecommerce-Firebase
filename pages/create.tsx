@@ -95,7 +95,7 @@ const Create: NextPageWithLayout = () => {
         <div className="grid place-content-end">
           <Link
             href="/dashboard"
-            className="font-semibold  text-base text-center px-8 py-2 border-2 border-red-500 text-slate-900 mb-8 rounded-md"
+            className="font-semibold  text-base text-center px-8 py-3 bg-red-400  text-white mb-8 rounded-md"
           >
             Dashboard
           </Link>

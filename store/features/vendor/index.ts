@@ -223,6 +223,8 @@ export const updateProduct = createAsyncThunk(
               updatedAt: Date.now(),
             });
           }, 3000);
+
+          return "";
         } else {
           const updateRef = ref(
             storage,
@@ -250,6 +252,7 @@ export const updateProduct = createAsyncThunk(
             // multipleURL: imagePath,
             updatedAt: Date.now(),
           });
+          return "";
         }
       } else {
         if (payload.productImages) {
@@ -304,6 +307,7 @@ export const updateProduct = createAsyncThunk(
               updatedAt: Date.now(),
             });
           });
+          return "";
         } else {
           const storageRef = ref(
             storage,
@@ -336,6 +340,7 @@ export const updateProduct = createAsyncThunk(
               updatedAt: Date.now(),
             });
           });
+          return "";
         }
       }
     } else {
@@ -368,6 +373,7 @@ export const updateProduct = createAsyncThunk(
             updatedAt: Date.now(),
           });
         }, 3000);
+        return "";
       } else {
         const docRef = doc(firestore, "product", payload.id);
 
@@ -379,6 +385,7 @@ export const updateProduct = createAsyncThunk(
           description: payload.productInfo.description,
           updatedAt: Date.now(),
         });
+        return "";
       }
     }
   }
@@ -396,7 +403,7 @@ export const deleteProductImage = createAsyncThunk(
       `documents/product_image/${payload.delRef.imageName}`
     );
 
-    deleteObject(storageRef).then(async () => {
+    const del = deleteObject(storageRef).then(async () => {
       // File deleted successfully
 
       const docRef = doc(firestore, "product", payload.id);
@@ -406,6 +413,8 @@ export const deleteProductImage = createAsyncThunk(
         updatedAt: Date.now(),
       });
     });
+
+    return del;
   }
 );
 
@@ -431,6 +440,7 @@ export const removeProductFromDB = createAsyncThunk(
 
       const docRef = doc(firestore, "product", payload.id);
       await deleteDoc(docRef);
+      return "";
     } else {
       await payload.multipleURL.map(async (img: any) => {
         const storageRef = ref(
@@ -443,6 +453,7 @@ export const removeProductFromDB = createAsyncThunk(
 
       const docRef = doc(firestore, "product", payload.id);
       await deleteDoc(docRef);
+      return "";
     }
   }
 );
@@ -484,7 +495,6 @@ const vendorSlice = createSlice({
       // Delete Product Image
       builder.addCase(deleteProductImage.pending, (state) => {
         state.loading = true;
-        
       }),
       builder.addCase(deleteProductImage.rejected, (state) => {
         state.loading = false;
@@ -525,8 +535,15 @@ const vendorSlice = createSlice({
         }
       ),
       // Remove Product
-
+      builder.addCase(removeProductFromDB.pending, (state) => {
+        state.loading = true;
+      }),
+      builder.addCase(removeProductFromDB.rejected, (state) => {
+        state.loading = false;
+        state.error = "An error occured";
+      }),
       builder.addCase(removeProductFromDB.fulfilled, (state) => {
+        state.loading = false;
         state.delete_image_success = "Product deleted successfully";
       }),
       //Get Single Product

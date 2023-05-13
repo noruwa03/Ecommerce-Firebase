@@ -17,7 +17,7 @@ const ScreenError = (props: IERROR) => {
           <div className="text-center my-6">
             <Link
               href="/"
-              className="font-quicksand px-8 py-2 text-sm bg-red-400 rounded-md text-white font-medium"
+              className="font-quicksand px-8 py-2 text-sm bg-red-400 rounded-md text-white font-semibold"
             >
               Go Home
             </Link>

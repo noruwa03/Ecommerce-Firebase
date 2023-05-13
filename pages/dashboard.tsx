@@ -44,8 +44,28 @@ const Dashboard: NextPageWithLayout = () => {
         <DeleteImageSuccess message={vendorProduct.delete_image_success} />
       ) : null}
       <section className="lg:pt-0 pt-0 pb-4 lg:px-0 sm:px-0 px-0">
+        <div className="fixed bottom-6 lg:right-6 right-4">
+          <Link
+            href="create"
+            className=" grid place-content-center py-4 px-4 rounded-full bg-red-400  text-white font-medium  sm:mt-0 mt-2 shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-white"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="20"
+              height="20"
+              fill="currentColor"
+              className="bi bi-plus-lg fill-white stroke-white"
+              viewBox="0 0 16 16"
+            >
+              <path
+                fillRule="evenodd"
+                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+              />
+            </svg>
+          </Link>
+        </div>
         <div className="relative">
-          <div className="w-full sm:h-44 h-36 relative">
+          <div className="w-full sm:h-44 h-28 relative">
             {state.user.storeBGPhotoURL === "" ? (
               <Image
                 priority={true}
@@ -82,15 +102,8 @@ const Dashboard: NextPageWithLayout = () => {
                 Signout
               </div>
             </div>
-            <div className="absolute bottom-8 lg:right-6 right-2">
-              <Link
-                href="create"
-                className="py-2 px-4 bg-red-400 rounded-md text-white font-medium  sm:mt-0 mt-2"
-              >
-                Create
-              </Link>
-            </div>
-            <div className="absolute -bottom-2 left-24 z-20">
+
+            <div className="absolute -bottom-2 sm:left-20 left-16 z-20">
               <Link
                 href="/profile"
                 className="p-2 rounded-full bg-gray-100 border-2 border-red-200 grid place-content-center"
@@ -108,7 +121,7 @@ const Dashboard: NextPageWithLayout = () => {
               </Link>
             </div>
           </div>
-          <div className="absolute sm:top-24 top-20 sm:left-10  left-2 sm:w-32 sm:h-32 w-28 h-28 rounded-full bg-white grid place-content-center shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-200">
+          <div className="absolute sm:top-24 top-16 sm:left-10  left-2 sm:w-32 sm:h-32 w-20 h-20 rounded-full bg-white grid place-content-center shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-200">
             {state.user.photoURL === "" ? (
               <Image
                 priority={true}
@@ -122,7 +135,7 @@ const Dashboard: NextPageWithLayout = () => {
                 alt=""
                 width={50}
                 height={50}
-                className="sm:w-32 sm:h-32 w-28 h-28 rounded-full object-contain"
+                className="sm:w-32 sm:h-32 w-20 h-20 rounded-full object-contain"
               />
             ) : (
               <Image
@@ -133,11 +146,11 @@ const Dashboard: NextPageWithLayout = () => {
                 alt=""
                 width={50}
                 height={50}
-                className="sm:w-32 sm:h-32 w-28 h-28 rounded-full object-cover"
+                className="sm:w-32 sm:h-32 w-20 h-20 rounded-full object-cover"
               />
             )}
           </div>
-          <div className="sm:px-10 px-6 mt-16">
+          <div className="sm:px-10 px-6 sm:mt-16 mt-10">
             <h1 className="font-quicksand text-base text-slate-800 font-semibold">
               {state.user.storeName ? state.user.storeName : state.user.email}
             </h1>
@@ -193,141 +206,145 @@ const Dashboard: NextPageWithLayout = () => {
           </div>
         </>
       ) : (
-        <section className="pt-8 pb-20 lg:px-16 sm:px-8 px-6">
-          <div className="my-8">
-            <div className="grid lg:grid-cols-8 md:grid-cols-10 grid-cols-4 shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white py-6 sm:px-8 px-4 rounded-tl-lg rounded-tr-lg">
-              <div className="font-semibold lg:col-span-2 lg:block md:block block md:col-span-4 col-span-2 font-quicksand text-base text-slate-600">
-                Product
+        <>
+          <section className="pt-8 pb-20 lg:px-16 sm:px-8 px-6">
+            <div className="my-8">
+              <div className="grid lg:grid-cols-8 md:grid-cols-10 grid-cols-4 shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white py-6 sm:px-8 px-4 rounded-tl-lg rounded-tr-lg">
+                <div className="font-semibold lg:col-span-2 lg:block md:block block md:col-span-4 col-span-2 font-quicksand text-base text-slate-600">
+                  Product
+                </div>
+                <div className="font-semibold lg:col-span-1 lg:block  md:hidden hidden font-quicksand text-base text-slate-600">
+                  Sku
+                </div>
+                <div className="font-semibold lg:col-span-1 lg:block  md:block block md:col-span-2 col-span-2 font-quicksand text-base text-slate-600">
+                  Availability
+                </div>
+                <div className="font-semibold lg:col-span-1 lg:block  md:block hidden md:col-span-2 font-quicksand text-base text-slate-600">
+                  Quantity
+                </div>
+                <div className="font-semibold lg:col-span-2 lg:block  md:hidden hidden font-quicksand text-base text-slate-600">
+                  About
+                </div>
+                <div className="font-semibold lg:col-span-1 lg:block  md:block hidden md:col-span-2  font-quicksand text-base text-slate-600">
+                  Action
+                </div>
               </div>
-              <div className="font-semibold lg:col-span-1 lg:block  md:hidden hidden font-quicksand text-base text-slate-600">
-                Sku
-              </div>
-              <div className="font-semibold lg:col-span-1 lg:block  md:block block md:col-span-2 col-span-2 font-quicksand text-base text-slate-600">
-                Availability
-              </div>
-              <div className="font-semibold lg:col-span-1 lg:block  md:block hidden md:col-span-2 font-quicksand text-base text-slate-600">
-                Quantity
-              </div>
-              <div className="font-semibold lg:col-span-2 lg:block  md:hidden hidden font-quicksand text-base text-slate-600">
-                About
-              </div>
-              <div className="font-semibold lg:col-span-1 lg:block  md:block hidden md:col-span-2  font-quicksand text-base text-slate-600">
-                Action
-              </div>
-            </div>
-            <div className="[&>*:nth-child(odd)]:bg-gray-50 [&>*:nth-child(even)]:bg-white">
-              {vendorProduct.dashboardProduct.map((res: any, index: number) => {
-                return (
-                  <Fragment key={index}>
-                    <div className="grid lg:grid-cols-8 md:grid-cols-10 grid-cols-4 items-center shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)]  py-2 sm:px-8 px-4 rounded-sm">
-                      <div className="lg:col-span-2 lg:block md:block block md:col-span-4 col-span-2 font-quicksand text-[0.87em] text-slate-600">
-                        <div className="flex flex-row items-center lg:space-x-4">
-                          {res.photoURL === "" ? (
-                            <Image
-                              priority={true}
-                              unoptimized={true}
-                              loader={() =>
-                                "https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png"
-                              }
-                              src={
-                                "https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png"
-                              }
-                              alt="Cover image"
-                              width={50}
-                              height={50}
-                              className="lg:block hidden"
-                            />
-                          ) : (
-                            <Image
-                              priority={true}
-                              unoptimized={true}
-                              loader={() => `${res.photoURL}`}
-                              src={res.photoURL}
-                              alt="Cover image"
-                              width={50}
-                              height={50}
-                              className="lg:block hidden"
-                            />
-                          )}
+              <div className="[&>*:nth-child(odd)]:bg-gray-50 [&>*:nth-child(even)]:bg-white">
+                {vendorProduct.dashboardProduct.map(
+                  (res: any, index: number) => {
+                    return (
+                      <Fragment key={index}>
+                        <div className="grid lg:grid-cols-8 md:grid-cols-10 grid-cols-4 items-center shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)]  py-2 sm:px-8 px-4 rounded-sm">
+                          <div className="lg:col-span-2 lg:block md:block block md:col-span-4 col-span-2 font-quicksand text-[0.87em] text-slate-600">
+                            <div className="flex flex-row items-center lg:space-x-4">
+                              {res.photoURL === "" ? (
+                                <Image
+                                  priority={true}
+                                  unoptimized={true}
+                                  loader={() =>
+                                    "https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png"
+                                  }
+                                  src={
+                                    "https://www.pngkey.com/png/detail/233-2332677_image-500580-placeholder-transparent.png"
+                                  }
+                                  alt="Cover image"
+                                  width={50}
+                                  height={50}
+                                  className="lg:block hidden"
+                                />
+                              ) : (
+                                <Image
+                                  priority={true}
+                                  unoptimized={true}
+                                  loader={() => `${res.photoURL}`}
+                                  src={res.photoURL}
+                                  alt="Cover image"
+                                  width={50}
+                                  height={50}
+                                  className="lg:block hidden"
+                                />
+                              )}
 
-                          <div className="flex flex-col items-start">
-                            <h3 className="font-semibold">
-                              {res.product_name.substring(0, 15)}
-                              {res.product_name.length >= 15 && "..."}
-                            </h3>
-                            <p>₦ {res.price}</p>
+                              <div className="flex flex-col items-start">
+                                <h3 className="font-semibold">
+                                  {res.product_name.substring(0, 15)}
+                                  {res.product_name.length >= 15 && "..."}
+                                </h3>
+                                <p>₦ {res.price}</p>
+                              </div>
+                            </div>
+                          </div>
+                          <div className="lg:col-span-1 lg:block  md:hidden hidden font-quicksand text-[0.87em] text-slate-600">
+                            GAN-37784
+                          </div>
+                          <div className="lg:col-span-1 lg:block  md:block block md:col-span-2 col-span-2 font-quicksand  text-slate-600">
+                            {res.quantity > 0 ? (
+                              <span className="px-6 py-2 bg-green-100/70 rounded-lg text-xs font-semibold">
+                                In stock
+                              </span>
+                            ) : (
+                              <span className="px-6 py-2 bg-red-100/70 rounded-lg text-xs font-semibold">
+                                Out of stock
+                              </span>
+                            )}
+                          </div>
+                          <div className="lg:col-span-1 lg:block  md:block hidden md:col-span-2 font-quicksand text-[0.87em] text-slate-600">
+                            {res.quantity}
+                          </div>
+                          <div className="lg:col-span-2 lg:block  md:hidden hidden font-quicksand text-[0.87em] text-slate-600">
+                            {res.description.substring(0, 40)}
+                            {res.description.length >= 20 && "..."}
+                          </div>
+                          <div className="lg:col-span-1 lg:block  md:block hidden md:col-span-2  font-quicksand text-[0.87em] text-slate-600">
+                            <div className="flex flex-row items-center space-x-8">
+                              <svg
+                                onClick={() => removeProduct(res)}
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="16"
+                                height="16"
+                                fill="currentColor"
+                                className="bi bi-trash3 cursor-pointer"
+                                viewBox="0 0 16 16"
+                              >
+                                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
+                              </svg>
+                              <Link href={`/edit/${res.id}`}>
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  width="16"
+                                  height="16"
+                                  fill="currentColor"
+                                  className="bi bi-pen"
+                                  viewBox="0 0 16 16"
+                                >
+                                  <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                                </svg>
+                              </Link>
+                            </div>
                           </div>
                         </div>
-                      </div>
-                      <div className="lg:col-span-1 lg:block  md:hidden hidden font-quicksand text-[0.87em] text-slate-600">
-                        GAN-37784
-                      </div>
-                      <div className="lg:col-span-1 lg:block  md:block block md:col-span-2 col-span-2 font-quicksand  text-slate-600">
-                        {res.quantity > 0 ? (
-                          <span className="px-6 py-2 bg-green-100/70 rounded-lg text-xs font-semibold">
-                            In stock
-                          </span>
-                        ) : (
-                          <span className="px-6 py-2 bg-red-100/70 rounded-lg text-xs font-semibold">
-                            Out of stock
-                          </span>
-                        )}
-                      </div>
-                      <div className="lg:col-span-1 lg:block  md:block hidden md:col-span-2 font-quicksand text-[0.87em] text-slate-600">
-                        {res.quantity}
-                      </div>
-                      <div className="lg:col-span-2 lg:block  md:hidden hidden font-quicksand text-[0.87em] text-slate-600">
-                        {res.description.substring(0, 40)}
-                        {res.description.length >= 20 && "..."}
-                      </div>
-                      <div className="lg:col-span-1 lg:block  md:block hidden md:col-span-2  font-quicksand text-[0.87em] text-slate-600">
-                        <div className="flex flex-row items-center space-x-8">
-                          <svg
-                            onClick={() => removeProduct(res)}
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            className="bi bi-trash3 cursor-pointer"
-                            viewBox="0 0 16 16"
-                          >
-                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                          </svg>
-                          <Link href={`/edit/${res.id}`}>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              className="bi bi-pen"
-                              viewBox="0 0 16 16"
-                            >
-                              <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
-                            </svg>
-                          </Link>
-                        </div>
-                      </div>
-                    </div>
-                  </Fragment>
-                );
-              })}
-            </div>
-
-            <div className="flex flex-row items-center justify-between shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white py-6 sm:px-8 px-4 rounded-bl-lg rounded-br-lg">
-              <div className="flex flex-row items-center sm:space-x-6 space-x-4">
-                <div className="sm:px-6 py-2 px-4  cursor-pointer rounded-md font-quicksand  text-[0.87em] text-slate-600 shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white">
-                  Prev
-                </div>
-                <div className="sm:px-6 py-2 px-4  cursor-pointer rounded-md  font-quicksand text-[0.87em] text-slate-600 shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white">
-                  Next
-                </div>
+                      </Fragment>
+                    );
+                  }
+                )}
               </div>
-              <h3 className="font-quicksand sm:text-[0.87em] text-xs text-slate-600 ">
-                Page 1 of 10
-              </h3>
+
+              <div className="flex flex-row items-center justify-between shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white py-6 sm:px-8 px-4 rounded-bl-lg rounded-br-lg">
+                <div className="flex flex-row items-center sm:space-x-6 space-x-4">
+                  <div className="sm:px-6 py-2 px-4  cursor-pointer rounded-md font-quicksand  text-[0.87em] text-slate-600 shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white">
+                    Prev
+                  </div>
+                  <div className="sm:px-6 py-2 px-4  cursor-pointer rounded-md  font-quicksand text-[0.87em] text-slate-600 shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white">
+                    Next
+                  </div>
+                </div>
+                <h3 className="font-quicksand sm:text-[0.87em] text-xs text-slate-600 ">
+                  Page 1 of 10
+                </h3>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
+        </>
       )}
     </>
   );

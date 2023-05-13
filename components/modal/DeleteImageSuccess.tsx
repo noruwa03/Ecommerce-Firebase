@@ -20,7 +20,7 @@ const DeleteImageSuccess = (props: ISUCCESS) => {
           <div className="grid place-content-center my-6">
             <div
               onClick={reloadWindow}
-              className="font-quicksand px-8 py-2 text-sm bg-red-400 rounded-md text-white font-medium cursor-pointer"
+              className="font-quicksand px-8 py-2 text-sm bg-red-400 rounded-md text-white font-semibold cursor-pointer"
             >
               Continue
             </div>
