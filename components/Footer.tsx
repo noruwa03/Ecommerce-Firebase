@@ -19,7 +19,7 @@ const Footer = () => {
           />
         </div>
         <div className="lg:col-span-3 sm:col-span-3 col-span-2">
-          <h2 className="uppercase font-quicksand text-slate-800 font-bold text-sm mb-5">
+          <h2 className="font-quicksand text-slate-500 uppercase font-semibold mb-5">
             About
           </h2>
 
@@ -31,7 +31,7 @@ const Footer = () => {
           </Link>
         </div>
         <div className="lg:col-span-3 sm:col-span-3 col-span-2">
-          <h2 className="uppercase font-quicksand text-slate-800 font-bold  text-sm mb-5">
+          <h2 className="font-quicksand text-slate-500 uppercase font-semibold mb-5">
             Services
           </h2>
 
@@ -55,7 +55,7 @@ const Footer = () => {
           </Link>
         </div>
         <div className="lg:col-span-3 sm:col-span-3 col-span-2">
-          <h2 className="uppercase font-quicksand text-slate-800 font-bold text-sm mb-5">
+          <h2 className="font-quicksand text-slate-500 uppercase font-semibold mb-5">
             Management
           </h2>
           <Link

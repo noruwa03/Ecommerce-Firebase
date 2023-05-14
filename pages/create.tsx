@@ -91,7 +91,7 @@ const Create: NextPageWithLayout = () => {
       {state.loading ? <Loading /> : null}
       {state.error ? <Error message={state.error} close={close} /> : null}
       {state.success ? <Success message={state.success} close={close} /> : null}
-      <section className="pt-14 pb-20 lg:px-16 sm:px-8 px-6">
+      <section className="pt-6 pb-20 lg:px-16 sm:px-8 px-6">
         <div className="grid place-content-end">
           <Link
             href="/dashboard"
@@ -100,7 +100,7 @@ const Create: NextPageWithLayout = () => {
             Dashboard
           </Link>
         </div>
-        <div className="lg:p-8 sm:p-2 rounded-md sm:shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-200">
+        <div className="lg:p-8 sm:p-2 rounded-md md:shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-200">
           <h1 className="font-quicksand font-semibold lg:text-2xl text-xl">
             Product Info
           </h1>
@@ -169,76 +169,100 @@ const Create: NextPageWithLayout = () => {
               />
 
               <div className="lg:col-span-2 md:col-span-2 col-span-4">
-                <h2 className="font-quicksand mb-2">Images</h2>
+                <label className="font-quicksand" htmlFor="images">
+                  Images
+                </label>
+
                 <input
+                  id="images"
                   type="file"
                   multiple
                   onChange={multipleImage}
                   required
-                  className="px-0 py-0 w-full outline-none border-[1px] border-slate-100 rounded-md text-red-500"
+                  className="px-0 py-0 w-full outline-none border-[1px] border-slate-100 rounded-md text-red-500 mt-2"
                 />
               </div>
               <div className="lg:col-span-2 md:col-span-2 col-span-4">
-                <h2 className="font-quicksand mb-2">Product Name</h2>
+                <label className="font-quicksand" htmlFor="product_name">
+                  Product Name
+                </label>
+
                 <input
+                  id="product_name"
                   type="text"
                   name="product_name"
                   value={productDetail.product_name}
                   onChange={onChangeHandler}
                   required
-                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700"
+                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700 mt-2"
                 />
               </div>
 
               <div className="lg:col-span-2 md:col-span-2 col-span-4">
-                <h2 className="font-quicksand mb-2">Price</h2>
+                <label className="font-quicksand" htmlFor="price">
+                  Price
+                </label>
+
                 <input
+                  id="price"
                   type="number"
                   name="price"
                   value={productDetail.price}
                   onChange={onChangeHandler}
                   required
-                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700"
+                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700 mt-2"
                 />
               </div>
 
               <div className="lg:col-span-2 md:col-span-2 col-span-4">
-                <h2 className="font-quicksand mb-2">Quantity</h2>
+                <label className="font-quicksand" htmlFor="quantity">
+                  Quantity
+                </label>
+
                 <input
+                  id="quantity"
                   type="number"
                   name="quantity"
                   value={productDetail.quantity}
                   onChange={onChangeHandler}
                   required
-                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700"
+                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700 mt-2"
                 />
               </div>
 
               <div className="lg:col-span-2 md:col-span-2 col-span-4">
-                <h2 className="font-quicksand mb-2">Category</h2>
+                <label className="font-quicksand" htmlFor="category">
+                  Category
+                </label>
+
                 <input
+                  id="category"
                   type="text"
                   name="category"
                   value={productDetail.category}
                   onChange={onChangeHandler}
                   required
-                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700"
+                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700 mt-2"
                 />
               </div>
 
               <div className="col-span-4">
-                <h2 className="font-quicksand mb-2">Description</h2>
+                <label className="font-quicksand" htmlFor="description">
+                  Description
+                </label>
+
+             
                 <textarea
-                  id=""
+                  id="description"
                   name="description"
                   value={productDetail.description}
                   onChange={onChangeHandler}
                   required
-                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full h-[10rem] text-base text-slate-700 resize-none"
+                  className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full h-[10rem] text-base text-slate-700 resize-none mt-2"
                 />
               </div>
             </div>
-            <button className="px-6 py-2 font- font-semibold text-white bg-red-400 rounded-md my-8">
+            <button className="w-full py-2 font-semibold text-white bg-red-400 rounded-md my-8">
               Submit
             </button>
           </form>

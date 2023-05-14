@@ -126,7 +126,7 @@ export default function Home() {
                             {res.category}
                           </h2>
                           <h3 className="font-quicksand text-[0.87em] text-slate-600 px-6 py-2 bg-gray-50 rounded-lg  font-semibold">
-                            ₦ {res.price}
+                            ₦ {Intl.NumberFormat('en-US').format(res.price)}
                           </h3>
                         </div>
                       </div>

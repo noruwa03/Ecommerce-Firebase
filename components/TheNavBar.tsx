@@ -33,7 +33,7 @@ const TheNavBar = () => {
           ref={nav_item}
         >
           <ul className="flex lg:flex-row lg:items-center lg:justify-center lg:space-x-16 lg:space-y-0 lg:px-0 px-6 space-y-4 flex-col items-start justify-center h-full">
-            <li>
+            <li onClick={menuHandler}>
               <Link
                 href="/"
                 className={
@@ -45,7 +45,7 @@ const TheNavBar = () => {
                 Shop
               </Link>
             </li>
-            <li>
+            <li onClick={menuHandler}>
               <Link
                 href="/store"
                 className={
@@ -57,7 +57,7 @@ const TheNavBar = () => {
                 Store
               </Link>
             </li>
-            <li>
+            <li onClick={menuHandler}>
               <Link
                 href=""
                 className="font-quicksand font-semibold uppercase text-slate-400 text-sm hover:text-slate-500 hover:underline hover:decoration-2 hover:decoration-wavy hover:decoration-red-300"

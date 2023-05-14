@@ -7,7 +7,7 @@ const Cart = () => {
 
   const [showbillingForm, setBillingForm] = useState<boolean>(false);
 
-  const billingHandler = () => setBillingForm(true);
+  const billingHandler = () : any => setBillingForm(true);
   return (
     <>
       <section className="py-20 lg:px-28 md:px-8 px-6">
@@ -15,7 +15,7 @@ const Cart = () => {
           <h1 className="font-quicksand font-semibold lg:text-3xl text-lg text-slate-800">
             Cart
           </h1>
-          <button className="py-3 px-4 border-2 border-slate-700 rounded-md text-base font-semibold font-quicksand bg-white hover:bg-gray-50 flex items-center space-x-3 ">
+          <button className="py-2 px-2 border-b-2 border-slate-700 rounded-md text-sm font-semibold font-quicksand bg-white hover:bg-gray-50 flex items-center space-x-3 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
@@ -36,10 +36,10 @@ const Cart = () => {
               <Image src={Tv} alt="" width={150} height={150} />
             </div>
             <div className="lg:col-span-4 col-span-2">
-              <h2 className="font-quicksand font-bold sm:texl-2xl text-lg capitalize">
+              <h2 className="font-quicksand font-bold sm:text-xl text-sm capitalize">
                 Lg smart tv
               </h2>
-              <h3 className="font-quicksand font-semibold texl-lg capitalize">
+              <h3 className="font-quicksand font-semibold sm:text-lg text-xs capitalize">
                 #58443
               </h3>
             </div>
@@ -54,13 +54,13 @@ const Cart = () => {
                   viewBox="0 0 16 16"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"
                   />
                 </svg>
               </button>
 
-              <h2 className="font-quicksand texl-lg font-semibold">2</h2>
+              <h2 className="font-quicksand  text-base font-semibold">2</h2>
 
               <button className="p-2 rounded-md shadow-sm shadow-gray-300">
                 <svg
@@ -72,7 +72,7 @@ const Cart = () => {
                   viewBox="0 0 16 16"
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
                   />
                 </svg>
@@ -92,73 +92,14 @@ const Cart = () => {
             </div>
           </div>
 
-          <div className="grid lg:grid-cols-10 grid-cols-4 items-center gap-2 lg:py-0  py-6">
-            <div className="lg:col-span-2 col-span-2">
-              <Image src={Tv} alt="" width={150} height={150} />
-            </div>
-            <div className="lg:col-span-4 col-span-2">
-              <h2 className="font-quicksand font-bold sm:texl-2xl text-lg capitalize">
-                Lg smart tv
-              </h2>
-              <h3 className="font-quicksand font-semibold texl-lg capitalize">
-                #58443
-              </h3>
-            </div>
-            <div className="lg:col-span-2 col-span-2 flex flex-row items-center space-x-8">
-              <button className="p-2 rounded-md shadow-sm shadow-gray-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-dash-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"
-                  />
-                </svg>
-              </button>
-
-              <h2 className="font-quicksand texl-lg font-semibold">2</h2>
-
-              <button className="p-2 rounded-md shadow-sm shadow-gray-300">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-plus-lg"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    fill-rule="evenodd"
-                    d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div className="lg:col-span-2 col-span-2 grid place-content-end">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-trash3"
-                viewBox="0 0 16 16"
-              >
-                <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-              </svg>
-            </div>
-          </div>
+          
         </div>
         <hr />
-        <div className="flex items-center justify-between mt-6">
-          <h3 className="font-quicksand sm:text-2xl text-lg font-semibold mt-5">
+        <div className="flex sm:flex-row items-center flex-col lg:space-y-0 space-y-4 justify-between mt-6">
+          <h3 className="font-quicksand sm:text-2xl text-base font-semibold mt-5">
             Total price: 3321
           </h3>
-          <button className="py-3 px-4 border-2 border-slate-700 rounded-md text-base font-semibold font-quicksand bg-white hover:bg-gray-50 flex items-center space-x-3 ">
+          <button className="py-3 px-4 border-2 border-red-300 rounded-md text-red-300 sm:text-base text-sm font-semibold font-quicksand bg-white hover:bg-gray-50 flex items-center space-x-3 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="20"
@@ -176,7 +117,7 @@ const Cart = () => {
         </div>
 
         <>
-          <div>{showbillingForm === true ? <BillingInfo /> : <></>}</div>
+          <div>{showbillingForm === true ? <BillingInfo /> : null}</div>
         </>
       </section>
     </>

@@ -66,7 +66,7 @@ const Profile: NextPageWithLayout = () => {
       {state.loading ? <Loading /> : null}
       {state.error ? <Error message={state.error} close={close} /> : null}
       {state.success ? <Success message={state.success} close={close} /> : null}
-      <section className="lg:pt-20 pt-10 lg:px-16 sm:px-8 px-6 pb-16">
+      <section className="lg:pt-14 pt-6 lg:px-16 sm:px-8 px-6 pb-16">
         <div className="grid place-content-end">
           <Link
             href="/dashboard"
@@ -142,7 +142,7 @@ const Profile: NextPageWithLayout = () => {
             />
 
             <label
-              htmlFor=""
+              htmlFor="userName"
               className="font-quicksand font-bold text-slate-700 text-sm"
             >
               Name

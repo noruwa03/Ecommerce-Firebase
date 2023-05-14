@@ -2,7 +2,7 @@ import { NextPageWithLayout } from "../_app";
 import type { ChangeEvent, FormEvent, ReactElement } from "react";
 
 import Image from "next/image";
-import Link from "next/link"
+import Link from "next/link";
 
 import { useState, useRef } from "react";
 import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
@@ -13,11 +13,8 @@ import Success from "@/components/modal/Success";
 import { updateStoreDetail, closeModal } from "@/store/features/auth";
 
 const StoreProfile: NextPageWithLayout = () => {
-
- const state = useAppSelector((state) => state.auth);
+  const state = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-
- 
 
   const [storeDetail, setStoreDetail] = useState({
     storeName: state.user
@@ -32,14 +29,14 @@ const StoreProfile: NextPageWithLayout = () => {
       : "",
   });
 
-   const close = () => dispatch(closeModal());
+  const close = () => dispatch(closeModal());
 
-
-  const detailHandler = (evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const detailHandler = (
+    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = evt.target;
     setStoreDetail((prev) => ({ ...prev, [name]: value }));
   };
-  
 
   const [file, setFile] = useState<string | any>();
 
@@ -61,14 +58,14 @@ const StoreProfile: NextPageWithLayout = () => {
     setDisplayImage(URL.createObjectURL(evt.target.files[0]));
   };
 
-   const submitHandler = (evt: FormEvent<HTMLFormElement>): void => {
-     evt.preventDefault();
-     const formData = {
-       store: storeDetail,
-       imageFile: file,
-     };
-     dispatch(updateStoreDetail(formData));
-   };
+  const submitHandler = (evt: FormEvent<HTMLFormElement>): void => {
+    evt.preventDefault();
+    const formData = {
+      store: storeDetail,
+      imageFile: file,
+    };
+    dispatch(updateStoreDetail(formData));
+  };
 
   if (!state.user) {
     return (
@@ -83,7 +80,7 @@ const StoreProfile: NextPageWithLayout = () => {
       {state.loading ? <Loading /> : null}
       {state.error ? <Error message={state.error} close={close} /> : null}
       {state.success ? <Success message={state.success} close={close} /> : null}
-      <section className="lg:pt-6 pt-10 lg:px-16 sm:px-8 px-6 pb-16">
+      <section className="lg:pt-14 pt-6  lg:px-16 sm:px-8 px-6 pb-16">
         <div className="grid place-content-end">
           <Link
             href="/dashboard"
@@ -160,12 +157,13 @@ const StoreProfile: NextPageWithLayout = () => {
             />
 
             <label
-              htmlFor=""
+              htmlFor="store_name"
               className="font-quicksand font-bold text-slate-700 text-sm"
             >
               Store Name
             </label>
             <input
+              id="store_name"
               type="text"
               className="outline-none border-[1px] border-gray-100 focus:border-red-400 px-4 py-2 rounded-lg w-full mb-4 mt-2 placeholder:text-slate-500 placeholder:font-serif placeholder:font-normal placeholder:text-sm text-base text-slate-700"
               placeholder=""
@@ -175,13 +173,13 @@ const StoreProfile: NextPageWithLayout = () => {
             />
 
             <label
-              htmlFor=""
+              htmlFor="more_info"
               className="font-quicksand font-bold text-slate-700 text-sm"
             >
               More Info
             </label>
             <textarea
-              id=""
+              id="more_info"
               className="resize-none h-24 outline-none border-[1px] border-gray-100 focus:border-red-400 px-4 py-2 rounded-lg w-full mb-4 mt-2 placeholder:text-slate-500 placeholder:font-serif placeholder:font-normal placeholder:text-sm text-base text-slate-700"
               name="storeInfo"
               value={storeDetail.storeInfo}

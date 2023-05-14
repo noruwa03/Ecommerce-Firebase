@@ -191,7 +191,9 @@ export const updateProduct = createAsyncThunk(
             imagePath.push({ imageName: img.name, imageURL: imageURL });
           });
 
-          setTimeout(async () => {
+          return new Promise(function (resolve) {
+            setTimeout(resolve, 3000);
+          }).then(async () => {
             const newImagePath = [...oldArr, ...imagePath];
 
             const updateRef = ref(
@@ -208,7 +210,7 @@ export const updateProduct = createAsyncThunk(
 
             const docRef = doc(firestore, "product", payload.id);
 
-            await updateDoc(docRef, {
+            const result = await updateDoc(docRef, {
               product_name: payload.productInfo.product_name,
               price: payload.productInfo.price,
               quantity: payload.productInfo.quantity,
@@ -222,9 +224,9 @@ export const updateProduct = createAsyncThunk(
 
               updatedAt: Date.now(),
             });
-          }, 3000);
 
-          return "";
+            return result;
+          });
         } else {
           const updateRef = ref(
             storage,
@@ -240,7 +242,7 @@ export const updateProduct = createAsyncThunk(
 
           const docRef = doc(firestore, "product", payload.id);
 
-          await updateDoc(docRef, {
+          const result = await updateDoc(docRef, {
             product_name: payload.productInfo.product_name,
             price: payload.productInfo.price,
             quantity: payload.productInfo.quantity,
@@ -252,7 +254,8 @@ export const updateProduct = createAsyncThunk(
             // multipleURL: imagePath,
             updatedAt: Date.now(),
           });
-          return "";
+
+          return result;
         }
       } else {
         if (payload.productImages) {
@@ -277,7 +280,7 @@ export const updateProduct = createAsyncThunk(
             `documents/product_cover_image/${payload.oldCoverImageName}`
           );
 
-          deleteObject(storageRef).then(async () => {
+          const result = deleteObject(storageRef).then(async () => {
             const updateRef = ref(
               storage,
               `documents/product_cover_image/${payload.newCoverImageFile.name}`
@@ -294,7 +297,7 @@ export const updateProduct = createAsyncThunk(
 
             const newImagePath = [...oldArr, ...imagePath];
 
-            await updateDoc(docRef, {
+            const result = await updateDoc(docRef, {
               product_name: payload.productInfo.product_name,
               price: payload.productInfo.price,
               quantity: payload.productInfo.quantity,
@@ -306,15 +309,18 @@ export const updateProduct = createAsyncThunk(
               multipleURL: newImagePath,
               updatedAt: Date.now(),
             });
+
+            return result;
           });
-          return "";
+
+          return result;
         } else {
           const storageRef = ref(
             storage,
             `documents/product_cover_image/${payload.oldCoverImageName}`
           );
 
-          deleteObject(storageRef).then(async () => {
+          const result = deleteObject(storageRef).then(async () => {
             const updateRef = ref(
               storage,
               `documents/product_cover_image/${payload.newCoverImageFile.name}`
@@ -329,7 +335,7 @@ export const updateProduct = createAsyncThunk(
 
             const docRef = doc(firestore, "product", payload.id);
 
-            await updateDoc(docRef, {
+            const result = await updateDoc(docRef, {
               product_name: payload.productInfo.product_name,
               price: payload.productInfo.price,
               quantity: payload.productInfo.quantity,
@@ -339,11 +345,15 @@ export const updateProduct = createAsyncThunk(
               photoURL: imageURL,
               updatedAt: Date.now(),
             });
+
+            return result;
           });
-          return "";
+
+          return result;
         }
       }
     } else {
+      // Return something for pending
       if (payload.productImages) {
         const imagePath: any = [];
 
@@ -358,12 +368,14 @@ export const updateProduct = createAsyncThunk(
           imagePath.push({ imageName: img.name, imageURL: imageURL });
         });
 
-        setTimeout(async () => {
+        return new Promise(function (resolve) {
+          setTimeout(resolve, 3000);
+        }).then(() => {
           const newImagePath = [...oldArr, ...imagePath];
 
           const docRef = doc(firestore, "product", payload.id);
 
-          await updateDoc(docRef, {
+          const result = updateDoc(docRef, {
             product_name: payload.productInfo.product_name,
             price: payload.productInfo.price,
             quantity: payload.productInfo.quantity,
@@ -372,12 +384,33 @@ export const updateProduct = createAsyncThunk(
             multipleURL: newImagePath,
             updatedAt: Date.now(),
           });
-        }, 3000);
-        return "";
+
+          return result;
+        });
+
+        // setTimeout(() => {
+        //   const newImagePath = [...oldArr, ...imagePath];
+
+        //   const docRef = doc(firestore, "product", payload.id);
+
+        //   const result = updateDoc(docRef, {
+        //     product_name: payload.productInfo.product_name,
+        //     price: payload.productInfo.price,
+        //     quantity: payload.productInfo.quantity,
+        //     category: payload.productInfo.category,
+        //     description: payload.productInfo.description,
+        //     multipleURL: newImagePath,
+        //     updatedAt: Date.now(),
+        //   });
+
+        //   return result;
+        // }, 3000);
+
+        // return "";
       } else {
         const docRef = doc(firestore, "product", payload.id);
 
-        await updateDoc(docRef, {
+        const result = await updateDoc(docRef, {
           product_name: payload.productInfo.product_name,
           price: payload.productInfo.price,
           quantity: payload.productInfo.quantity,
@@ -385,7 +418,8 @@ export const updateProduct = createAsyncThunk(
           description: payload.productInfo.description,
           updatedAt: Date.now(),
         });
-        return "";
+
+        return result;
       }
     }
   }

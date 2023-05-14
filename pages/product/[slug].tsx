@@ -106,12 +106,12 @@ const ProductDetail = () => {
                   `${state.singleProduct[0].multipleURL[currentIndex].imageURL}`
                 }
                 src={state.singleProduct[0].multipleURL[currentIndex].imageURL}
-                alt="Shoe"
+                alt={state.singleProduct[0].multipleURL[currentIndex].imageName}
                 width={50}
                 height={50}
                 className="w-full"
               />
-              <div className="flex flex-row flex-wrap items-center  mt-5">
+              <div className="flex flex-row flex-wrap items-center bg-red-400 mt-5 flex snap-x snap-mandatory w-full mx:auto overflow-scroll">
                 {state.singleProduct[0].multipleURL.map(
                   (res: any, index: number) => {
                     return (
@@ -121,7 +121,7 @@ const ProductDetail = () => {
                           unoptimized={true}
                           loader={() => `${res.imageURL}`}
                           src={res.imageURL}
-                          alt=""
+                          alt={res.imageName}
                           width={50}
                           height={50}
                           className="lg:w-[7rem] w-[5rem] aspect-[4/4] lg:mr-6 mr-3 lg:mb-6 mb-3 border-2 border-white hover:border-red-400 cursor-pointer"
@@ -143,7 +143,10 @@ const ProductDetail = () => {
                 {state.singleProduct[0].description.length >= 150 && "..."}
               </p>
               <p className="font-quicksand lg:text-2xl text-base font-semibold text-slate-900 mt-4">
-                ₦ {state.singleProduct[0].price}
+                ₦{" "}
+                {Intl.NumberFormat("en-US").format(
+                  state.singleProduct[0].price
+                )}
               </p>
               <p className="font-quicksand text-base text-slate-900 mt-4">
                 Availability:{" "}

@@ -10,6 +10,7 @@ import { Loading } from "@/components/loader/loading";
 import DeleteImageSuccess from "@/components/modal/DeleteImageSuccess";
 import Error from "@/components/modal/Error";
 
+
 import {
   getDashboardProduct,
   removeProductFromDB,
@@ -31,6 +32,11 @@ const Dashboard: NextPageWithLayout = () => {
     dispatch(removeProductFromDB(payload));
   };
 
+
+  const signOutUser = () => {
+    dispatch(signOutCurrentUser)
+  }
+
   if (!state.user) {
     return (
       <>
@@ -44,7 +50,7 @@ const Dashboard: NextPageWithLayout = () => {
         <DeleteImageSuccess message={vendorProduct.delete_image_success} />
       ) : null}
       <section className="lg:pt-0 pt-0 pb-4 lg:px-0 sm:px-0 px-0">
-        <div className="fixed bottom-6 lg:right-6 right-4">
+        <div className="fixed bottom-6 lg:right-6 right-4 z-10">
           <Link
             href="create"
             className=" grid place-content-center py-4 px-4 rounded-full bg-red-400  text-white font-medium  sm:mt-0 mt-2 shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-white"
@@ -65,7 +71,7 @@ const Dashboard: NextPageWithLayout = () => {
           </Link>
         </div>
         <div className="relative">
-          <div className="w-full sm:h-44 h-28 relative">
+          <div className="w-full sm:h-40 h-28 relative">
             {state.user.storeBGPhotoURL === "" ? (
               <Image
                 priority={true}
@@ -96,22 +102,32 @@ const Dashboard: NextPageWithLayout = () => {
 
             <div className="absolute lg:top-6 top-4 lg:right-6 right-2">
               <div
-                onClick={() => dispatch(signOutCurrentUser)}
-                className="font-semibold  text-base text-center px-5 py-2 bg-red-400 text-white lg:mb-4 mb-8 rounded-md cursor-pointer"
-              >
-                Signout
-              </div>
-            </div>
-
-            <div className="absolute -bottom-2 sm:left-20 left-16 z-20">
-              <Link
-                href="/profile"
-                className="p-2 rounded-full bg-gray-100 border-2 border-red-200 grid place-content-center"
+                onClick={signOutUser}
+                className="grid place-content-center py-2 px-2 cursor-pointer bg-red-400 rounded-full"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
                   height="16"
+                  fill="currentColor"
+                  className="bi bi-power fill-white stroke-white"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M7.5 1v7h1V1h-1z" />
+                  <path d="M3 8.812a4.999 4.999 0 0 1 2.578-4.375l-.485-.874A6 6 0 1 0 11 3.616l-.501.865A5 5 0 1 1 3 8.812z" />
+                </svg>
+              </div>
+            </div>
+
+            <div className="absolute -bottom-4 sm:left-32 left-16 z-20">
+              <Link
+                href="/profile"
+                className="p-2 rounded-full bg-white border-2 border-red-200 grid place-content-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="14"
+                  height="14"
                   fill="currentColor"
                   className="bi bi-pen"
                   viewBox="0 0 16 16"
@@ -121,7 +137,7 @@ const Dashboard: NextPageWithLayout = () => {
               </Link>
             </div>
           </div>
-          <div className="absolute sm:top-24 top-16 sm:left-10  left-2 sm:w-32 sm:h-32 w-20 h-20 rounded-full bg-white grid place-content-center shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-200">
+          <div className="absolute sm:top-24 top-16 sm:left-10  left-2 sm:w-28 sm:h-28 w-20 h-20 rounded-full bg-white grid place-content-center shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-200">
             {state.user.photoURL === "" ? (
               <Image
                 priority={true}
@@ -135,7 +151,7 @@ const Dashboard: NextPageWithLayout = () => {
                 alt=""
                 width={50}
                 height={50}
-                className="sm:w-32 sm:h-32 w-20 h-20 rounded-full object-contain"
+                className="sm:w-28 sm:h-28 w-20 h-20 rounded-full object-contain"
               />
             ) : (
               <Image
@@ -146,36 +162,44 @@ const Dashboard: NextPageWithLayout = () => {
                 alt=""
                 width={50}
                 height={50}
-                className="sm:w-32 sm:h-32 w-20 h-20 rounded-full object-cover"
+                className="sm:w-28 sm:h-28 w-20 h-20 sm:border-4 border-2 border-white rounded-full object-cover"
               />
             )}
           </div>
-          <div className="sm:px-10 px-6 sm:mt-16 mt-10">
-            <h1 className="font-quicksand text-base text-slate-800 font-semibold">
-              {state.user.storeName ? state.user.storeName : state.user.email}
-            </h1>
-            <div className="mt-4">
-              <Link
-                href="/store-profile"
-                className="font-quicksand text-base text-slate-700 font-semibold underline decoration-wavy flex items-center"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  fill="currentColor"
-                  className="bi bi-shop mr-3"
-                  viewBox="0 0 16 16"
+          <div className="sm:px-10 px-4 sm:mt-14 mt-10">
+          
+            <div className="flex lg:flex-row flex-col lg:gap-8 gap-4">
+              <div className="flex lg:flex-col flex-row lg:items-start items-center  justify-between">
+                <Link
+                  href="/store-profile"
+                  className="font-quicksand text-sm text-slate-700 font-semibold underline decoration-wavy flex items-center"
                 >
-                  <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
-                </svg>
-                My shop
-              </Link>
-            </div>
-            <div className="mt-2 lg:w-3/5 w-5/5">
-              <h2 className="font-quicksand text-[0.87em] text-slate-600">
-                {state.user.storeInfo ? state.user.storeInfo : ""}
-              </h2>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="18"
+                    height="18"
+                    fill="currentColor"
+                    className="bi bi-shop mr-3"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M2.97 1.35A1 1 0 0 1 3.73 1h8.54a1 1 0 0 1 .76.35l2.609 3.044A1.5 1.5 0 0 1 16 5.37v.255a2.375 2.375 0 0 1-4.25 1.458A2.371 2.371 0 0 1 9.875 8 2.37 2.37 0 0 1 8 7.083 2.37 2.37 0 0 1 6.125 8a2.37 2.37 0 0 1-1.875-.917A2.375 2.375 0 0 1 0 5.625V5.37a1.5 1.5 0 0 1 .361-.976l2.61-3.045zm1.78 4.275a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0 1.375 1.375 0 1 0 2.75 0V5.37a.5.5 0 0 0-.12-.325L12.27 2H3.73L1.12 5.045A.5.5 0 0 0 1 5.37v.255a1.375 1.375 0 0 0 2.75 0 .5.5 0 0 1 1 0zM1.5 8.5A.5.5 0 0 1 2 9v6h1v-5a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v5h6V9a.5.5 0 0 1 1 0v6h.5a.5.5 0 0 1 0 1H.5a.5.5 0 0 1 0-1H1V9a.5.5 0 0 1 .5-.5zM4 15h3v-5H4v5zm5-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3zm3 0h-2v3h2v-3z" />
+                  </svg>
+                  {state.user.storeName
+                    ? state.user.storeName
+                    : state.user.email}
+                </Link>
+                <Link
+                  href="/"
+                  className="font-quicksand  font-semibold px-6 py-2 border-2 border-red-200 bg-red-100/70 text-slate-800 text-center text-xs rounded-full lg:mt-3 mt-0"
+                >
+                  Home
+                </Link>
+              </div>
+              <div>
+                <h2 className="font-quicksand font-semibold text-[0.87em] text-slate-600">
+                  {state.user.storeInfo ? state.user.storeInfo : ""}
+                </h2>
+              </div>
             </div>
           </div>
         </div>
@@ -207,7 +231,7 @@ const Dashboard: NextPageWithLayout = () => {
         </>
       ) : (
         <>
-          <section className="pt-8 pb-20 lg:px-16 sm:px-8 px-6">
+          <section className="pt-8 pb-20 lg:px-12 sm:px-8 px-4">
             <div className="my-8">
               <div className="grid lg:grid-cols-8 md:grid-cols-10 grid-cols-4 shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white py-6 sm:px-8 px-4 rounded-tl-lg rounded-tr-lg">
                 <div className="font-semibold lg:col-span-2 lg:block md:block block md:col-span-4 col-span-2 font-quicksand text-base text-slate-600">
@@ -270,7 +294,10 @@ const Dashboard: NextPageWithLayout = () => {
                                   {res.product_name.substring(0, 15)}
                                   {res.product_name.length >= 15 && "..."}
                                 </h3>
-                                <p>₦ {res.price}</p>
+                                <p>
+                                  ₦{" "}
+                                  {Intl.NumberFormat("en-US").format(res.price)}
+                                </p>
                               </div>
                             </div>
                           </div>

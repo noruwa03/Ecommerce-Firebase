@@ -1,8 +1,4 @@
-import {
-  createSlice,
-  PayloadAction,
-  createAsyncThunk,
-} from "@reduxjs/toolkit";
+import { createSlice, PayloadAction, createAsyncThunk } from "@reduxjs/toolkit";
 import { Auth } from "@/models/authState.type";
 import { UserInput } from "@/models/userInput.type";
 import { auth, storage, firestore } from "@/lib/firebase";
@@ -68,7 +64,6 @@ export const signIn = createAsyncThunk(
         storeBGPhotoURL: currentUser[0].storeBGPhotoURL,
       };
 
-
       return userObj;
     });
 
@@ -113,7 +108,6 @@ export const signUp = createAsyncThunk(
           storeBGPhotoURL: "",
         };
 
-
         return userObj;
       });
       return result;
@@ -125,6 +119,7 @@ export const signUp = createAsyncThunk(
 
 export const signOutCurrentUser = () => {
   signOut(auth).then(() => {
+    window.location.href = "/";
     persistor.purge();
   });
 };
@@ -164,8 +159,6 @@ export const updateUserProfile = createAsyncThunk(
 
           return updateResult;
         } else {
-    
-
           const storageRef = ref(
             storage,
             `documents/profile_image/${appState.auth.user.photoName}`
@@ -233,9 +226,7 @@ export const updateStoreDetail = createAsyncThunk(
   async (payload: any, api) => {
     const appState = api.getState() as RootState;
 
-    
     if (auth.currentUser) {
-  
       if (payload.imageFile) {
         if (appState.auth.user.storeBGPhotoURL.length === 0) {
           const updateRef = ref(
@@ -267,8 +258,6 @@ export const updateStoreDetail = createAsyncThunk(
 
           return updateResult;
         } else {
-         
-
           const storageRef = ref(
             storage,
             `documents/store_image/${appState.auth.user.storeBGPhotoName}`
@@ -313,7 +302,6 @@ export const updateStoreDetail = createAsyncThunk(
           return delResult;
         }
       } else {
-
         const docRef = doc(firestore, "users", appState.auth.user.uid);
 
         const updateResult = updateDoc(docRef, {
