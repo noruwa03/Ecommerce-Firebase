@@ -93,8 +93,9 @@ export const storeProduct = createAsyncThunk(
       await uploadTask;
       const imageURL = await getDownloadURL(uploadTask.snapshot.ref);
 
-      //Reason for using setTimeout: addDoc function runs without getting the image array, Thus the array would be empty.
-      setTimeout(async () => {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, 8000);
+      }).then(async () => {
         await addDoc(collection(firestore, "product"), {
           product_name: payload.productInfo.product_name,
           price: payload.productInfo.price,
@@ -108,10 +109,13 @@ export const storeProduct = createAsyncThunk(
           createdAt: Date.now(),
           updatedAt: Date.now(),
         });
-      }, 3000);
+
+        return "";
+      });
     } else {
-      //Reason for using setTimeout: addDoc function runs without getting the image array, Thus the array would be empty.
-      setTimeout(async () => {
+      return new Promise(function (resolve) {
+        setTimeout(resolve, 8000);
+      }).then(async () => {
         await addDoc(collection(firestore, "product"), {
           product_name: payload.productInfo.product_name,
           price: payload.productInfo.price,
@@ -125,7 +129,9 @@ export const storeProduct = createAsyncThunk(
           createdAt: Date.now(),
           updatedAt: Date.now(),
         });
-      }, 3000);
+
+        return "";
+      });
     }
   }
 );
@@ -192,7 +198,7 @@ export const updateProduct = createAsyncThunk(
           });
 
           return new Promise(function (resolve) {
-            setTimeout(resolve, 3000);
+            setTimeout(resolve, 8000);
           }).then(async () => {
             const newImagePath = [...oldArr, ...imagePath];
 
@@ -250,8 +256,6 @@ export const updateProduct = createAsyncThunk(
             description: payload.productInfo.description,
             coverImageName: payload.newCoverImageFile.name,
             photoURL: imageURL,
-
-            // multipleURL: imagePath,
             updatedAt: Date.now(),
           });
 
@@ -353,7 +357,6 @@ export const updateProduct = createAsyncThunk(
         }
       }
     } else {
-      // Return something for pending
       if (payload.productImages) {
         const imagePath: any = [];
 
@@ -369,7 +372,7 @@ export const updateProduct = createAsyncThunk(
         });
 
         return new Promise(function (resolve) {
-          setTimeout(resolve, 3000);
+          setTimeout(resolve, 8000);
         }).then(() => {
           const newImagePath = [...oldArr, ...imagePath];
 
@@ -387,26 +390,6 @@ export const updateProduct = createAsyncThunk(
 
           return result;
         });
-
-        // setTimeout(() => {
-        //   const newImagePath = [...oldArr, ...imagePath];
-
-        //   const docRef = doc(firestore, "product", payload.id);
-
-        //   const result = updateDoc(docRef, {
-        //     product_name: payload.productInfo.product_name,
-        //     price: payload.productInfo.price,
-        //     quantity: payload.productInfo.quantity,
-        //     category: payload.productInfo.category,
-        //     description: payload.productInfo.description,
-        //     multipleURL: newImagePath,
-        //     updatedAt: Date.now(),
-        //   });
-
-        //   return result;
-        // }, 3000);
-
-        // return "";
       } else {
         const docRef = doc(firestore, "product", payload.id);
 

@@ -106,7 +106,7 @@ const SignUp: NextPageWithLayout = () => {
                   Create an account
                 </button>
 
-                <div className="w-full px-4 py-3 shadow-sm shadow-gray-200  bg-white rounded-lg flex flex-row items-center justify-center text-slate-600 space-x-6 font-serif font-semibold text-sm cursor-pointer hover:bg-gray-50">
+                <div className="w-full px-4 py-3 shadow-sm shadow-gray-200  bg-white rounded-lg flex flex-row items-center justify-center text-slate-600 space-x-6 font-serif font-medium text-sm cursor-pointer hover:bg-gray-50">
                   <Image
                     src={Google}
                     alt="Google"

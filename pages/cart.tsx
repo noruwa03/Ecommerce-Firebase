@@ -1,13 +1,25 @@
 import Tv from "@/assets/images/tv.jpg";
 import BillingInfo from "@/components/screens/BillingInfo";
 import Image from "next/image";
-import { useState } from "react"
+import { useState } from "react";
 
 const Cart = () => {
-
   const [showbillingForm, setBillingForm] = useState<boolean>(false);
+  const [quantity, setQuantity] = useState(1);
 
-  const billingHandler = () : any => setBillingForm(true);
+  const increaseQuantity = () => {
+    if (quantity < 10) {
+      setQuantity(quantity + 1);
+    }
+  };
+
+  const decreaseQuantity = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+
+  const billingHandler = (): any => setBillingForm(true);
   return (
     <>
       <section className="py-20 lg:px-28 md:px-8 px-6">
@@ -36,15 +48,18 @@ const Cart = () => {
               <Image src={Tv} alt="" width={150} height={150} />
             </div>
             <div className="lg:col-span-4 col-span-2">
-              <h2 className="font-quicksand font-bold sm:text-xl text-sm capitalize">
+              <h2 className="font-quicksand font-bold sm:text-xl text-base capitalize">
                 Lg smart tv
               </h2>
-              <h3 className="font-quicksand font-semibold sm:text-lg text-xs capitalize">
+              <h3 className="font-quicksand font-semibold sm:text-lg text-base capitalize">
                 #58443
               </h3>
             </div>
-            <div className="lg:col-span-2 col-span-2 flex flex-row items-center space-x-8">
-              <button className="p-2 rounded-md shadow-sm shadow-gray-300">
+            <div className="lg:col-span-2 col-span-2 flex flex-row items-center justify-between space-x-8">
+              <button
+                className="p-2 rounded-md shadow-sm shadow-gray-300"
+                onClick={decreaseQuantity}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -60,9 +75,14 @@ const Cart = () => {
                 </svg>
               </button>
 
-              <h2 className="font-quicksand  text-base font-semibold">2</h2>
+              <h2 className="font-quicksand  text-base font-semibold">
+                {quantity}
+              </h2>
 
-              <button className="p-2 rounded-md shadow-sm shadow-gray-300">
+              <button
+                className="p-2 rounded-md shadow-sm shadow-gray-300"
+                onClick={increaseQuantity}
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -91,8 +111,6 @@ const Cart = () => {
               </svg>
             </div>
           </div>
-
-          
         </div>
         <hr />
         <div className="flex sm:flex-row items-center flex-col lg:space-y-0 space-y-4 justify-between mt-6">

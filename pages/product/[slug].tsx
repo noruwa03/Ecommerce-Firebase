@@ -61,57 +61,62 @@ const ProductDetail = () => {
         <section className="lg:pt-12 pt-24 pb-20 lg:px-28 sm:px-8 px-6">
           <div className="grid md:grid-cols-4 grid-cols-2 gap-10">
             <div className="lg:col-span-2 col-span-2 relative">
-              <div
-                onClick={goToPrevious}
-                className="cursor-pointer absolute top-[35%] -translate-y-[50%] left-2 grid place-content-center sm:p-4 p-3 bg-[#000000cc] rounded-full z-20"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-chevron-compact-left fill-white scale-110 stroke-white"
-                  viewBox="0 0 16 16"
+              <div className="relative">
+                <div
+                  onClick={goToPrevious}
+                  className="cursor-pointer absolute top-[50%] -translate-y-[50%] left-2 grid place-content-center sm:p-4 p-3 bg-[#000000cc] rounded-full z-20"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223z"
-                  />
-                </svg>
-              </div>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-chevron-compact-left fill-white scale-110 stroke-white"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M9.224 1.553a.5.5 0 0 1 .223.67L6.56 8l2.888 5.776a.5.5 0 1 1-.894.448l-3-6a.5.5 0 0 1 0-.448l3-6a.5.5 0 0 1 .67-.223z"
+                    />
+                  </svg>
+                </div>
 
-              <div
-                onClick={goToNext}
-                className=" cursor-pointer absolute top-[35%] -translate-y-[50%] right-2 grid place-content-center sm:p-4 p-3 bg-[#000000cc] rounded-full z-20"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="16"
-                  height="16"
-                  fill="currentColor"
-                  className="bi bi-chevron-compact-right fill-white scale-110 stroke-white"
-                  viewBox="0 0 16 16"
+                <div
+                  onClick={goToNext}
+                  className=" cursor-pointer absolute top-[50%] -translate-y-[50%] right-2 grid place-content-center sm:p-4 p-3 bg-[#000000cc] rounded-full z-20"
                 >
-                  <path
-                    fillRule="evenodd"
-                    d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z"
-                  />
-                </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="16"
+                    height="16"
+                    fill="currentColor"
+                    className="bi bi-chevron-compact-right fill-white scale-110 stroke-white"
+                    viewBox="0 0 16 16"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M6.776 1.553a.5.5 0 0 1 .671.223l3 6a.5.5 0 0 1 0 .448l-3 6a.5.5 0 1 1-.894-.448L9.44 8 6.553 2.224a.5.5 0 0 1 .223-.671z"
+                    />
+                  </svg>
+                </div>
+                <Image
+                  priority={true}
+                  unoptimized={true}
+                  loader={() =>
+                    `${state.singleProduct[0].multipleURL[currentIndex].imageURL}`
+                  }
+                  src={
+                    state.singleProduct[0].multipleURL[currentIndex].imageURL
+                  }
+                  alt={
+                    state.singleProduct[0].multipleURL[currentIndex].imageName
+                  }
+                  width={50}
+                  height={50}
+                  className="w-full"
+                />
               </div>
-
-              <Image
-                priority={true}
-                unoptimized={true}
-                loader={() =>
-                  `${state.singleProduct[0].multipleURL[currentIndex].imageURL}`
-                }
-                src={state.singleProduct[0].multipleURL[currentIndex].imageURL}
-                alt={state.singleProduct[0].multipleURL[currentIndex].imageName}
-                width={50}
-                height={50}
-                className="w-full"
-              />
-              <div className="flex flex-row flex-wrap items-center bg-red-400 mt-5 flex snap-x snap-mandatory w-full mx:auto overflow-scroll">
+              <div className="flex snap-proximity snap-x snap-mandatory  w-full mx:auto overflow-x-scroll mt-5 lg:py-4 py-4 space-x-4">
                 {state.singleProduct[0].multipleURL.map(
                   (res: any, index: number) => {
                     return (
@@ -124,7 +129,7 @@ const ProductDetail = () => {
                           alt={res.imageName}
                           width={50}
                           height={50}
-                          className="lg:w-[7rem] w-[5rem] aspect-[4/4] lg:mr-6 mr-3 lg:mb-6 mb-3 border-2 border-white hover:border-red-400 cursor-pointer"
+                          className="snap-center lg:w-[6rem] w-[5rem] aspect-[4/4] border-2 border-white hover:border-red-400 cursor-pointer object-cover"
                           onClick={() => goToImage(index)}
                         />
                       </Fragment>

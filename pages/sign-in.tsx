@@ -50,7 +50,7 @@ const SignIn: NextPageWithLayout = () => {
                 <h1 className="text-slate-700 font-serif font-bold lg:text-3xl text-2xl lg:text-start text-center lg:mb-4 mb-8">
                   Welcome Back
                 </h1>
-                <div className="w-full px-4 py-3 shadow-sm shadow-gray-200 bg-white rounded-lg flex flex-row items-center text-slate-600 space-x-6 font-serif font-semibold text-sm cursor-pointer hover:bg-gray-50">
+                <div className="w-full px-4 py-3 shadow-sm shadow-gray-200 bg-white rounded-lg flex flex-row items-center text-slate-600 space-x-6 font-serif font-medium text-sm cursor-pointer hover:bg-gray-50">
                   <Image
                     priority={true}
                     unoptimized={true}
