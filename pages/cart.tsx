@@ -1,4 +1,3 @@
-import Tv from "@/assets/images/tv.jpg";
 import BillingInfo from "@/components/screens/BillingInfo";
 import Image from "next/image";
 import { useState, useEffect, Fragment } from "react";
@@ -18,19 +17,7 @@ const Cart = () => {
   }, [cartState.cartItem]);
 
   const [showbillingForm, setBillingForm] = useState<boolean>(false);
-  const [quantity, setQuantity] = useState(1);
-
-  const increaseQuantity = () => {
-    if (quantity < 10) {
-      setQuantity(quantity + 1);
-    }
-  };
-
-  const decreaseQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
+ 
 
   const billingHandler = (): any => setBillingForm(true);
 
