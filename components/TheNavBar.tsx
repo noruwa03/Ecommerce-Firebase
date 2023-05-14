@@ -20,12 +20,12 @@ const TheNavBar = () => {
   };
 
   const state = useAppSelector((state) => state.auth);
+  const cartState = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
-   const signOutUser = () => {
-     dispatch(signOutCurrentUser);
-   };
-  
+  const signOutUser = () => {
+    dispatch(signOutCurrentUser);
+  };
 
   return (
     <>
@@ -152,7 +152,7 @@ const TheNavBar = () => {
               </svg>
             </Link>
             <span className="absolute lg:-top-5 sm:-top-4 -top-4 -right-3 bg-red-400 text-white font-semibold font-quicksand text-xs sm:w-7 sm:h-7 w-6 h-6 rounded-full grid place-content-center">
-              10
+              {cartState.cartItem.length}
             </span>{" "}
           </div>
         </div>

@@ -749,6 +749,10 @@ video {
   margin-top: 0.5rem;
 }
 
+.mt-28 {
+  margin-top: 7rem;
+}
+
 .mt-3 {
   margin-top: 0.75rem;
 }
@@ -1277,6 +1281,10 @@ video {
 
 .fill-slate-600 {
   fill: #475569;
+}
+
+.fill-slate-700 {
+  fill: #334155;
 }
 
 .fill-slate-800 {
@@ -2393,6 +2401,10 @@ input::file-selector-button {
     justify-content: center;
   }
 
+  .lg\:gap-6 {
+    gap: 1.5rem;
+  }
+
   .lg\:gap-8 {
     gap: 2rem;
   }
@@ -2467,6 +2479,10 @@ input::file-selector-button {
     padding-bottom: 0px;
   }
 
+  .lg\:pb-20 {
+    padding-bottom: 5rem;
+  }
+
   .lg\:pt-0 {
     padding-top: 0px;
   }
@@ -2508,6 +2524,11 @@ input::file-selector-button {
   .lg\:text-base {
     font-size: 1rem;
     line-height: 1.5rem;
+  }
+
+  .lg\:text-lg {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
   }
 
   .lg\:text-sm {

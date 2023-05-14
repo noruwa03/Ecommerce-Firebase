@@ -1,4 +1,4 @@
-import { configureStore, combineReducers } from "@reduxjs/toolkit";
+import { configureStore } from "@reduxjs/toolkit";
 import {
   persistReducer,
   persistStore,
@@ -11,7 +11,7 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userAuth from "./features/auth";
-import cartReducer from "./features/cart";
+import cartItemReducer from "./features/cart";
 import vendorReducer from "./features/vendor";
 
 const authPersistConfig = {
@@ -21,6 +21,14 @@ const authPersistConfig = {
 };
 
 const authReducer = persistReducer(authPersistConfig, userAuth);
+
+const cartPersistConfig = {
+  key: "cartState",
+  storage,
+  whitelist: ["cartItem"],
+};
+
+const cartReducer = persistReducer(cartPersistConfig, cartItemReducer)
 
 export const store = configureStore({
   reducer: {
