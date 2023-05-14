@@ -1,7 +1,4 @@
 import Head from "next/head";
-import Avatar0 from "@/assets/images/avatar0.jpg";
-import Avatar1 from "@/assets/images/avatar1.jpg";
-import Shoe from "@/assets/images/shoe0.jpg";
 import Image from "next/image";
 import Link from "next/link";
 import { auth } from "@/lib/firebase";

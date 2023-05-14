@@ -107,7 +107,7 @@ const TheNavBar = () => {
                   width="23"
                   height="23"
                   fill="currentColor"
-                  className="bi bi-power fill-red-300"
+                  className="bi bi-power fill-red-500"
                   viewBox="0 0 16 16"
                 >
                   <path d="M7.5 1v7h1V1h-1z" />
@@ -144,7 +144,7 @@ const TheNavBar = () => {
                 className={
                   currentRoute === "/cart"
                     ? "bi bi-bag fill-red-500"
-                    : "bi bi-bag fill-slate-600"
+                    : "bi bi-bag fill-slate-500"
                 }
                 viewBox="0 0 16 16"
               >

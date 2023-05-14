@@ -2,11 +2,18 @@ import BillingInfo from "@/components/screens/BillingInfo";
 import Image from "next/image";
 import { useState, useEffect, Fragment } from "react";
 import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
-import { removeItemFromCart, resetCart, closeModal } from "@/store/features/cart";
+import {
+  removeItemFromCart,
+  resetCart,
+  increaseQuantity,
+  decreaseQuantity,
+  closeModal,
+} from "@/store/features/cart";
 import CartMessage from "@/components/modal/CartMessage";
 import Link from "next/link";
 
 const Cart = () => {
+  const authState = useAppSelector((state) => state.auth);
   const cartState = useAppSelector((state) => state.cart);
   const dispatch = useAppDispatch();
 
@@ -17,7 +24,6 @@ const Cart = () => {
   }, [cartState.cartItem]);
 
   const [showbillingForm, setBillingForm] = useState<boolean>(false);
- 
 
   const billingHandler = (): any => setBillingForm(true);
 
@@ -31,11 +37,18 @@ const Cart = () => {
 
   const reset = () => {
     dispatch(resetCart());
-  }
+  };
 
   const handleDecrement = (id: string | number) => {
-    setCartItem((cart: any) => cart.map((item: any) => id === item.id ? {...item, quantity: item.quantity - (item.quantity > 1? 1:0)}: item));
-  }
+    setCartItem((cart: any) =>
+      cart.map((item: any) =>
+        id === item.id
+          ? { ...item, quantity: item.quantity - (item.quantity > 1 ? 1 : 0) }
+          : item
+      )
+    );
+    dispatch(decreaseQuantity(id));
+  };
 
   const handleIncrement = (id: string | number) => {
     setCartItem((cart: any) =>
@@ -45,6 +58,7 @@ const Cart = () => {
           : item
       )
     );
+    dispatch(increaseQuantity(id));
   };
 
   return (
@@ -89,7 +103,10 @@ const Cart = () => {
               <h1 className="font-quicksand font-semibold lg:text-3xl text-lg text-slate-800">
                 Cart
               </h1>
-              <button onClick={reset} className="py-2 px-2 border-b-2 border-slate-700 rounded-md text-sm font-semibold font-quicksand bg-white hover:bg-gray-50 flex items-center space-x-3 ">
+              <button
+                onClick={reset}
+                className="py-2 px-2 border-b-2 border-slate-700 rounded-md text-sm font-semibold font-quicksand bg-white hover:bg-gray-50 flex items-center space-x-3 "
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="16"
@@ -108,9 +125,9 @@ const Cart = () => {
               return (
                 <Fragment key={res.id}>
                   {" "}
-                  <div className="my-4">
-                    <div className="grid lg:grid-cols-10 grid-cols-4 items-center lg:gap-6 gap-2 lg:py-0  py-6 ">
-                      <div className="lg:col-span-2 col-span-2">
+                  <div className="lg:my-4 my-2">
+                    <div className="grid lg:grid-cols-10 grid-cols-4 items-center lg:gap-6 gap-y-0 gap-y-5 gap-2 lg:py-0  py-6 ">
+                      <div className="lg:col-span-2 col-span-1">
                         <Image
                           priority={true}
                           unoptimized={true}
@@ -122,16 +139,18 @@ const Cart = () => {
                           className="w-full"
                         />
                       </div>
-                      <div className="lg:col-span-4 col-span-2">
+                      <div className="lg:col-span-4 col-span-3">
                         <h2 className="font-quicksand font-bold sm:text-xl text-base capitalize">
                           {res.name}
                         </h2>
                         <h3 className="font-quicksand font-semibold sm:text-lg text-base capitalize">
-                          # {res.price}
+                          ₦ {Intl.NumberFormat("en-US").format(res.price)}
                         </h3>
-                        <h3 className="font-quicksand font-semibold sm:text-lg text-sm capitalize">
-                          Total Price:{" "}
-                          {Number(res.quantity) * Number(res.price)}
+                        <h3 className="font-quicksand font-semibold sm:text-lg text-base">
+                          Total Price: ₦{" "}
+                          {Intl.NumberFormat("en-US").format(
+                            Number(res.quantity) * Number(res.price)
+                          )}
                         </h3>
                       </div>
                       <div className="lg:col-span-2 col-span-2 flex flex-row items-center justify-between space-x-8">
@@ -198,24 +217,33 @@ const Cart = () => {
             })}
 
             <div className="flex sm:flex-row items-center flex-col lg:space-y-0 space-y-4 justify-between mt-6">
-              <h3 className="font-quicksand sm:text-2xl text-base font-semibold mt-5">
+              <h3 className="font-quicksand sm:text-2xl text-lg font-semibold mt-5">
                 Total price: 3321
               </h3>
-              <button className="py-3 px-4 border-2 border-red-300 rounded-md text-red-300 sm:text-base text-sm font-semibold font-quicksand bg-white hover:bg-gray-50 flex items-center space-x-3 ">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-check2-circle fill-red-300 hover:fill-green-300"
-                  viewBox="0 0 16 16"
+              {authState.user === null ? (
+                <Link
+                  href="/sign-in"
+                  className="font-quicksand px-8 py-3 border-2 border-red-400 text-base rounded-md  font-semibold"
                 >
-                  <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
-                  <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
-                </svg>
+                  Sign In to checkout
+                </Link>
+              ) : (
+                <button className="py-3 px-4 border-2 border-red-300 rounded-md text-red-300 sm:text-base text-base font-medium font-quicksand bg-white hover:bg-gray-50 flex items-center space-x-3 ">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    className="bi bi-check2-circle fill-red-300 hover:fill-green-300"
+                    viewBox="0 0 16 16"
+                  >
+                    <path d="M2.5 8a5.5 5.5 0 0 1 8.25-4.764.5.5 0 0 0 .5-.866A6.5 6.5 0 1 0 14.5 8a.5.5 0 0 0-1 0 5.5 5.5 0 1 1-11 0z" />
+                    <path d="M15.354 3.354a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0l7-7z" />
+                  </svg>
 
-                <span onClick={billingHandler}>Checkout</span>
-              </button>
+                  <span onClick={billingHandler}>Proceed to checkout</span>
+                </button>
+              )}
             </div>
 
             <>

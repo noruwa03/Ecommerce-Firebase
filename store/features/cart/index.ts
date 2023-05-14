@@ -26,6 +26,19 @@ const cartSlice = createSlice({
         }
       }
     },
+    increaseQuantity(state, action: PayloadAction<any>) {
+      const checkQty = state.cartItem.find((res) => res.id === action.payload);
+
+      if (checkQty!.quantity < 10) {
+         checkQty!.quantity++;
+      } 
+    },
+    decreaseQuantity(state, action: PayloadAction<any>) {
+      const checkQty = state.cartItem.find((res) => res.id === action.payload);
+      if (checkQty!.quantity > 1) {
+        checkQty!.quantity--;
+      } 
+    },
     removeItemFromCart(state, action: PayloadAction<any>) {
       state.cartItem = state.cartItem.filter(
         (res) => res.id !== action.payload
@@ -34,7 +47,7 @@ const cartSlice = createSlice({
     },
     resetCart(state) {
       state.cartItem = [];
-      state.message = "Cart cleared successfully"
+      state.message = "Cart cleared successfully";
     },
     closeModal(state) {
       state.message = "";
@@ -43,5 +56,11 @@ const cartSlice = createSlice({
 });
 
 export default cartSlice.reducer;
-export const { addToCart, removeItemFromCart, resetCart, closeModal } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  removeItemFromCart,
+  increaseQuantity,
+  decreaseQuantity,
+  resetCart,
+  closeModal,
+} = cartSlice.actions;
