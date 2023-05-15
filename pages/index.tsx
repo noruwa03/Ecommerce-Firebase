@@ -1,6 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 import { auth } from "@/lib/firebase";
 import ScreenLoader from "@/components/loader/ScreenLoader";
 import ScreenError from "@/components/modal/ScreenError";
@@ -9,6 +10,9 @@ import { Fragment, useEffect } from "react";
 import { getProduct } from "@/store/features/vendor";
 import { addToCart, closeModal } from "@/store/features/cart";
 import CartMessage from "@/components/modal/CartMessage";
+import HeroOne from "@/assets/images/hero_one.png";
+import HeroTwo from "@/assets/images/hero_two.png";
+import HeroThree from "@/assets/images/hero_three.png";
 
 export default function Home() {
   if (auth.currentUser) {
@@ -41,6 +45,25 @@ export default function Home() {
 
   const close = () => {
     dispatch(closeModal());
+  };
+
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const heroImages = [HeroOne, HeroTwo, HeroThree];
+
+  const goToPrevious = () => {
+    const isFirstImage = currentIndex === 0;
+    const newIndex = isFirstImage
+      ? state.singleProduct[0].multipleURL.length - 1
+      : currentIndex - 1;
+    setCurrentIndex(newIndex);
+  };
+
+  const goToNext = () => {
+    const isLastImage =
+      currentIndex === state.singleProduct[0].multipleURL.length - 1;
+    const newIndex = isLastImage ? 0 : currentIndex + 1;
+    setCurrentIndex(newIndex);
   };
 
   return (
@@ -84,7 +107,55 @@ export default function Home() {
                 <CartMessage message={cartState.message} close={close} />
               ) : null}
               <>
-                <section className="lg:pt-20 pt-32 pb-20 lg:px-16 sm:px-8 px-6">
+                <section className="lg:pt-14 pt-28 lg:pb-20 pb-0 lg:px-16 sm:px-8 px-6">
+                  <div className="grid place-content-center lg:w-4/5 w-5/5 mx-auto lg:mb-8 mb-4">
+                    {" "}
+                    <h1 className="font-quicksand_bold text-transparent lg:text-7xl md:text-5xl text-3xl bg-clip-text bg-gradient-to-r from-red-500 to-red-600 font-bold text-center py-2">
+                      Your one stop shop to get everything you want
+                    </h1>
+                  </div>
+                  <div className="mt-16">
+                    <div className="grid lg:grid-cols-9 sm:grid-cols-8 grid-cols-2 gap-8">
+                      <div className="lg:col-span-3 sm:col-span-4 col-span-2">
+                        <Image
+                          priority={true}
+                          unoptimized={true}
+                          loader={() => `${HeroOne}`}
+                          src={HeroOne}
+                          alt={"HeroOne"}
+                          width={50}
+                          height={50}
+                          className="w-full object-cover"
+                        />
+                      </div>
+                      <div className="lg:col-span-3 sm:col-span-4 col-span-2">
+                        <Image
+                          priority={true}
+                          unoptimized={true}
+                          loader={() => `${HeroTwo}`}
+                          src={HeroTwo}
+                          alt={"HeroTwo"}
+                          width={50}
+                          height={50}
+                          className="w-full object-cover"
+                        />
+                      </div>
+                      <div className="lg:col-span-3 sm:col-span-4 col-span-2">
+                        <Image
+                          priority={true}
+                          unoptimized={true}
+                          loader={() => `${HeroThree}`}
+                          src={HeroThree}
+                          alt={"HeroThree"}
+                          width={50}
+                          height={50}
+                          className="w-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </section>
+                <section className="lg:pt-20 pt-16 pb-20 lg:px-16 sm:px-8 px-6">
                   <div className="grid lg:grid-cols-8 sm:grid-cols-8 grid-cols-2 gap-8">
                     {state.product.map((res: any) => {
                       return (
