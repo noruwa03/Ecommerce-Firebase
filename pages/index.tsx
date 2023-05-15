@@ -107,10 +107,10 @@ export default function Home() {
                 <CartMessage message={cartState.message} close={close} />
               ) : null}
               <>
-                <section className="lg:pt-14 pt-28 lg:pb-20 pb-0 lg:px-16 sm:px-8 px-6">
+                <section className="lg:pt-14 pt-32 lg:pb-20 pb-0 lg:px-16 sm:px-8 px-6">
                   <div className="grid place-content-center lg:w-4/5 w-5/5 mx-auto lg:mb-8 mb-4">
                     {" "}
-                    <h1 className="font-quicksand_bold text-transparent lg:text-7xl md:text-5xl text-3xl bg-clip-text bg-gradient-to-r from-red-500 to-red-600 font-bold text-center py-2">
+                    <h1 className="font-quicksand_bold text-transparent lg:text-7xl md:text-5xl text-4xl bg-clip-text bg-gradient-to-r from-red-500 to-red-600 font-bold text-center py-2">
                       Your one stop shop to get everything you want
                     </h1>
                   </div>
