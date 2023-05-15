@@ -99,10 +99,14 @@ const SignIn: NextPageWithLayout = () => {
           <div className="lg:col-span-4 lg:block hidden">
             <div className="w-full h-screen">
               <Image
+                loader={() => SignInFlow}
                 src={SignInFlow}
                 alt="Signin Flow"
                 priority={true}
                 className="w-full h-full"
+                unoptimized={true}
+                width={150}
+                height={150}
               />
             </div>
           </div>

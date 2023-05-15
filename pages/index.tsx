@@ -2,7 +2,7 @@ import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
-import { auth } from "@/lib/firebase";
+// import { auth } from "@/lib/firebase";
 import ScreenLoader from "@/components/loader/ScreenLoader";
 import ScreenError from "@/components/modal/ScreenError";
 import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
@@ -15,11 +15,11 @@ import HeroTwo from "@/assets/images/hero_two.png";
 import HeroThree from "@/assets/images/hero_three.png";
 
 export default function Home() {
-  if (auth.currentUser) {
-    console.log(auth.currentUser);
-  } else {
-    console.log("No user");
-  }
+  // if (auth.currentUser) {
+  //   console.log(auth.currentUser);
+  // } else {
+  //   console.log("No user");
+  // }
 
   const state = useAppSelector((state) => state.vendor);
   const cartState = useAppSelector((state) => state.cart);
@@ -49,22 +49,9 @@ export default function Home() {
 
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const heroImages = [HeroOne, HeroTwo, HeroThree];
+  
 
-  const goToPrevious = () => {
-    const isFirstImage = currentIndex === 0;
-    const newIndex = isFirstImage
-      ? state.singleProduct[0].multipleURL.length - 1
-      : currentIndex - 1;
-    setCurrentIndex(newIndex);
-  };
-
-  const goToNext = () => {
-    const isLastImage =
-      currentIndex === state.singleProduct[0].multipleURL.length - 1;
-    const newIndex = isLastImage ? 0 : currentIndex + 1;
-    setCurrentIndex(newIndex);
-  };
+ 
 
   return (
     <>

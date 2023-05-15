@@ -71,6 +71,8 @@ const SignUp: NextPageWithLayout = () => {
                 src={signupFlow}
                 alt="Signup Flow"
                 className="w-full h-full"
+                width={150}
+                height={150}
               />
             </div>
           </div>
@@ -115,7 +117,7 @@ const SignUp: NextPageWithLayout = () => {
                     {passwordError}
                   </div>
                 ) : null}
-                <div className="mt-5">
+                {/* <div className="mt-5">
                   <label
                     htmlFor="checkbox"
                     className="flex items-start space-x-3"
@@ -132,7 +134,7 @@ const SignUp: NextPageWithLayout = () => {
                       customer
                     </span>
                   </label>
-                </div>
+                </div> */}
                 <button className="w-full bg-red-400 py-3 outline-none text-white font-serif text-sm font-bold my-6 rounded-lg">
                   Create an account
                 </button>
