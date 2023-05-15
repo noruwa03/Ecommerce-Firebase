@@ -914,20 +914,16 @@ video {
   width: 20%;
 }
 
-.w-\[30\%\] {
-  width: 30%;
-}
-
-.w-\[48\%\] {
-  width: 48%;
-}
-
 .w-\[50\%\] {
   width: 50%;
 }
 
 .w-\[5rem\] {
   width: 5rem;
+}
+
+.w-\[76\%\] {
+  width: 76%;
 }
 
 .w-full {
@@ -1300,6 +1296,10 @@ video {
   fill: #ef4444;
 }
 
+.fill-slate-500 {
+  fill: #64748b;
+}
+
 .fill-slate-600 {
   fill: #475569;
 }
@@ -1316,28 +1316,12 @@ video {
   fill: #fff;
 }
 
-.fill-slate-500 {
-  fill: #64748b;
-}
-
-.fill-red-600 {
-  fill: #dc2626;
-}
-
 .stroke-red-200 {
   stroke: #fecaca;
 }
 
 .stroke-white {
   stroke: #fff;
-}
-
-.stroke-red-400 {
-  stroke: #f87171;
-}
-
-.stroke-red-300 {
-  stroke: #fca5a5;
 }
 
 .object-contain {

@@ -1,5 +1,8 @@
 import BillingInfo from "@/components/screens/BillingInfo";
 import Image from "next/image";
+import { Loading } from "@/components/loader/loading";
+import CheckoutSuccess from "@/components/modal/CheckoutSuccess";
+import ScreenError from "@/components/modal/ScreenError";
 import { useState, useEffect, Fragment } from "react";
 import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
 import {
@@ -9,15 +12,19 @@ import {
   decreaseQuantity,
   closeModal,
 } from "@/store/features/cart";
+import { closeOrderModal } from "@/store/features/order";
 import CartMessage from "@/components/modal/CartMessage";
 import Link from "next/link";
 
 const Cart = () => {
   const authState = useAppSelector((state) => state.auth);
   const cartState = useAppSelector((state) => state.cart);
+  const orderState = useAppSelector((state) => state.order);
   const dispatch = useAppDispatch();
 
   const [cartItem, setCartItem] = useState<any>([]);
+
+  let totalCartPrice = 0;
 
   useEffect(() => {
     setCartItem(cartState.cartItem);
@@ -61,8 +68,22 @@ const Cart = () => {
     dispatch(increaseQuantity(id));
   };
 
+  const closeSuccessModal = () => {
+    dispatch(closeOrderModal());
+  };
+
   return (
     <>
+      {orderState.loading ? <Loading /> : null}
+      {orderState.error.length > 0 ? (
+        <ScreenError message={orderState.error} />
+      ) : null}
+      {orderState.success.length > 0 ? (
+        <CheckoutSuccess
+          message={orderState.success}
+          close={closeSuccessModal}
+        />
+      ) : null}
       {cartState.message.length > 0 ? (
         <CartMessage message={cartState.message} close={close} />
       ) : null}
@@ -122,6 +143,7 @@ const Cart = () => {
               </button>
             </div>
             {cartItem.map((res: any) => {
+              totalCartPrice += res.price * res.quantity;
               return (
                 <Fragment key={res.id}>
                   {" "}
@@ -218,7 +240,8 @@ const Cart = () => {
 
             <div className="flex sm:flex-row items-center flex-col lg:space-y-0 space-y-4 justify-between mt-6">
               <h3 className="font-quicksand sm:text-2xl text-lg font-semibold mt-5">
-                Total price: 3321
+                Total price: ₦{" "}
+                {Intl.NumberFormat("en-US").format(totalCartPrice)}
               </h3>
               {authState.user === null ? (
                 <Link
@@ -247,7 +270,14 @@ const Cart = () => {
             </div>
 
             <>
-              <div>{showbillingForm === true ? <BillingInfo /> : null}</div>
+              <div>
+                {showbillingForm === true ? (
+                  <BillingInfo
+                    totalPrice={totalCartPrice}
+                    orderItem={cartItem}
+                  />
+                ) : null}
+              </div>
             </>
           </section>
         </>

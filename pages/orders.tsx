@@ -1,118 +1,122 @@
 import Link from "next/link";
 import { NextPageWithLayout } from "./_app";
 import type { ReactElement } from "react";
+import { useEffect, Fragment } from "react";
+import UnauthorizedUser from "@/components/modal/UnauthorizedUser";
+import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
+import { getProductOrder } from "@/store/features/order";
+import ScreenLoader from "@/components/loader/ScreenLoader";
+import ScreenError from "@/components/modal/ScreenError";
 
 const Orders: NextPageWithLayout = () => {
+
+  const currentUser = useAppSelector((state) => state.auth);
+  const myOrder = useAppSelector((state) => state.order)
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(getProductOrder());
+  }, [currentUser, dispatch]);
+  
+   if (!currentUser.user) {
+     return (
+       <>
+         <UnauthorizedUser />
+       </>
+     );
+   }
+
+  
   return (
     <>
-      <section className="py-20 lg:px-28 md:px-8 px-6">
-        <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white w-full  rounded-tl-xl rounded-tr-xl p-5">
-          <h1 className="font-quicksand font-bold text-lg text-slate-700">
-            All Bids
-          </h1>
-          <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
-            <div className="lg:block md:hidden hidden font-quicksand font-semibold col-span-2">
-              Payment Type
-            </div>
-            <div className="lg:block md:block md:col-span-3 font-quicksand font-semibold lg:col-span-4 col-span-4">
-              Product Name
-            </div>
-            <div className="lg:block md:block hidden md:col-span-2 font-quicksand font-semibold col-span-2">
-              Total Price
-            </div>
-            <div className="lg:block md:hidden hidden font-quicksand font-semibold col-span-2">
-              Quantiy
-            </div>
-            <div className="lg:block md:block md:col-span-1 font-quicksand font-semibold col-span-2">
-              Action
-            </div>
-          </div>
-        </div>
-
-        <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white w-full rounded-sm py-3 px-5">
-          <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
-            <div className="lg:block md:hidden hidden font-quicksand  col-span-2">
-              Cash on Delivery
-            </div>
-            <div className="lg:block md:block md:col-span-3 font-quicksand  lg:col-span-4 col-span-4">
-              Lg Ultra Smart tv
-            </div>
-            <div className="lg:block md:block hidden md:col-span-2 font-quicksand col-span-2">
-              #24000
-            </div>
-            <div className="lg:block md:hidden hidden font-quicksand col-span-2">
-              5
-            </div>
-            <div className="lg:flex flex-row items-center space-x-8 md:flex flex md:col-span-1 font-quicksand col-span-2">
-              <Link href="">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-eye"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-                </svg>
-              </Link>
+      {myOrder.loading ? <ScreenLoader /> : null}
+      {myOrder.error ? <ScreenError message={myOrder.error} /> : null}
+      <section className="py-20 lg:px-16 md:px-8 px-4">
+        {myOrder.productOrder.length === 0 ? (
+          <>
+            <div className="grid place-content-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
+                width="80"
+                height="80"
                 fill="currentColor"
-                className="bi bi-x-circle"
+                className="bi bi-journal-text fill-slate-700"
                 viewBox="0 0 16 16"
               >
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+                <path d="M3 0h10a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2v-1h1v1a1 1 0 0 0 1 1h10a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v1H1V2a2 2 0 0 1 2-2z" />
+                <path d="M1 5v-.5a.5.5 0 0 1 1 0V5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0V8h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1zm0 3v-.5a.5.5 0 0 1 1 0v.5h.5a.5.5 0 0 1 0 1h-2a.5.5 0 0 1 0-1H1z" />
               </svg>
+             
             </div>
-          </div>
-        </div>
-        <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white w-full rounded-sm py-3 px-5">
-          <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
-            <div className="lg:block md:hidden hidden font-quicksand  col-span-2">
-              Cash on Delivery
-            </div>
-            <div className="lg:block md:block md:col-span-3 font-quicksand  lg:col-span-4 col-span-4">
-              Lg Ultra Smart tv
-            </div>
-            <div className="lg:block md:block hidden md:col-span-2 font-quicksand col-span-2">
-              #24000
-            </div>
-            <div className="lg:block md:hidden hidden font-quicksand col-span-2">
-              5
-            </div>
-            <div className="lg:flex flex-row  items-center space-x-8 md:flex flex md:col-span-1 font-quicksand col-span-2">
-              <Link href="/">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-eye"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z" />
-                  <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z" />
-                </svg>
+            <div className="text-center mt-6">
+              {" "}
+              <Link
+                href="/"
+                className="font-quicksand lg:text-lg text-base  text-slate-600 font-bold underline decoration-wavy decoration-red-300"
+              >
+                No orders continue shopping
               </Link>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                className="bi bi-x-circle"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
-              </svg>
             </div>
-          </div>
-        </div>
+          </>
+        ) : (
+          <>
+            {" "}
+            <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white w-full  rounded-tl-xl rounded-tr-xl p-5">
+              <h1 className="font-quicksand font-bold text-xl text-slate-700">
+                Orders
+              </h1>
+              <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
+                <div className="lg:block md:hidden hidden font-quicksand font-semibold col-span-2">
+                  Payment Type
+                </div>
+                <div className="lg:block md:block md:col-span-3 font-quicksand font-semibold lg:col-span-4 col-span-4">
+                  Status
+                </div>
+                <div className="lg:block md:block hidden md:col-span-2 font-quicksand font-semibold col-span-2">
+                  Total Price
+                </div>
+                <div className="lg:block md:hidden hidden font-quicksand font-semibold col-span-2">
+                  Quantiy
+                </div>
+                <div className="lg:block md:block md:col-span-1 font-quicksand font-semibold col-span-2">
+                  Action
+                </div>
+              </div>
+            </div>
+            {myOrder.productOrder.map((res: any) => {
+              return (
+                <Fragment key={res.id}>
+                  <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white w-full rounded-sm py-3 px-5">
+                    <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
+                      <div className="lg:block md:hidden hidden font-quicksand  col-span-2">
+                        Paypal
+                      </div>
+                      <div className="lg:block md:block md:col-span-3 font-quicksand  lg:col-span-4 col-span-4">
+                        Pending
+                      </div>
+                      <div className="lg:block md:block hidden md:col-span-2 font-quicksand col-span-2">
+                        ₦ {Intl.NumberFormat("en-US").format(res.totalPrice)}
+                      </div>
+                      <div className="lg:block md:hidden hidden font-quicksand col-span-2">
+                        {res.orderItem.length}
+                      </div>
+                      <div className="lg:flex flex-row items-center space-x-8 md:flex flex md:col-span-1 font-quicksand col-span-2">
+                        <Link
+                          href={`order/${res.id}`}
+                          className="px-6 py-2 bg-green-100/70 text-sm rounded-lg font-quicksand font-semibold"
+                        >
+                          View
+                        </Link>
+                       
+                      </div>
+                    </div>
+                  </div>
+                </Fragment>
+              );
+            })}
+          </>
+        )}
       </section>
     </>
   );

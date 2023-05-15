@@ -1,5 +1,6 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { Cart } from "@/models/cart.types";
+import { storeOrder } from "../order";
 
 const initialState = {
   cartItem: [] as Cart[],
@@ -53,6 +54,11 @@ const cartSlice = createSlice({
       state.message = "";
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(storeOrder.fulfilled, (state) => {
+      state.cartItem = [];
+    })
+  }
 });
 
 export default cartSlice.reducer;

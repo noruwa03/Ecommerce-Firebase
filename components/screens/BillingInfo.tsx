@@ -1,6 +1,45 @@
-import React from 'react'
+import { useState, FormEvent, ChangeEvent } from "react";
+import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
+import { storeOrder } from "@/store/features/order";
 
-const BillingInfo = () => {
+
+interface ICART {
+  totalPrice: number;
+  orderItem: [];
+}
+
+const BillingInfo = (props: ICART) => {
+  const state = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+
+  const [info, setInfo] = useState({
+    fullname: "",
+    email: "",
+    phone_no: "",
+    city: "",
+    state: "",
+    country: "",
+    address: "",
+  });
+
+  const onChangeHandler = (
+    evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = evt.target;
+    setInfo((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const formData = {
+      uid: state.user.uid,
+      totalPrice: props.totalPrice,
+      customerDetail: info,
+      orderItem: props.orderItem,
+    };
+
+    dispatch(storeOrder(formData))
+  };
   return (
     <>
       <section className="py-20">
@@ -11,7 +50,7 @@ const BillingInfo = () => {
           <h2 className="font-quicksand text-base mt-4">
             Add information like Full Name, Email etc.
           </h2>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="grid lg:grid-cols-6 grid-cols-4 gap-6 mt-8">
               <div className="lg:col-span-2 md:col-span-2 col-span-4">
                 <label className="font-quicksand " htmlFor="fullname">
@@ -21,6 +60,10 @@ const BillingInfo = () => {
                 <input
                   type="text"
                   id="fullname"
+                  required
+                  name="fullname"
+                  value={info.fullname}
+                  onChange={onChangeHandler}
                   className="px-3 py-2 w-full outline-none border-2 border-slate-100 rounded-md mt-2"
                 />
               </div>
@@ -33,6 +76,10 @@ const BillingInfo = () => {
                 <input
                   id="email"
                   type="email"
+                  required
+                  name="email"
+                  value={info.email}
+                  onChange={onChangeHandler}
                   className="px-3 py-2 w-full outline-none border-2 border-slate-100 rounded-md mt-2"
                 />
               </div>
@@ -43,6 +90,10 @@ const BillingInfo = () => {
 
                 <input
                   type="number"
+                  required
+                  name="phone_no"
+                  value={info.phone_no}
+                  onChange={onChangeHandler}
                   className="px-3 py-2 w-full outline-none border-2 border-slate-100 rounded-md mt-2"
                 />
               </div>
@@ -54,6 +105,10 @@ const BillingInfo = () => {
                 <input
                   id="city"
                   type="text"
+                  required
+                  name="city"
+                  value={info.city}
+                  onChange={onChangeHandler}
                   className="px-3 py-2 w-full outline-none border-2 border-slate-100 rounded-md mt-2"
                 />
               </div>
@@ -65,6 +120,10 @@ const BillingInfo = () => {
 
                 <input
                   type="text"
+                  required
+                  name="state"
+                  value={info.state}
+                  onChange={onChangeHandler}
                   className="px-3 py-2 w-full outline-none border-2 border-slate-100 rounded-md mt-2"
                 />
               </div>
@@ -76,19 +135,25 @@ const BillingInfo = () => {
                 <input
                   id="country"
                   type="text"
+                  required
+                  name="country"
+                  value={info.country}
+                  onChange={onChangeHandler}
                   className="px-3 py-2 w-full outline-none border-2 border-slate-100 rounded-md mt-2"
                 />
               </div>
 
               <div className="col-span-4">
-              
                 <label className="font-quicksand " htmlFor="address">
                   Address
                 </label>
 
                 <textarea
-                  name=""
+                  name="address"
                   id="address"
+                  required
+                  value={info.address}
+                  onChange={onChangeHandler}
                   className="px-3 py-2 h-[10rem] w-full outline-none border-2 border-slate-100 rounded-md resize-none mt-2"
                 />
               </div>
@@ -101,6 +166,6 @@ const BillingInfo = () => {
       </section>
     </>
   );
-}
+};
 
-export default BillingInfo
+export default BillingInfo;

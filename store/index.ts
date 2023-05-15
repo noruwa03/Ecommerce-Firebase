@@ -13,6 +13,7 @@ import storage from "redux-persist/lib/storage";
 import userAuth from "./features/auth";
 import cartItemReducer from "./features/cart";
 import vendorReducer from "./features/vendor";
+import orderReducer from "./features/order"
 
 const authPersistConfig = {
   key: "authState",
@@ -35,6 +36,7 @@ export const store = configureStore({
     auth: authReducer,
     cart: cartReducer,
     vendor: vendorReducer,
+    order: orderReducer
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

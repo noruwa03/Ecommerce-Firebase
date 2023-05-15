@@ -1,101 +1,175 @@
 import { NextPageWithLayout } from ".././_app";
 import type { ReactElement } from "react";
-import Tv from "@/assets/images/tv.jpg";
 import Image from "next/image";
+import UnauthorizedUser from "@/components/modal/UnauthorizedUser";
+import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
+import { useEffect, Fragment } from "react";
+import { getProductOrderDetail } from "@/store/features/order";
+import { useRouter } from "next/router";
+import ScreenLoader from "@/components/loader/ScreenLoader";
+import ScreenError from "@/components/modal/ScreenError";
 
-const BidDetail: NextPageWithLayout = () => {
+const OrderDetail: NextPageWithLayout = () => {
+  const currentUser = useAppSelector((state) => state.auth);
+  const myOrder = useAppSelector((state) => state.order);
+
+  const dispatch = useAppDispatch();
+
+  const { query } = useRouter();
+
+  useEffect(() => {
+    dispatch(getProductOrderDetail(query.slug));
+  }, [dispatch, query.slug]);
+
+  if (!currentUser.user) {
+    return (
+      <>
+        <UnauthorizedUser />
+      </>
+    );
+  }
+
   return (
     <>
-      <section className="py-20 lg:px-16 md:px-8 px-6">
-        <div className="grid lg:grid-cols-8 grid-cols-2 gap-12">
-          <div className="lg:col-span-4 col-span-2 divide-y">
-            <div className="flex flex-wrap items-center pt-4  mb-3">
-              <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                Fullname
-              </h2>
-              <p className="w-[50%]  font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                Alex Fin
-              </p>
-            </div>
+      {myOrder.loading ? (
+        <ScreenLoader />
+      ) : (
+        <>
+          {myOrder.productOrderDetail === "No product" ? (
+            <ScreenError message="No product" />
+          ) : (
+            <>
+              {" "}
+              {currentUser.user.uid === myOrder.productOrderDetail[0]?.uid ? (
+                <section className="py-20 lg:px-16 md:px-8 px-6">
+                  <div className="grid lg:grid-cols-8 grid-cols-2 gap-12">
+                    <div className="lg:col-span-4 col-span-2 divide-y">
+                      <div className="flex flex-wrap items-center pt-4  mb-3">
+                        <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          Fullname
+                        </h2>
+                        <p className="w-[50%]  font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          {
+                            myOrder.productOrderDetail[0]?.customerDetail
+                              .fullname
+                          }
+                        </p>
+                      </div>
 
-            <div className="flex flex-wrap items-center pt-10 mb-3">
-              <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                Email
-              </h2>
-              <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                alex@gmail.com
-              </p>
-            </div>
-            <div className="flex  flex-wrap items-center  pt-10  mb-3">
-              <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                Phone No
-              </h2>
-              <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                +747824
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center   pt-10  mb-3">
-              <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                City
-              </h2>
-              <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                FCT
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center   pt-10  mb-3">
-              <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                State
-              </h2>
-              <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                Abuja
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center pt-10  mb-3">
-              <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                Country
-              </h2>
-              <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                Nigeria
-              </p>
-            </div>
-            <div className="flex flex-wrap items-center pt-10  mb-3">
-              <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                Address
-              </h2>
-              <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
-                32, Maitama cresent avenue, Lubge district
-              </p>
-            </div>
-          </div>
-          <div className="lg:col-span-4 col-span-2  divide-y">
-            <div className="flex flex-wrap items-start pt-4  mb-3">
-              <div className="w-[20%] ">
-                <Image src={Tv} width={100} height={100} alt="" />
-              </div>
-              <div className="w-[48%]  ">
-                <p className="font-quicksand font-bold lg:text-base text-sm text-slate-600">
-                  Lg Smart tv
-                </p>
-                <p className="font-quicksand font-bold lg:text-base text-xs text-slate-600">
-                  #20000
-                </p>
-                <p className="font-quicksand font-bold lg:text-base text-xs text-slate-600">
-                  Quantity: 5
-                </p>
-              </div>
-              <div className="w-[30%]  font-quicksand font-semibold lg:text-sm text-xs text-green-400">
-                7 day(s) waranty assured
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+                      <div className="flex flex-wrap items-center pt-10 mb-3">
+                        <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          Email
+                        </h2>
+                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          {myOrder.productOrderDetail[0]?.customerDetail.email}
+                        </p>
+                      </div>
+                      <div className="flex  flex-wrap items-center  pt-10  mb-3">
+                        <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          Phone No
+                        </h2>
+                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          {
+                            myOrder.productOrderDetail[0]?.customerDetail
+                              .phone_no
+                          }
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap items-center   pt-10  mb-3">
+                        <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          City
+                        </h2>
+                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          {myOrder.productOrderDetail[0]?.customerDetail.city}
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap items-center   pt-10  mb-3">
+                        <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          State
+                        </h2>
+                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          {myOrder.productOrderDetail[0]?.customerDetail.state}
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap items-center pt-10  mb-3">
+                        <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          Country
+                        </h2>
+                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          {
+                            myOrder.productOrderDetail[0]?.customerDetail
+                              .country
+                          }
+                        </p>
+                      </div>
+                      <div className="flex flex-wrap items-center pt-10  mb-3">
+                        <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          Address
+                        </h2>
+                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                          {
+                            myOrder.productOrderDetail[0]?.customerDetail
+                              .address
+                          }
+                        </p>
+                      </div>
+                    </div>
+                    <div className="lg:col-span-4 col-span-2  divide-y">
+                      {myOrder.productOrderDetail[0]?.orderItem.map(
+                        (res: any) => {
+                          return (
+                            <Fragment key={res.id}>
+                              <div className="flex flex-wrap items-start pt-4  mb-3">
+                                <div className="w-[20%] ">
+                                  <Image
+                                    priority={true}
+                                    unoptimized={true}
+                                    loader={() => res.photoURL}
+                                    src={res.photoURL}
+                                    alt={res.id}
+                                    width={100}
+                                    height={100}
+                                  />
+                                </div>
+                                <div className="w-[76%]">
+                                  <p className="font-quicksand font-bold lg:text-base text-sm text-slate-600">
+                                    {res.name}
+                                  </p>
+                                  <p className="font-quicksand font-bold lg:text-base text-xs text-slate-600">
+                                    ₦{" "}
+                                    {Intl.NumberFormat("en-US").format(
+                                      res.price
+                                    )}{" "}
+                                    * {res.quantity} = ₦{" "}
+                                    {Intl.NumberFormat("en-US").format(
+                                      Number(res.quantity) * Number(res.price)
+                                    )}
+                                  </p>
+                                  <p className="font-quicksand font-bold lg:text-base text-xs text-slate-600">
+                                    Quantity: {res.quantity}
+                                  </p>
+                                </div>
+                              </div>
+                            </Fragment>
+                          );
+                        }
+                      )}
+                    </div>
+                  </div>
+                </section>
+              ) : (
+                <UnauthorizedUser />
+              )}
+            </>
+          )}
+        </>
+      )}
     </>
   );
 };
 
-BidDetail.getLayout = function PageLayout(page: ReactElement) {
+OrderDetail.getLayout = function PageLayout(page: ReactElement) {
   return <>{page}</>;
 };
 
-export default BidDetail;
+export default OrderDetail;
