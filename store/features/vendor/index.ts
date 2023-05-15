@@ -564,10 +564,14 @@ const vendorSlice = createSlice({
         state.delete_image_success = "Product deleted successfully";
       }),
       //Get Single Product
-
+      builder.addCase(getSingleProduct.pending, (state) => {
+        state.loading = true;
+      }),
+ 
       builder.addCase(
         getSingleProduct.fulfilled,
         (state, action: PayloadAction<any>) => {
+           state.loading = false;
           state.singleProduct = action.payload;
         }
       );

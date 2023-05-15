@@ -38,7 +38,7 @@ const ProductDetail = () => {
     setCurrentIndex(imageIndex);
   };
 
-  if (state.singleProduct.length === 0) {
+  if (state.loading) {
     return (
       <>
         <ScreenLoader />
@@ -99,25 +99,28 @@ const ProductDetail = () => {
                     />
                   </svg>
                 </div>
-                <Image
-                  priority={true}
-                  unoptimized={true}
-                  loader={() =>
-                    `${state.singleProduct[0].multipleURL[currentIndex].imageURL}`
-                  }
-                  src={
-                    state.singleProduct[0].multipleURL[currentIndex].imageURL
-                  }
-                  alt={
-                    state.singleProduct[0].multipleURL[currentIndex].imageName
-                  }
-                  width={50}
-                  height={50}
-                  className="w-full"
-                />
+                {state.singleProduct[0]?.multipleURL.length > 0 && (
+                  <Image
+                    priority={true}
+                    unoptimized={true}
+                    loader={() =>
+                      `${state.singleProduct[0]?.multipleURL[currentIndex].imageURL}`
+                    }
+                    src={
+                      state.singleProduct[0]?.multipleURL[currentIndex].imageURL
+                    }
+                    alt={
+                      state.singleProduct[0]?.multipleURL[currentIndex]
+                        .imageName
+                    }
+                    width={50}
+                    height={50}
+                    className="w-full"
+                  />
+                )}
               </div>
-              <div className="flex snap-proximity snap-x snap-mandatory  w-full mx:auto overflow-x-scroll mt-5 lg:py-4 py-4 space-x-4">
-                {state.singleProduct[0].multipleURL.map(
+              <div className="flex snap-x snap-mandatory  w-full mx:auto overflow-x-scroll mt-5 lg:py-4 py-4 space-x-4">
+                {state.singleProduct[0]?.multipleURL.map(
                   (res: any, index: number) => {
                     return (
                       <Fragment key={res.imageName}>
@@ -129,7 +132,7 @@ const ProductDetail = () => {
                           alt={res.imageName}
                           width={50}
                           height={50}
-                          className="snap-center lg:w-[6rem] w-[5rem] aspect-[4/4] border-2 border-white hover:border-red-400 cursor-pointer object-cover"
+                          className="snap-center lg:w-[6rem] lg:h-[4.4rem] h-[3.7rem] w-[5rem] aspect-[4/4] border-2 border-white hover:border-red-400 cursor-pointer object-cover"
                           onClick={() => goToImage(index)}
                         />
                       </Fragment>
@@ -140,22 +143,22 @@ const ProductDetail = () => {
             </div>
             <div className="md:col-span-2 col-span-2">
               <h1 className="font-quicksand md:text-3xl text-lg font-semibold capitalize text-slate-800">
-                {state.singleProduct[0].product_name}
+                {state.singleProduct[0]?.product_name}
               </h1>
               <hr className="my-4" />
               <p className="font-quicksand text-base text-slate-900">
-                {state.singleProduct[0].description.substring(0, 150)}
-                {state.singleProduct[0].description.length >= 150 && "..."}
+                {state.singleProduct[0]?.description.substring(0, 150)}
+                {state.singleProduct[0]?.description.length >= 150 && "..."}
               </p>
               <p className="font-quicksand lg:text-2xl text-base font-semibold text-slate-900 mt-4">
                 ₦{" "}
                 {Intl.NumberFormat("en-US").format(
-                  state.singleProduct[0].price
+                  state.singleProduct[0]?.price
                 )}
               </p>
               <p className="font-quicksand text-base text-slate-900 mt-4">
                 Availability:{" "}
-                {state.singleProduct[0].quantity > 0 ? (
+                {state.singleProduct[0]?.quantity > 0 ? (
                   <span className="ml-3 px-6 py-2 bg-green-100/70 text-xs rounded-lg">
                     In stock
                   </span>
@@ -166,7 +169,7 @@ const ProductDetail = () => {
                 )}
               </p>
               <p className="font-quicksand text-base text-slate-900 mt-4">
-                Quantity: <span> {state.singleProduct[0].quantity}</span>
+                Quantity: <span> {state.singleProduct[0]?.quantity}</span>
               </p>
               <div className="flex flex-row items-center space-x-5 mt-6">
                 <button className="p-2 rounded-md shadow-sm shadow-gray-300">
@@ -242,210 +245,6 @@ const ProductDetail = () => {
               </div>
             </div>
           </div>
-
-          {/* <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-green-400 grid lg:grid-cols-6 grid-cols-2 p-8 my-24 rounded-lg lg:divide-x lg:space-y-0  space-y-8">
-          <div className="col-span-2 grid place-content-center ">
-            {" "}
-            <div className="flex flex-row items-center">
-              <span className="font-quicksand font-semibold ">
-                Warranty: 7 days
-              </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                className="bi bi-info-circle fill-green-400 ml-4"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z" />
-              </svg>
-            </div>{" "}
-          </div>
-          <div className="col-span-2 grid place-content-center">
-            <div className="flex flex-row items-center">
-              <span className="font-quicksand font-semibold ">
-                Return Policy: No return policy
-              </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                className="bi bi-bootstrap-reboot fill-green-400 ml-4"
-                viewBox="0 0 16 16"
-              >
-                <path d="M1.161 8a6.84 6.84 0 1 0 6.842-6.84.58.58 0 1 1 0-1.16 8 8 0 1 1-6.556 3.412l-.663-.577a.58.58 0 0 1 .227-.997l2.52-.69a.58.58 0 0 1 .728.633l-.332 2.592a.58.58 0 0 1-.956.364l-.643-.56A6.812 6.812 0 0 0 1.16 8z" />
-                <path d="M6.641 11.671V8.843h1.57l1.498 2.828h1.314L9.377 8.665c.897-.3 1.427-1.106 1.427-2.1 0-1.37-.943-2.246-2.456-2.246H5.5v7.352h1.141zm0-3.75V5.277h1.57c.881 0 1.416.499 1.416 1.32 0 .84-.504 1.324-1.386 1.324h-1.6z" />
-              </svg>
-            </div>
-          </div>
-          <div className="col-span-2 grid place-content-center">
-            {" "}
-            <div className="flex flex-row items-center">
-              <span className="font-quicksand font-semibold ">
-                Return Policy: No return policy
-              </span>
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="20"
-                height="20"
-                fill="currentColor"
-                className="bi bi-bootstrap-reboot fill-green-400 ml-4"
-                viewBox="0 0 16 16"
-              >
-                <path d="M1.161 8a6.84 6.84 0 1 0 6.842-6.84.58.58 0 1 1 0-1.16 8 8 0 1 1-6.556 3.412l-.663-.577a.58.58 0 0 1 .227-.997l2.52-.69a.58.58 0 0 1 .728.633l-.332 2.592a.58.58 0 0 1-.956.364l-.643-.56A6.812 6.812 0 0 0 1.16 8z" />
-                <path d="M6.641 11.671V8.843h1.57l1.498 2.828h1.314L9.377 8.665c.897-.3 1.427-1.106 1.427-2.1 0-1.37-.943-2.246-2.456-2.246H5.5v7.352h1.141zm0-3.75V5.277h1.57c.881 0 1.416.499 1.416 1.32 0 .84-.504 1.324-1.386 1.324h-1.6z" />
-              </svg>
-            </div>
-          </div>
-        </div> */}
-
-          {/* Review */}
-          {/* <div className="my-32">
-          <h2 className="font-quicksand text-lg uppercase font-bold mb-4">
-            Review
-          </h2>
-          <div className="grid lg:grid-cols-8 grid-6">
-            <div className="col-span-6">
-              <div className="flex flex-row flex-wrap items-center justify-between">
-                <h3 className="font-quicksand capitalize font-semibold">
-                  Sarah walker
-                </h3>
-                <div className="flex flex-row flex-wrap items-center space-x-3">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-star-fill fill-yellow-500"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-star-fill fill-yellow-500"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                  </svg>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="16"
-                    height="16"
-                    fill="currentColor"
-                    className="bi bi-star-fill fill-yellow-500"
-                    viewBox="0 0 16 16"
-                  >
-                    <path d="M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.282.95l-3.522 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z" />
-                  </svg>
-                </div>
-              </div>
-              <p className="font-quicksand my-4">
-                Lorem ipsum, dolor sit amet consectetur adipisicing elit. Rerum
-                vel nulla facilis doloribus veritatis officiis! Commodi
-                consequuntur laborum repudiandae rerum at aut voluptate
-                obcaecati maxime, sequi est optio reiciendis incidunt?
-              </p>
-              <p className="font-quicksand text-base text-gray-400 my-4">
-                02/04/2023
-              </p>
-            </div>
-          </div>
-        </div> */}
-
-          {/* <h2 className="font-quicksand font-semibold mt-28 mb-6">
-          Other item you might be interested in{" "}
-        </h2>
-        <div className="grid lg:grid-cols-8 sm:grid-cols-4 grid-cols-2 gap-8">
-          <div className="lg:col-span-2 col-span-2">
-            <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] rounded-md pb-6 relative">
-              <div className="w-full h-48 overflow-hidden">
-                <Image
-                  src={Shoe}
-                  alt="Shoe"
-                  className="w-full h-full object-cover transition-all duration-150 scale-110 hover:scale-100"
-                />
-              </div>
-              <div className="absolute top-44 right-8 w-12 h-12 rounded-full bg-white grid place-content-center shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-cart3 fill-red-400"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                </svg>
-              </div>
-              <div className="px-4 mt-8">
-                <h1 className="font-quicksand text-base text-slate-800 font-semibold capitalize">
-                  <Link
-                    href=""
-                    className="underline decoration-wavy decoration-red-300"
-                  >
-                    Lg smart tv
-                  </Link>
-                </h1>
-                <div className="flex flex-row items-center flex-wrap justify-between mt-2">
-                  <h2 className="font-quicksand text-[0.87em] text-slate-600 capitalize">
-                    Men clothing
-                  </h2>
-                  <h3 className="font-quicksand text-[0.87em] text-slate-600 px-6 py-2 bg-gray-50 rounded-lg  font-semibold">
-                    #89844
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="lg:col-span-2 col-span-2">
-            <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] rounded-md pb-6 relative">
-              <div className="w-full h-48 overflow-hidden">
-                <Image
-                  src={Shoe}
-                  alt="Shoe"
-                  className="w-full h-full object-cover transition-all duration-150 scale-110 hover:scale-100"
-                />
-              </div>
-              <div className="absolute top-44 right-8 w-12 h-12 rounded-full bg-white grid place-content-center shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] shadow-red-400">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="currentColor"
-                  className="bi bi-cart3 fill-red-400"
-                  viewBox="0 0 16 16"
-                >
-                  <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
-                </svg>
-              </div>
-              <div className="px-4 mt-8">
-                <h1 className="font-quicksand text-base text-slate-800 font-semibold capitalize">
-                  <Link
-                    href=""
-                    className="underline decoration-wavy decoration-red-300"
-                  >
-                    Lg smart tv
-                  </Link>
-                </h1>
-                <div className="flex flex-row items-center flex-wrap justify-between mt-2">
-                  <h2 className="font-quicksand text-[0.87em] text-slate-600 capitalize">
-                    Men clothing
-                  </h2>
-                  <h3 className="font-quicksand text-[0.87em] text-slate-600 px-6 py-2 bg-gray-50 rounded-lg  font-semibold">
-                    #89844
-                  </h3>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
         </section>
       )}
     </>

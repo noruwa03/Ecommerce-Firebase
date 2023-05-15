@@ -629,16 +629,8 @@ video {
   top: 1.4rem;
 }
 
-.top-\[35\%\] {
-  top: 35%;
-}
-
 .top-\[50\%\] {
   top: 50%;
-}
-
-.top-\[5\%\] {
-  top: 5%;
 }
 
 .z-10 {
@@ -675,14 +667,6 @@ video {
 
 .col-span-8 {
   grid-column: span 8 / span 8;
-}
-
-.col-span-1 {
-  grid-column: span 1 / span 1;
-}
-
-.col-span-3 {
-  grid-column: span 3 / span 3;
 }
 
 .my-10 {
@@ -811,10 +795,6 @@ video {
   display: block;
 }
 
-.inline-block {
-  display: inline-block;
-}
-
 .flex {
   display: flex;
 }
@@ -893,6 +873,22 @@ video {
 
 .h-screen {
   height: 100vh;
+}
+
+.h-\[\] {
+  height: ;
+}
+
+.h-\[3rem\] {
+  height: 3rem;
+}
+
+.h-\[3\.6rem\] {
+  height: 3.6rem;
+}
+
+.h-\[3\.7rem\] {
+  height: 3.7rem;
 }
 
 .w-12 {
@@ -985,10 +981,6 @@ video {
 
 .snap-mandatory {
   --tw-scroll-snap-strictness: mandatory;
-}
-
-.snap-proximity {
-  --tw-scroll-snap-strictness: proximity;
 }
 
 .snap-center {
@@ -1489,10 +1481,6 @@ video {
   text-align: start;
 }
 
-.align-middle {
-  vertical-align: middle;
-}
-
 .font-quicksand {
   font-family: Quicksand, sans-serif;
 }
@@ -1545,10 +1533,6 @@ video {
 
 .font-semibold {
   font-weight: 600;
-}
-
-.font-normal {
-  font-weight: 400;
 }
 
 .uppercase {
@@ -2365,6 +2349,22 @@ input::file-selector-button {
     height: 2rem;
   }
 
+  .lg\:h-\[4rem\] {
+    height: 4rem;
+  }
+
+  .lg\:h-\[5rem\] {
+    height: 5rem;
+  }
+
+  .lg\:h-\[rem\] {
+    height: rem;
+  }
+
+  .lg\:h-\[4\.4rem\] {
+    height: 4.4rem;
+  }
+
   .lg\:w-11 {
     width: 2.75rem;
   }
@@ -2383,10 +2383,6 @@ input::file-selector-button {
 
   .lg\:w-\[6rem\] {
     width: 6rem;
-  }
-
-  .lg\:w-\[rem\] {
-    width: rem;
   }
 
   .lg\:grid-cols-10 {
