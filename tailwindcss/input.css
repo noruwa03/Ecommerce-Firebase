@@ -7,6 +7,11 @@
   src: url("../assets/fonts/Quicksand-Regular.ttf");
 }
 
+@font-face {
+  font-family: "QuicksandBold";
+  src: url("../assets/fonts/Quicksand-VariableFont_wght.ttf");
+}
+
 ::-webkit-scrollbar {
   width: 10px;
 }

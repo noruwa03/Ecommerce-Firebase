@@ -1387,6 +1387,11 @@ video {
   padding-bottom: 0px;
 }
 
+.py-12 {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
 .py-14 {
   padding-top: 3.5rem;
   padding-bottom: 3.5rem;
@@ -1415,11 +1420,6 @@ video {
 .py-6 {
   padding-top: 1.5rem;
   padding-bottom: 1.5rem;
-}
-
-.py-12 {
-  padding-top: 3rem;
-  padding-bottom: 3rem;
 }
 
 .pb-16 {
@@ -1478,6 +1478,10 @@ video {
   font-family: Quicksand, sans-serif;
 }
 
+.font-quicksand_bold {
+  font-family: QuicksandBold, sans-serif;
+}
+
 .font-serif {
   font-family: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
 }
@@ -1485,6 +1489,11 @@ video {
 .text-2xl {
   font-size: 1.5rem;
   line-height: 2rem;
+}
+
+.text-3xl {
+  font-size: 1.875rem;
+  line-height: 2.25rem;
 }
 
 .text-\[0\.87em\] {
@@ -1693,6 +1702,12 @@ video {
   font-family: "Quicksand";
 
   src: url("../assets/fonts/Quicksand-Regular.ttf");
+}
+
+@font-face {
+  font-family: "QuicksandBold";
+
+  src: url("../assets/fonts/Quicksand-VariableFont_wght.ttf");
 }
 
 ::-webkit-scrollbar {

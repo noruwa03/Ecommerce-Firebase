@@ -62,7 +62,7 @@ const AllOrders: NextPageWithLayout = () => {
       ) : null}
       {order.loading ? <ScreenLoader /> : null}
       {order.error ? <ScreenError message={order.error} /> : null}
-      <section className="py-20 lg:px-16 md:px-8 px-4">
+      <section className="lg:py-20 py-14 lg:px-16 md:px-8 px-4">
         {order.adminOrder.length === 0 ? (
           <>
             <div className="grid place-content-center">

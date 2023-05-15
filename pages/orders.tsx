@@ -33,7 +33,7 @@ const Orders: NextPageWithLayout = () => {
       ) : (
         <>
           {" "}
-          <section className="py-20 lg:px-16 md:px-8 px-4">
+          <section className="lg:py-20 py-14 lg:px-16 md:px-8 px-4">
             {myOrder.productOrder.length === 0 ? (
               <>
                 <div className="grid place-content-center">
@@ -68,10 +68,10 @@ const Orders: NextPageWithLayout = () => {
                     Orders
                   </h1>
                   <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
-                    <div className="lg:block md:hidden hidden font-quicksand font-semibold col-span-2">
+                    <div className="lg:block md:block  md:col-span-3 col-span-4 font-quicksand font-semibold lg:col-span-2">
                       Status
                     </div>
-                    <div className="lg:block md:block md:col-span-3 font-quicksand font-semibold lg:col-span-4 col-span-4">
+                    <div className="lg:block  md:hidden hidden font-quicksand font-semibold lg:col-span-4">
                       Payment ID
                     </div>
                     <div className="lg:block md:block hidden md:col-span-2 font-quicksand font-semibold col-span-2">
