@@ -27,6 +27,8 @@ export const storeOrder = createAsyncThunk(
       totalPrice: payload.totalPrice,
       customerDetail: payload.customerDetail,
       orderItem: payload.orderItem,
+      paymentType: "Paypal",
+      status: "Pending",
       createdAt: Date.now(),
       updatedAt: Date.now(),
     });

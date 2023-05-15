@@ -90,10 +90,10 @@ const Orders: NextPageWithLayout = () => {
                   <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white w-full rounded-sm py-3 px-5">
                     <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
                       <div className="lg:block md:hidden hidden font-quicksand  col-span-2">
-                        Paypal
+                        {res.paymentType}
                       </div>
                       <div className="lg:block md:block md:col-span-3 font-quicksand  lg:col-span-4 col-span-4">
-                        Pending
+                        {res.status}
                       </div>
                       <div className="lg:block md:block hidden md:col-span-2 font-quicksand col-span-2">
                         ₦ {Intl.NumberFormat("en-US").format(res.totalPrice)}
@@ -108,7 +108,6 @@ const Orders: NextPageWithLayout = () => {
                         >
                           View
                         </Link>
-                       
                       </div>
                     </div>
                   </div>
