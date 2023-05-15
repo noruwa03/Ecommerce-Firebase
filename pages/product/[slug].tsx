@@ -132,7 +132,7 @@ const ProductDetail = () => {
                           alt={res.imageName}
                           width={50}
                           height={50}
-                          className="snap-center lg:w-[6rem] lg:h-[4.4rem] h-[3.7rem] w-[5rem] aspect-[4/4] border-2 border-white hover:border-red-400 cursor-pointer object-cover"
+                          className="snap-center lg:w-[6rem] lg:h-[4.4rem] h-[3.7rem] w-[5rem] aspect-[4/3] border-2 border-white hover:border-red-400 cursor-pointer object-cover"
                           onClick={() => goToImage(index)}
                         />
                       </Fragment>
