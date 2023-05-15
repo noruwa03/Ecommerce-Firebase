@@ -1482,10 +1482,6 @@ video {
   padding-top: 6rem;
 }
 
-.pt-28 {
-  padding-top: 7rem;
-}
-
 .pt-32 {
   padding-top: 8rem;
 }
@@ -1527,9 +1523,9 @@ video {
   line-height: 2rem;
 }
 
-.text-3xl {
-  font-size: 1.875rem;
-  line-height: 2.25rem;
+.text-4xl {
+  font-size: 2.25rem;
+  line-height: 2.5rem;
 }
 
 .text-\[0\.87em\] {
@@ -1559,11 +1555,6 @@ video {
 .text-xs {
   font-size: 0.75rem;
   line-height: 1rem;
-}
-
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
 }
 
 .font-bold {
@@ -2548,10 +2539,6 @@ input::file-selector-button {
 
   .lg\:pt-32 {
     padding-top: 8rem;
-  }
-
-  .lg\:pb-12 {
-    padding-bottom: 3rem;
   }
 
   .lg\:text-start {

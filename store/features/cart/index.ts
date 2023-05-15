@@ -31,20 +31,20 @@ const cartSlice = createSlice({
       const checkQty = state.cartItem.find((res) => res.id === action.payload);
 
       if (checkQty!.quantity < 10) {
-         checkQty!.quantity++;
-      } 
+        checkQty!.quantity++;
+      }
     },
     decreaseQuantity(state, action: PayloadAction<any>) {
       const checkQty = state.cartItem.find((res) => res.id === action.payload);
       if (checkQty!.quantity > 1) {
         checkQty!.quantity--;
-      } 
+      }
     },
     removeItemFromCart(state, action: PayloadAction<any>) {
       state.cartItem = state.cartItem.filter(
         (res) => res.id !== action.payload
       );
-      state.message = `Item successfully removed with id ${action.payload}`;
+      state.message = `Item successfully removed`;
     },
     resetCart(state) {
       state.cartItem = [];
@@ -57,8 +57,8 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(storeOrder.fulfilled, (state) => {
       state.cartItem = [];
-    })
-  }
+    });
+  },
 });
 
 export default cartSlice.reducer;
