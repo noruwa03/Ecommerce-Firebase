@@ -71,51 +71,52 @@ export const signIn = createAsyncThunk(
   }
 );
 
-export const signUp = createAsyncThunk(
-  "signupUser/signUp",
-  (payload: UserInput) => {
-    setPersistence(auth, browserLocalPersistence);
-    const promise = createUserWithEmailAndPassword(
-      auth,
-      payload.email,
-      payload.password
-    ).then(async (res) => {
-      const result = sendEmailVerification(res.user).then(async () => {
-        await setDoc(doc(firestore, "users", res.user.uid), {
-          email: payload.email,
-          displayName: "",
-          photoName: "",
-          photoURL: "",
-          vendor: false,
-          storeName: "",
-          storeInfo: "",
-          storeBGPhotoName: "",
-          storeBGPhotoURL: "",
-          createdAt: serverTimestamp(),
-          updatedAt: serverTimestamp(),
-        });
+export const signUp = createAsyncThunk("signupUser/signUp", (payload: any) => {
+  // console.log(payload.input.email);
+  // console.log(payload.input.password);
+  // console.log(payload.isVendor);
+  setPersistence(auth, browserLocalPersistence);
 
-        const userObj = {
-          uid: res.user.uid,
-          email: res.user.email,
-          displayName: "",
-          photoName: "",
-          photoURL: "",
-          vendor: false,
-          storeName: "",
-          storeInfo: "",
-          storeBGPhotoName: "",
-          storeBGPhotoURL: "",
-        };
-
-        return userObj;
+  const promise = createUserWithEmailAndPassword(
+    auth,
+    payload.input.email,
+    payload.input.password
+  ).then(async (res) => {
+    const result = sendEmailVerification(res.user).then(async () => {
+      await setDoc(doc(firestore, "users", res.user.uid), {
+        email: payload.input.email,
+        displayName: "",
+        photoName: "",
+        photoURL: "",
+        vendor: payload.isVendor,
+        storeName: "",
+        storeInfo: "",
+        storeBGPhotoName: "",
+        storeBGPhotoURL: "",
+        createdAt: serverTimestamp(),
+        updatedAt: serverTimestamp(),
       });
-      return result;
-    });
 
-    return promise;
-  }
-);
+      const userObj = {
+        uid: res.user.uid,
+        email: res.user.email,
+        displayName: "",
+        photoName: "",
+        photoURL: "",
+        vendor: payload.isVendor,
+        storeName: "",
+        storeInfo: "",
+        storeBGPhotoName: "",
+        storeBGPhotoURL: "",
+      };
+
+      return userObj;
+    });
+    return result;
+  });
+
+  return promise;
+});
 
 export const signOutCurrentUser = () => {
   signOut(auth).then(() => {

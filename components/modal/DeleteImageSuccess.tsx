@@ -8,7 +8,7 @@ const DeleteImageSuccess = (props: ISUCCESS) => {
   const reloadWindow = () => {
     setTimeout(() => {
       window.location.reload();
-    }, 3000);
+    }, 1000);
   };
   return (
     <>

@@ -1,7 +1,11 @@
 import React from "react";
 import Link from "next/link";
+import { useAppSelector } from "@/appHook/hooks";
 
 const EmailVerification = () => {
+
+  const state = useAppSelector((state) => state.auth);
+  
   return (
     <>
       <div className="fixed top-0 left-0 h-screen w-full bg-[#000000cc] z-20">
@@ -10,12 +14,21 @@ const EmailVerification = () => {
             A link to verify your email will be sent to you shortly.
           </div>
           <div className="text-center my-6">
-            <Link
-              href="/dashboard"
-              className="font-quicksand px-8 py-3 text-base bg-red-400 rounded-md text-white font-semibold"
-            >
-              Continue
-            </Link>
+            {state.user.vendor === true ? (
+              <Link
+                href="/dashboard"
+                className="font-quicksand px-8 py-3 text-base bg-red-400 rounded-md text-white font-semibold"
+              >
+                Continue
+              </Link>
+            ) : (
+              <Link
+                href="/"
+                className="font-quicksand px-8 py-3 text-base bg-red-400 rounded-md text-white font-semibold"
+              >
+                Continue
+              </Link>
+            )}
           </div>
         </div>
       </div>

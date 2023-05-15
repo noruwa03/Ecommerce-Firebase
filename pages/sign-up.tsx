@@ -29,13 +29,26 @@ const SignUp: NextPageWithLayout = () => {
     setInput((prev) => ({ ...prev, [name]: value }));
   };
 
+   const [isVendor, setIsVendor] = useState(false);
+
+   const isVendorHandler = (event: ChangeEvent<HTMLInputElement>) => {
+     setIsVendor(event.target.checked);
+     
+   };
+
+
+
   const submitHandler = (evt: FormEvent<HTMLFormElement>): void => {
     evt.preventDefault();
     if (input.password.length < 6) {
       setPasswordError("Password should be greater than 6 characters");
     } else {
       setPasswordError("");
-      dispatch(signUp(input));
+      const formData = {
+        input,
+        isVendor
+      }
+      dispatch(signUp(formData));
     }
   };
 
@@ -102,6 +115,24 @@ const SignUp: NextPageWithLayout = () => {
                     {passwordError}
                   </div>
                 ) : null}
+                <div className="mt-5">
+                  <label
+                    htmlFor="checkbox"
+                    className="flex items-start space-x-3"
+                  >
+                    <input
+                      id="checkbox"
+                      type="checkbox"
+                      name="vendor"
+                      onChange={isVendorHandler}
+                    />
+                    <span className="font-serif text-sm">
+                      {" "}
+                      Tick to become a vendor or leave unchecked to become a
+                      customer
+                    </span>
+                  </label>
+                </div>
                 <button className="w-full bg-red-400 py-3 outline-none text-white font-serif text-sm font-bold my-6 rounded-lg">
                   Create an account
                 </button>
