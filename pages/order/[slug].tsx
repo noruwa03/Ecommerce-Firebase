@@ -41,14 +41,14 @@ const OrderDetail: NextPageWithLayout = () => {
             <>
               {" "}
               {currentUser.user.uid === myOrder.productOrderDetail[0]?.uid ? (
-                <section className="py-20 lg:px-16 md:px-8 px-6">
+                <section className="py-20 lg:px-16 md:px-8 px-4">
                   <div className="grid lg:grid-cols-8 grid-cols-2 gap-12">
                     <div className="lg:col-span-4 col-span-2 divide-y">
                       <div className="flex flex-wrap items-center pt-4  mb-3">
                         <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           Fullname
                         </h2>
-                        <p className="w-[50%]  font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                        <p className="w-[50%] break-words font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           {
                             myOrder.productOrderDetail[0]?.customerDetail
                               .fullname
@@ -60,7 +60,7 @@ const OrderDetail: NextPageWithLayout = () => {
                         <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           Email
                         </h2>
-                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                        <p className="w-[50%] break-words font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           {myOrder.productOrderDetail[0]?.customerDetail.email}
                         </p>
                       </div>
@@ -68,7 +68,7 @@ const OrderDetail: NextPageWithLayout = () => {
                         <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           Phone No
                         </h2>
-                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                        <p className="w-[50%] break-words font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           {
                             myOrder.productOrderDetail[0]?.customerDetail
                               .phone_no
@@ -79,7 +79,7 @@ const OrderDetail: NextPageWithLayout = () => {
                         <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           City
                         </h2>
-                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                        <p className="w-[50%] break-words font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           {myOrder.productOrderDetail[0]?.customerDetail.city}
                         </p>
                       </div>
@@ -87,7 +87,7 @@ const OrderDetail: NextPageWithLayout = () => {
                         <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           State
                         </h2>
-                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                        <p className="w-[50%] break-words font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           {myOrder.productOrderDetail[0]?.customerDetail.state}
                         </p>
                       </div>
@@ -95,18 +95,18 @@ const OrderDetail: NextPageWithLayout = () => {
                         <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           Country
                         </h2>
-                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                        <p className="w-[50%] break-words font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           {
                             myOrder.productOrderDetail[0]?.customerDetail
                               .country
                           }
                         </p>
                       </div>
-                      <div className="flex flex-wrap items-center pt-10  mb-3">
-                        <h2 className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                      <div className="flex flex-wrap items-center pt-10 lg:space-y-0 space-y-4  mb-3">
+                        <h2 className="w-[100%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           Address
                         </h2>
-                        <p className="w-[50%] font-quicksand font-semibold lg:text-base text-sm text-slate-600">
+                        <p className="w-[100%] break-words font-quicksand font-semibold lg:text-base text-sm text-slate-600">
                           {
                             myOrder.productOrderDetail[0]?.customerDetail
                               .address
@@ -119,7 +119,7 @@ const OrderDetail: NextPageWithLayout = () => {
                         (res: any) => {
                           return (
                             <Fragment key={res.id}>
-                              <div className="flex flex-wrap items-start pt-4  mb-3">
+                              <div className="flex flex-wrap items-start justify-between pt-4  mb-3">
                                 <div className="w-[20%] ">
                                   <Image
                                     priority={true}
@@ -129,10 +129,11 @@ const OrderDetail: NextPageWithLayout = () => {
                                     alt={res.id}
                                     width={100}
                                     height={100}
+                                    className="w-full"
                                   />
                                 </div>
                                 <div className="w-[76%]">
-                                  <p className="font-quicksand font-bold lg:text-base text-sm text-slate-600">
+                                  <p className="font-quicksand font-bold lg:text-base text-sm text-slate-600 break-words">
                                     {res.name}
                                   </p>
                                   <p className="font-quicksand font-bold lg:text-base text-xs text-slate-600">
