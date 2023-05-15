@@ -39,7 +39,7 @@ const OrderDetail: NextPageWithLayout = () => {
             <ScreenError message="No product" />
           ) : (
             <>
-              <section className="py-20 lg:px-16 md:px-8 px-4">
+              <section className="lg:py-20 py-12  lg:px-16 md:px-8 px-4">
                 <div className="grid lg:grid-cols-8 grid-cols-2 gap-12">
                   <div className="lg:col-span-4 col-span-2 divide-y">
                     <div className="flex flex-wrap items-center pt-4  mb-3">

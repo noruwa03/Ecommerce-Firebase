@@ -69,10 +69,10 @@ const Orders: NextPageWithLayout = () => {
                   </h1>
                   <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
                     <div className="lg:block md:hidden hidden font-quicksand font-semibold col-span-2">
-                      Payment Type
+                      Status
                     </div>
                     <div className="lg:block md:block md:col-span-3 font-quicksand font-semibold lg:col-span-4 col-span-4">
-                      Status
+                      Payment ID
                     </div>
                     <div className="lg:block md:block hidden md:col-span-2 font-quicksand font-semibold col-span-2">
                       Total Price
@@ -89,12 +89,22 @@ const Orders: NextPageWithLayout = () => {
                   return (
                     <Fragment key={res.id}>
                       <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white w-full rounded-sm py-3 px-5">
-                        <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
-                          <div className="lg:block md:hidden hidden font-quicksand  col-span-2">
-                            {res.paymentType}
+                        <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3 font-medium">
+                          <div className="lg:block md:block  md:col-span-3 col-span-4 font-quicksand lg:col-span-2">
+                            {res.status === "Processing" ? (
+                              <span className="text-yellow-500">
+                                {res.status}
+                              </span>
+                            ) : res.status === "Delivered" ? (
+                              <span className="text-green-500">
+                                {res.status}
+                              </span>
+                            ) : (
+                              <span className="">{res.status}</span>
+                            )}
                           </div>
-                          <div className="lg:block md:block md:col-span-3 font-quicksand  lg:col-span-4 col-span-4">
-                            {res.status}
+                          <div className="lg:block  md:hidden hidden font-quicksand lg:col-span-4">
+                            {res.paymentID}
                           </div>
                           <div className="lg:block md:block hidden md:col-span-2 font-quicksand col-span-2">
                             ₦{" "}
@@ -105,7 +115,7 @@ const Orders: NextPageWithLayout = () => {
                           </div>
                           <div className="lg:flex flex-row items-center space-x-8 md:flex flex md:col-span-1 font-quicksand col-span-2">
                             <Link
-                              href={`order/${res.id}`}
+                              href={`/order/${res.id}`}
                               className="px-6 py-2 bg-green-100/70 text-sm rounded-lg font-quicksand font-semibold"
                             >
                               View
