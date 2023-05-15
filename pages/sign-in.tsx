@@ -14,6 +14,7 @@ import { useRouter } from "next/router";
 
 const SignIn: NextPageWithLayout = () => {
   const state = useAppSelector((state) => state.auth);
+
   const dispatch = useAppDispatch();
   const userInput: UserInput = {
     email: "",
@@ -33,7 +34,9 @@ const SignIn: NextPageWithLayout = () => {
     evt.preventDefault();
     dispatch(signIn(input))
       .unwrap()
-      .then(() => router.push("/dashboard"));
+      .then(() => {
+        router.push("/");
+      });
   };
 
   const close = () => dispatch(closeModal());
