@@ -1,7 +1,7 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
 import { storeOrder } from "@/store/features/order";
-
+import { PayPalScriptProvider, PayPalButtons } from "@paypal/react-paypal-js";
 
 interface ICART {
   totalPrice: number;
@@ -11,6 +11,9 @@ interface ICART {
 const BillingInfo = (props: ICART) => {
   const state = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
+  const [showPayPalCheckout, setShowPayPalCheckout] = useState(false);
+
+
 
   const [info, setInfo] = useState({
     fullname: "",
@@ -31,14 +34,7 @@ const BillingInfo = (props: ICART) => {
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const formData = {
-      uid: state.user.uid,
-      totalPrice: props.totalPrice,
-      customerDetail: info,
-      orderItem: props.orderItem,
-    };
-
-    dispatch(storeOrder(formData))
+    setShowPayPalCheckout(true);
   };
   return (
     <>
@@ -162,6 +158,66 @@ const BillingInfo = (props: ICART) => {
               Continue
             </button>
           </form>
+
+          {showPayPalCheckout ? (
+            <>
+              {" "}
+              <div className="fixed top-0 left-0 h-screen w-full bg-[#000000] z-50">
+                <div className="lg:w-2/5 w-4/5 fixed top-[50%] left-[50%] -translate-y-[50%] -translate-x-[50%] p-8 bg-white shadow-sm shadow-green-300 rounded-lg">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="28"
+                    height="28"
+                    fill="currentColor"
+                    className="bi bi-x-circle absolute top-3 right-4"
+                    viewBox="0 0 16 16"
+                    onClick={() => setShowPayPalCheckout(false)}
+                  >
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                    <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" />
+                  </svg>
+                  <div className="mt-7">
+                    <PayPalScriptProvider
+                      options={{
+                        "client-id":
+                          "AbNlAGqctKCy3jOAlCopa41Iavz9AYGmNeQ9dfK81U9tQ3P0ztyss3PWE8nHJUnztdvAjtLxhjiJiPds",
+                      }}
+                    >
+                      <PayPalButtons
+                        createOrder={(data, actions) => {
+                          return actions.order.create({
+                            purchase_units: [
+                              {
+                                amount: {
+                                  currency_code: "USD",
+                                  value: `${props.totalPrice}`,
+                                },
+                              },
+                            ],
+                          });
+                        }}
+                        onApprove={(data: any, actions: any) => {
+                          return actions.order
+                            .capture()
+                            .then((details: any) => {
+                              const formData = {
+                                uid: state.user.uid,
+                                totalPrice: props.totalPrice,
+                                customerDetail: info,
+                                orderItem: props.orderItem,
+                                paymentID: details.id,
+                              };
+
+                              dispatch(storeOrder(formData));
+                            });
+                        }}
+                      />
+                    </PayPalScriptProvider>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : null}
         </div>
       </section>
     </>

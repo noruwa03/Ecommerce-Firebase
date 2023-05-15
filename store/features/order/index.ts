@@ -76,7 +76,7 @@ export const storeOrder = createAsyncThunk(
       totalPrice: payload.totalPrice,
       customerDetail: payload.customerDetail,
       orderItem: payload.orderItem,
-      paymentID: "1242425",
+      paymentID: payload.paymentID,
       status: "Pending",
       createdAt: Date.now(),
       updatedAt: Date.now(),
