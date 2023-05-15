@@ -106,13 +106,10 @@ const Cart = () => {
               <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
             </svg>
           </div>
-          <div className="text-center mt-6">
-            {" "}
-            <Link
-              href="/"
-              className="font-quicksand lg:text-lg text-base  text-slate-600 font-bold underline decoration-wavy decoration-red-300"
-            >
-              Continue Shopping
+          <div className="mt-6 font-quicksand font-semibold text-base text-slate-700 text-center">
+            No item in cart,
+            <Link href="/" className="text-red-400 ml-2">
+              continue shopping
             </Link>
           </div>
         </div>
@@ -149,7 +146,7 @@ const Cart = () => {
                   <Fragment key={res.id}>
                     {" "}
                     <div className="lg:my-4 my-2">
-                      <div className="grid lg:grid-cols-10 grid-cols-4 items-center lg:gap-6 gap-y-0 gap-y-5 gap-2 lg:py-0  py-6 ">
+                      <div className="grid lg:grid-cols-10 grid-cols-4 items-center lg:gap-6 gap-y-5 gap-2 lg:py-0  py-6 ">
                         <div className="lg:col-span-2 col-span-1">
                           <Image
                             priority={true}
@@ -186,7 +183,7 @@ const Cart = () => {
                               width="16"
                               height="16"
                               fill="currentColor"
-                              className="bi bi-dash-lg"
+                              className="bi bi-dash-lg stroke-slate-900"
                               viewBox="0 0 16 16"
                             >
                               <path
@@ -209,7 +206,7 @@ const Cart = () => {
                               width="16"
                               height="16"
                               fill="currentColor"
-                              className="bi bi-plus-lg"
+                              className="bi bi-plus-lg stroke-slate-900"
                               viewBox="0 0 16 16"
                             >
                               <path

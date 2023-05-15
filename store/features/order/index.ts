@@ -1,6 +1,16 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
-import { addDoc, collection, query, where, getDocs, doc, getDoc, orderBy } from "firebase/firestore";
+import {
+  addDoc,
+  collection,
+  query,
+  where,
+  getDocs,
+  doc,
+  getDoc,
+  orderBy,
+  updateDoc,
+} from "firebase/firestore";
 import { firestore } from "@/lib/firebase";
 
 interface IORDER {
@@ -18,16 +28,14 @@ const initialState: IORDER = {
   success: "",
   productOrder: [],
   productOrderDetail: [],
-  adminOrder: []
+  adminOrder: [],
 };
 
 export const getAdminOrder = createAsyncThunk(
   "getAdminOrder/fetchAllOrder",
   async () => {
-  
-
     const orderRef = collection(firestore, "orders");
-    const q = query(orderRef, orderBy("updatedAt", "desc"));
+    const q = query(orderRef, orderBy("createdAt", "desc"));
 
     const orders = getDocs(q).then((docRes) => {
       if (docRes.empty) {
@@ -46,6 +54,20 @@ export const getAdminOrder = createAsyncThunk(
   }
 );
 
+export const updateOrder = createAsyncThunk(
+  "updateOrder/updateOrderStatus",
+  async (payload: any) => {
+    const docRef = doc(firestore, "orders", payload.id);
+
+    await updateDoc(docRef, {
+      status: payload.status,
+      updatedAt: Date.now(),
+    });
+
+    return "";
+  }
+);
+
 export const storeOrder = createAsyncThunk(
   "storeOrder/orderItem",
   async (payload: any) => {
@@ -54,7 +76,7 @@ export const storeOrder = createAsyncThunk(
       totalPrice: payload.totalPrice,
       customerDetail: payload.customerDetail,
       orderItem: payload.orderItem,
-      paymentType: "Paypal",
+      paymentID: "1242425",
       status: "Pending",
       createdAt: Date.now(),
       updatedAt: Date.now(),
@@ -108,8 +130,6 @@ export const getProductOrderDetail = createAsyncThunk(
   }
 );
 
-
-
 const orderSlice = createSlice({
   name: "order",
   initialState,
@@ -120,6 +140,7 @@ const orderSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
+    // Store Order
     builder.addCase(storeOrder.pending, (state) => {
       state.loading = true;
     });
@@ -130,6 +151,19 @@ const orderSlice = createSlice({
     builder.addCase(storeOrder.fulfilled, (state) => {
       state.loading = false;
       state.success = "Checkout was successful";
+    });
+
+    // Update Order
+    builder.addCase(updateOrder.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(updateOrder.rejected, (state) => {
+      state.loading = false;
+      state.error = "An error occured";
+    });
+    builder.addCase(updateOrder.fulfilled, (state) => {
+      state.loading = false;
+      state.success = "Order updated successful";
     });
 
     // All Orders
@@ -143,8 +177,8 @@ const orderSlice = createSlice({
     builder.addCase(
       getAdminOrder.fulfilled,
       (state, action: PayloadAction<any>) => {
-        state.loading = false;
         state.adminOrder = action.payload;
+        state.loading = false;
       }
     );
 
@@ -159,8 +193,8 @@ const orderSlice = createSlice({
     builder.addCase(
       getProductOrder.fulfilled,
       (state, action: PayloadAction<any>) => {
-        state.loading = false;
         state.productOrder = action.payload;
+        state.loading = false;
       }
     );
 
@@ -171,8 +205,8 @@ const orderSlice = createSlice({
       builder.addCase(
         getProductOrderDetail.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.loading = false;
           state.productOrderDetail = action.payload;
+          state.loading = false;
         }
       );
   },

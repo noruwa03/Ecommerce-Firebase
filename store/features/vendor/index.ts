@@ -71,7 +71,8 @@ export const getDashboardProduct = createAsyncThunk(
 
 export const storeProduct = createAsyncThunk(
   "storeProduct/uploadProduct",
-  async (payload: any) => {
+  async (payload: any, api) => {
+    const appState = api.getState() as RootState;
     const imagePath: any = [];
 
     await payload.productImages.map(async (img: any) => {
@@ -101,11 +102,15 @@ export const storeProduct = createAsyncThunk(
           price: payload.productInfo.price,
           quantity: payload.productInfo.quantity,
           category: payload.productInfo.category,
+          sku: payload.productInfo.sku,
           description: payload.productInfo.description,
           coverImageName: payload.coverImage.name,
           photoURL: imageURL,
           uid: payload.currentUserId,
           multipleURL: imagePath,
+          phone_no: appState.auth.user.phone_no
+            ? appState.auth.user.phone_no
+            : "",
           createdAt: Date.now(),
           updatedAt: Date.now(),
         });
@@ -121,11 +126,15 @@ export const storeProduct = createAsyncThunk(
           price: payload.productInfo.price,
           quantity: payload.productInfo.quantity,
           category: payload.productInfo.category,
+          sku: payload.productInfo.sku,
           description: payload.productInfo.description,
           coverImageName: "",
           photoURL: "",
           uid: payload.currentUserId,
           multipleURL: imagePath,
+          phone_no: appState.auth.user.phone_no
+            ? appState.auth.user.phone_no
+            : "",
           createdAt: Date.now(),
           updatedAt: Date.now(),
         });
@@ -177,7 +186,8 @@ export const getSingleProduct = createAsyncThunk(
 
 export const updateProduct = createAsyncThunk(
   "updateProduct/updateFirebaseProduct",
-  async (payload: any) => {
+  async (payload: any, api) => {
+    const appState = api.getState() as RootState;
     if (payload.newCoverImageFile) {
       if (payload.oldCoverImageName.length === 0) {
         if (payload.productImages) {
@@ -227,6 +237,9 @@ export const updateProduct = createAsyncThunk(
               photoURL: imageURL,
 
               multipleURL: newImagePath,
+              phone_no: appState.auth.user.phone_no
+                ? appState.auth.user.phone_no
+                : "",
 
               updatedAt: Date.now(),
             });
@@ -256,6 +269,9 @@ export const updateProduct = createAsyncThunk(
             description: payload.productInfo.description,
             coverImageName: payload.newCoverImageFile.name,
             photoURL: imageURL,
+            phone_no: appState.auth.user.phone_no
+              ? appState.auth.user.phone_no
+              : "",
             updatedAt: Date.now(),
           });
 
@@ -311,6 +327,9 @@ export const updateProduct = createAsyncThunk(
               photoURL: imageURL,
 
               multipleURL: newImagePath,
+              phone_no: appState.auth.user.phone_no
+                ? appState.auth.user.phone_no
+                : "",
               updatedAt: Date.now(),
             });
 
@@ -347,6 +366,9 @@ export const updateProduct = createAsyncThunk(
               description: payload.productInfo.description,
               coverImageName: payload.newCoverImageFile.name,
               photoURL: imageURL,
+              phone_no: appState.auth.user.phone_no
+                ? appState.auth.user.phone_no
+                : "",
               updatedAt: Date.now(),
             });
 
@@ -384,6 +406,9 @@ export const updateProduct = createAsyncThunk(
             quantity: payload.productInfo.quantity,
             category: payload.productInfo.category,
             description: payload.productInfo.description,
+            phone_no: appState.auth.user.phone_no
+              ? appState.auth.user.phone_no
+              : "",
             multipleURL: newImagePath,
             updatedAt: Date.now(),
           });
@@ -399,6 +424,9 @@ export const updateProduct = createAsyncThunk(
           quantity: payload.productInfo.quantity,
           category: payload.productInfo.category,
           description: payload.productInfo.description,
+          phone_no: appState.auth.user.phone_no
+            ? appState.auth.user.phone_no
+            : "",
           updatedAt: Date.now(),
         });
 
@@ -532,8 +560,8 @@ const vendorSlice = createSlice({
       builder.addCase(
         getProduct.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.loading = false;
           state.product = action.payload;
+          state.loading = false;
         }
       ),
       //Get Vendor Product
@@ -547,8 +575,8 @@ const vendorSlice = createSlice({
       builder.addCase(
         getDashboardProduct.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.loading = false;
           state.dashboardProduct = action.payload;
+          state.loading = false;
         }
       ),
       // Remove Product
@@ -567,12 +595,11 @@ const vendorSlice = createSlice({
       builder.addCase(getSingleProduct.pending, (state) => {
         state.loading = true;
       }),
- 
       builder.addCase(
         getSingleProduct.fulfilled,
         (state, action: PayloadAction<any>) => {
-           state.loading = false;
           state.singleProduct = action.payload;
+          state.loading = false;
         }
       );
   },

@@ -22,6 +22,9 @@ const Profile: NextPageWithLayout = () => {
         : ""
       : ""
   );
+   const [userPhoneNo, setUserPhoneNo] = useState<string>(
+     state.user ? (state.user.phone_no ? state.user.phone_no : "") : ""
+   );
 
   const close = () => dispatch(closeModal());
 
@@ -49,6 +52,7 @@ const Profile: NextPageWithLayout = () => {
     evt.preventDefault();
     const formData = {
       fullname: userName,
+      phone_no: userPhoneNo,
       imageFile: file,
     };
     dispatch(updateUserProfile(formData));
@@ -154,6 +158,21 @@ const Profile: NextPageWithLayout = () => {
               id="userName"
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
+            />
+
+            <label
+              htmlFor="userPhoneNo"
+              className="font-quicksand font-bold text-slate-700 text-sm"
+            >
+              Phone No
+            </label>
+            <input
+              type="tel"
+              className="outline-none border-[1px] border-gray-100 focus:border-red-400 px-4 py-2 rounded-lg w-full mb-4 mt-2 placeholder:text-slate-500 placeholder:font-serif placeholder:font-normal placeholder:text-sm text-base text-slate-700"
+             
+              id="userPhoneNo"
+              value={userPhoneNo}
+              onChange={(e) => setUserPhoneNo(e.target.value)}
             />
 
             <button className="font-quicksand w-full bg-red-400 py-2 outline-none text-white text-sm font-bold my-6 rounded-lg">

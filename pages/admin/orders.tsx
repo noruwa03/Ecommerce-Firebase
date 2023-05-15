@@ -1,12 +1,15 @@
 import { NextPageWithLayout } from "../_app";
-import { useEffect, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 import type { ReactElement } from "react";
 import UnauthorizedUser from "@/components/modal/UnauthorizedUser";
 import { useAppSelector, useAppDispatch } from "@/appHook/hooks";
 import { getAdminOrder } from "@/store/features/order";
 import ScreenLoader from "@/components/loader/ScreenLoader";
 import ScreenError from "@/components/modal/ScreenError";
+import Success from "@/components/modal/Success";
 import Link from "next/link";
+import EditOrder from "@/components/modal/EditOrder";
+import { closeOrderModal } from "@/store/features/order";
 
 const AllOrders: NextPageWithLayout = () => {
   const currentUser = useAppSelector((state) => state.auth);
@@ -16,6 +19,25 @@ const AllOrders: NextPageWithLayout = () => {
   useEffect(() => {
     dispatch(getAdminOrder());
   }, [currentUser, dispatch]);
+
+  const [showModal, setShowModal] = useState(false);
+  const [updateDetail, setUpdateDetail] = useState({
+    id: "",
+    status: "",
+  });
+
+  const showEditModal = (args: any): void => {
+    setShowModal(true);
+    setUpdateDetail({ id: args.id, status: args.status });
+  };
+
+  const close = (): void => {
+    setShowModal(false);
+  };
+
+  const closeSuccessModal = () => {
+    dispatch(closeOrderModal());
+  };
 
   if (!currentUser.user || currentUser.user.vendor === false) {
     return (
@@ -28,6 +50,16 @@ const AllOrders: NextPageWithLayout = () => {
   return (
     <>
       {" "}
+      {showModal ? (
+        <EditOrder
+          id={updateDetail.id}
+          status={updateDetail.status}
+          close={close}
+        />
+      ) : null}
+      {order.success ? (
+        <Success message={order.success} close={closeSuccessModal} />
+      ) : null}
       {order.loading ? <ScreenLoader /> : null}
       {order.error ? <ScreenError message={order.error} /> : null}
       <section className="py-20 lg:px-16 md:px-8 px-4">
@@ -65,11 +97,11 @@ const AllOrders: NextPageWithLayout = () => {
                 Orders
               </h1>
               <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
-                <div className="lg:block md:hidden hidden font-quicksand font-semibold col-span-2">
-                  Payment Type
-                </div>
-                <div className="lg:block md:block md:col-span-3 font-quicksand font-semibold lg:col-span-4 col-span-4">
+                <div className="lg:block md:block  md:col-span-3 col-span-4 font-quicksand font-semibold lg:col-span-2">
                   Status
+                </div>
+                <div className="lg:block  md:hidden hidden font-quicksand font-semibold lg:col-span-4">
+                  Payment ID
                 </div>
                 <div className="lg:block md:block hidden md:col-span-2 font-quicksand font-semibold col-span-2">
                   Total Price
@@ -86,12 +118,18 @@ const AllOrders: NextPageWithLayout = () => {
               return (
                 <Fragment key={res.id}>
                   <div className="shadow-[0_0px_4px_-1.76px_rgba(0,0,0,0.3)] bg-white w-full rounded-sm py-3 px-5">
-                    <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3">
-                      <div className="lg:block md:hidden hidden font-quicksand  col-span-2">
-                        {res.paymentType}
+                    <div className="grid lg:grid-cols-12 md:grid-cols-6 grid-cols-6 mt-3 font-medium">
+                      <div className="lg:block md:block  md:col-span-3 col-span-4 font-quicksand lg:col-span-2">
+                        {res.status === "Processing" ? (
+                          <span className="text-yellow-500">{res.status}</span>
+                        ) : res.status === "Delivered" ? (
+                          <span className="text-green-500">{res.status}</span>
+                        ) : (
+                          <span className="">{res.status}</span>
+                        )}
                       </div>
-                      <div className="lg:block md:block md:col-span-3 font-quicksand  lg:col-span-4 col-span-4">
-                        {res.status}
+                      <div className="lg:block  md:hidden hidden font-quicksand lg:col-span-4">
+                        {res.paymentID}
                       </div>
                       <div className="lg:block md:block hidden md:col-span-2 font-quicksand col-span-2">
                         ₦ {Intl.NumberFormat("en-US").format(res.totalPrice)}
@@ -107,9 +145,20 @@ const AllOrders: NextPageWithLayout = () => {
                           View
                         </Link>
                         {currentUser.user.vendor === true ? (
-                          <button className="hidden lg:block px-6 py-2 bg-red-100/70 text-sm rounded-lg font-quicksand font-semibold">
-                            Edit
-                           
+                          <button
+                            onClick={() => showEditModal(res)}
+                            className="hidden lg:block p-2 bg-red-100/70 text-sm rounded-lg font-quicksand font-semibold"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="14"
+                              height="14"
+                              fill="currentColor"
+                              className="bi bi-pen"
+                              viewBox="0 0 16 16"
+                            >
+                              <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001zm-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708l-1.585-1.585z" />
+                            </svg>
                           </button>
                         ) : null}
                       </div>

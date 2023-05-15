@@ -55,6 +55,7 @@ export const signIn = createAsyncThunk(
         uid: res.user.uid,
         email: res.user.email,
         displayName: currentUser[0].displayName,
+        phone_no: currentUser[0].phone_no,
         photoName: currentUser[0].photoName,
         photoURL: currentUser[0].photoURL,
         vendor: currentUser[0].vendor,
@@ -86,6 +87,7 @@ export const signUp = createAsyncThunk("signupUser/signUp", (payload: any) => {
       await setDoc(doc(firestore, "users", res.user.uid), {
         email: payload.input.email,
         displayName: "",
+        phone_no: "",
         photoName: "",
         photoURL: "",
         vendor: payload.isVendor,
@@ -101,6 +103,7 @@ export const signUp = createAsyncThunk("signupUser/signUp", (payload: any) => {
         uid: res.user.uid,
         email: res.user.email,
         displayName: "",
+        phone_no: "",
         photoName: "",
         photoURL: "",
         vendor: payload.isVendor,
@@ -146,12 +149,14 @@ export const updateUserProfile = createAsyncThunk(
 
           const updateResult = updateDoc(docRef, {
             displayName: payload.fullname,
+            phone_no: payload.phone_no,
             photoName: payload.imageFile.name,
             photoURL: imageURL,
             updatedAt: serverTimestamp(),
           }).then(() => {
             const userDetail = {
               userDisplayName: payload.fullname,
+              phone_no: payload.phone_no,
               photoName: payload.imageFile.name,
               userPhotoURL: imageURL,
             };
@@ -184,12 +189,14 @@ export const updateUserProfile = createAsyncThunk(
 
             const updateResult = updateDoc(docRef, {
               displayName: payload.fullname,
+              phone_no: payload.phone_no,
               photoName: payload.imageFile.name,
               photoURL: imageURL,
               updatedAt: serverTimestamp(),
             }).then(() => {
               const userDetail = {
                 userDisplayName: payload.fullname,
+                phone_no: payload.phone_no,
                 photoName: payload.imageFile.name,
                 userPhotoURL: imageURL,
               };
@@ -206,10 +213,12 @@ export const updateUserProfile = createAsyncThunk(
 
         const updateResult = updateDoc(docRef, {
           displayName: payload.fullname,
+          phone_no: payload.phone_no,
           updatedAt: serverTimestamp(),
         }).then(() => {
           const userDetail = {
             userDisplayName: payload.fullname,
+            phone_no: payload.phone_no,
             photoName: appState.auth.user.photoName,
             userPhotoURL: appState.auth.user.photoURL,
           };
@@ -357,8 +366,9 @@ const authSlice = createSlice({
         (state.loading = false), (state.error = "An error has occured");
       }),
       builder.addCase(signIn.fulfilled, (state, action: PayloadAction<any>) => {
-        state.loading = false;
+       
         state.user = action.payload;
+         state.loading = false;
       });
 
     //SignOut
@@ -376,12 +386,14 @@ const authSlice = createSlice({
       builder.addCase(
         updateUserProfile.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.loading = false;
-
+         
           state.user.displayName = action.payload.userDisplayName;
+          state.user.phone_no = action.payload.phone_no;
           state.user.photoName = action.payload.photoName;
           state.user.photoURL = action.payload.userPhotoURL;
           state.success = "Your profile has been updated successfully.";
+           state.loading = false;
+
         }
       );
 
@@ -395,13 +407,13 @@ const authSlice = createSlice({
       builder.addCase(
         updateStoreDetail.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.loading = false;
-
+          
           state.user.storeName = action.payload.storeName;
           state.user.storeInfo = action.payload.storeInfo;
           state.user.storeBGPhotoName = action.payload.storeBGPhotoName;
           state.user.storeBGPhotoURL = action.payload.storeBGPhotoURL;
           state.success = "Your store profile has been updated successfully.";
+          state.loading = false;
         }
       );
   },

@@ -24,6 +24,7 @@ const Create: NextPageWithLayout = () => {
     price: "",
     quantity: "",
     category: "",
+    sku: "",
     description: "",
   });
 
@@ -70,6 +71,7 @@ const Create: NextPageWithLayout = () => {
       price: "",
       quantity: "",
       category: "",
+      sku: "",
       description: "",
     });
     setCoverImage("");
@@ -244,6 +246,21 @@ const Create: NextPageWithLayout = () => {
                       type="text"
                       name="category"
                       value={productDetail.category}
+                      onChange={onChangeHandler}
+                      required
+                      className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700 mt-2"
+                    />
+                  </div>
+                  <div className="lg:col-span-2 md:col-span-2 col-span-4">
+                    <label className="font-quicksand" htmlFor="sku">
+                      SKU
+                    </label>
+
+                    <input
+                      id="sku"
+                      type="text"
+                      name="sku"
+                      value={productDetail.sku}
                       onChange={onChangeHandler}
                       required
                       className="outline-none border-[1px] border-gray-100 focus:border-red-300 px-4 py-2 rounded-lg w-full text-base text-slate-700 mt-2"

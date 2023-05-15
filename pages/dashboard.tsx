@@ -306,7 +306,7 @@ const Dashboard: NextPageWithLayout = () => {
                                 </div>
                               </div>
                               <div className="lg:col-span-1 lg:block  md:hidden hidden font-quicksand text-[0.87em] text-slate-600">
-                                GAN-37784
+                                {res.sku}
                               </div>
                               <div className="lg:col-span-1 lg:block  md:block block md:col-span-2 col-span-2 font-quicksand  text-slate-600">
                                 {res.quantity > 0 ? (

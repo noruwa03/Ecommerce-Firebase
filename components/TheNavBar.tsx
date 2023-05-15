@@ -34,7 +34,15 @@ const TheNavBar = () => {
           href="/"
           className="lg:col-span-2 flex items-center lg:relative lg:top-0 lg:left-0 fixed top-4 left-4 z-50"
         >
-          <Image src={Logo} alt="Logo" className="lg:w-11 lg:h-11 w-7 h-7" />{" "}
+          <Image
+            priority={true}
+            unoptimized={true}
+            src={Logo}
+            alt="Logo"
+            width={50}
+            height={50}
+            className="lg:w-11 lg:h-11 w-7 h-7"
+          />{" "}
           <span className="text-base text-slate-900 font-semibold font-quicksand ml-2">
             shopper<span className="text-red-300">Cart</span>
           </span>{" "}
@@ -89,7 +97,7 @@ const TheNavBar = () => {
                     width="20"
                     height="20"
                     fill="currentColor"
-                    className="bi bi-box fill-slate-600"
+                    className="bi bi-box fill-slate-900"
                     viewBox="0 0 16 16"
                   >
                     <path d="M8.186 1.113a.5.5 0 0 0-.372 0L1.846 3.5 8 5.961 14.154 3.5 8.186 1.113zM15 4.239l-6.5 2.6v7.922l6.5-2.6V4.24zM7.5 14.762V6.838L1 4.239v7.923l6.5 2.6zM7.443.184a1.5 1.5 0 0 1 1.114 0l7.129 2.852A.5.5 0 0 1 16 3.5v8.662a1 1 0 0 1-.629.928l-7.185 2.874a.5.5 0 0 1-.372 0L.63 13.09a1 1 0 0 1-.63-.928V3.5a.5.5 0 0 1 .314-.464L7.443.184z" />
@@ -108,7 +116,7 @@ const TheNavBar = () => {
                     width="20"
                     height="20"
                     fill="currentColor"
-                    className="bi bi-journal-text fill-slate-700"
+                    className="bi bi-journal-text fill-slate-900"
                     viewBox="0 0 16 16"
                   >
                     <path d="M5 10.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 0 1h-2a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0-2a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
@@ -153,7 +161,7 @@ const TheNavBar = () => {
                       className={
                         currentRoute === "/cart"
                           ? "bi bi-bag fill-red-500"
-                          : "bi bi-bag fill-slate-500"
+                          : "bi bi-bag fill-slate-900"
                       }
                       viewBox="0 0 16 16"
                     >
@@ -190,7 +198,7 @@ const TheNavBar = () => {
                     className={
                       currentRoute === "/cart"
                         ? "bi bi-bag fill-red-500"
-                        : "bi bi-bag fill-slate-500"
+                        : "bi bi-bag fill-slate-900"
                     }
                     viewBox="0 0 16 16"
                   >
