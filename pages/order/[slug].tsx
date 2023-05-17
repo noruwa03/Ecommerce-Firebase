@@ -122,7 +122,7 @@ const OrderDetail: NextPageWithLayout = () => {
                                 <p className="font-quicksand font-bold lg:text-base text-base text-slate-600 break-words">
                                   {res.name}
                                 </p>
-                                <p className="font-quicksand font-bold lg:text-base text-base text-slate-600">
+                                <p className="font-quicksand font-bold lg:text-base text-sm text-slate-600">
                                   ₦{" "}
                                   {Intl.NumberFormat("en-US").format(res.price)}{" "}
                                   * {res.quantity} = ₦{" "}
@@ -130,7 +130,7 @@ const OrderDetail: NextPageWithLayout = () => {
                                     Number(res.quantity) * Number(res.price)
                                   )}
                                 </p>
-                                <p className="font-quicksand font-bold lg:text-base text-base text-slate-600">
+                                <p className="font-quicksand font-bold lg:text-base text-sm text-slate-600">
                                   Quantity: {res.quantity}
                                 </p>
                               </div>

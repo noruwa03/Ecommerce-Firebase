@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "@/store";
-import { addDoc, collection, query, where, getDocs, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, query, where, getDocs, doc, getDoc, orderBy } from "firebase/firestore";
 import { firestore } from "@/lib/firebase";
 
 interface IORDER {
@@ -9,6 +9,7 @@ interface IORDER {
   success: string;
   productOrder: any;
   productOrderDetail: any;
+  adminOrder: any;
 }
 
 const initialState: IORDER = {
@@ -17,7 +18,33 @@ const initialState: IORDER = {
   success: "",
   productOrder: [],
   productOrderDetail: [],
+  adminOrder: []
 };
+
+export const getAdminOrder = createAsyncThunk(
+  "getAdminOrder/fetchAllOrder",
+  async () => {
+  
+
+    const orderRef = collection(firestore, "orders");
+    const q = query(orderRef, orderBy("updatedAt", "desc"));
+
+    const orders = getDocs(q).then((docRes) => {
+      if (docRes.empty) {
+        return [];
+      } else {
+        const result: any = [];
+        docRes.forEach((docData) => {
+          result.push({ ...docData.data(), id: docData.id });
+        });
+
+        return result;
+      }
+    });
+
+    return orders;
+  }
+);
 
 export const storeOrder = createAsyncThunk(
   "storeOrder/orderItem",
@@ -105,7 +132,23 @@ const orderSlice = createSlice({
       state.success = "Checkout was successful";
     });
 
-    // Orders
+    // All Orders
+    builder.addCase(getAdminOrder.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(getAdminOrder.rejected, (state) => {
+      state.loading = false;
+      state.error = "An error occured";
+    });
+    builder.addCase(
+      getAdminOrder.fulfilled,
+      (state, action: PayloadAction<any>) => {
+        state.loading = false;
+        state.adminOrder = action.payload;
+      }
+    );
+
+    // Customer Orders
     builder.addCase(getProductOrder.pending, (state) => {
       state.loading = true;
     });

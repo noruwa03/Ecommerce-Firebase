@@ -142,101 +142,103 @@ const Cart = () => {
                 <span>Clear Cart</span>
               </button>
             </div>
-            {cartItem.map((res: any) => {
-              totalCartPrice += res.price * res.quantity;
-              return (
-                <Fragment key={res.id}>
-                  {" "}
-                  <div className="lg:my-4 my-2">
-                    <div className="grid lg:grid-cols-10 grid-cols-4 items-center lg:gap-6 gap-y-0 gap-y-5 gap-2 lg:py-0  py-6 ">
-                      <div className="lg:col-span-2 col-span-1">
-                        <Image
-                          priority={true}
-                          unoptimized={true}
-                          loader={() => res.photoURL}
-                          src={res.photoURL}
-                          alt={res.id}
-                          width={150}
-                          height={150}
-                          className="w-full"
-                        />
-                      </div>
-                      <div className="lg:col-span-4 col-span-3">
-                        <h2 className="font-quicksand font-bold sm:text-xl text-base capitalize">
-                          {res.name}
-                        </h2>
-                        <h3 className="font-quicksand font-semibold sm:text-lg text-base capitalize">
-                          ₦ {Intl.NumberFormat("en-US").format(res.price)}
-                        </h3>
-                        <h3 className="font-quicksand font-semibold sm:text-lg text-base">
-                          Total Price: ₦{" "}
-                          {Intl.NumberFormat("en-US").format(
-                            Number(res.quantity) * Number(res.price)
-                          )}
-                        </h3>
-                      </div>
-                      <div className="lg:col-span-2 col-span-2 flex flex-row items-center justify-between space-x-8">
-                        <button
-                          className="p-2 rounded-md shadow-sm shadow-gray-300"
-                          onClick={() => handleDecrement(res.id)}
-                        >
+            {cartItem
+              .map((res: any) => {
+                totalCartPrice += res.price * res.quantity;
+                return (
+                  <Fragment key={res.id}>
+                    {" "}
+                    <div className="lg:my-4 my-2">
+                      <div className="grid lg:grid-cols-10 grid-cols-4 items-center lg:gap-6 gap-y-0 gap-y-5 gap-2 lg:py-0  py-6 ">
+                        <div className="lg:col-span-2 col-span-1">
+                          <Image
+                            priority={true}
+                            unoptimized={true}
+                            loader={() => res.photoURL}
+                            src={res.photoURL}
+                            alt={res.id}
+                            width={150}
+                            height={150}
+                            className="w-full"
+                          />
+                        </div>
+                        <div className="lg:col-span-4 col-span-3">
+                          <h2 className="font-quicksand font-bold sm:text-xl text-base capitalize">
+                            {res.name}
+                          </h2>
+                          <h3 className="font-quicksand font-semibold sm:text-lg text-base capitalize">
+                            ₦ {Intl.NumberFormat("en-US").format(res.price)}
+                          </h3>
+                          <h3 className="font-quicksand font-semibold sm:text-lg text-base">
+                            Total Price: ₦{" "}
+                            {Intl.NumberFormat("en-US").format(
+                              Number(res.quantity) * Number(res.price)
+                            )}
+                          </h3>
+                        </div>
+                        <div className="lg:col-span-2 col-span-2 flex flex-row items-center justify-between space-x-8">
+                          <button
+                            className="p-2 rounded-md shadow-sm shadow-gray-300"
+                            onClick={() => handleDecrement(res.id)}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              className="bi bi-dash-lg"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"
+                              />
+                            </svg>
+                          </button>
+
+                          <h2 className="font-quicksand  text-base font-semibold">
+                            {res.quantity}
+                          </h2>
+
+                          <button
+                            className="p-2 rounded-md shadow-sm shadow-gray-300"
+                            onClick={() => handleIncrement(res.id)}
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              className="bi bi-plus-lg"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                fillRule="evenodd"
+                                d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                        <div className="lg:col-span-2 col-span-2 grid place-content-end">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
                             width="16"
                             height="16"
                             fill="currentColor"
-                            className="bi bi-dash-lg"
+                            className="bi bi-trash3 cursor-pointer"
                             viewBox="0 0 16 16"
+                            onClick={() => remove(res.id)}
                           >
-                            <path
-                              fillRule="evenodd"
-                              d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8Z"
-                            />
+                            <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
                           </svg>
-                        </button>
-
-                        <h2 className="font-quicksand  text-base font-semibold">
-                          {res.quantity}
-                        </h2>
-
-                        <button
-                          className="p-2 rounded-md shadow-sm shadow-gray-300"
-                          onClick={() => handleIncrement(res.id)}
-                        >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            className="bi bi-plus-lg"
-                            viewBox="0 0 16 16"
-                          >
-                            <path
-                              fillRule="evenodd"
-                              d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"
-                            />
-                          </svg>
-                        </button>
-                      </div>
-                      <div className="lg:col-span-2 col-span-2 grid place-content-end">
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          className="bi bi-trash3 cursor-pointer"
-                          viewBox="0 0 16 16"
-                          onClick={() => remove(res.id)}
-                        >
-                          <path d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5ZM11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H2.506a.58.58 0 0 0-.01 0H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1h-.995a.59.59 0 0 0-.01 0H11Zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5h9.916Zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47ZM8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5Z" />
-                        </svg>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                  <hr />
-                </Fragment>
-              );
-            })}
+                    <hr />
+                  </Fragment>
+                );
+              })
+              .reverse()}
 
             <div className="flex sm:flex-row items-center flex-col lg:space-y-0 space-y-4 justify-between mt-6">
               <h3 className="font-quicksand sm:text-2xl text-lg font-semibold mt-5">
